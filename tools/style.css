@@ -1,0 +1,112 @@
+/* Estilo basado en la nueva paleta de colores del logo */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background: #003366;
+    color: #ffffff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    display: block;
+    border-radius: 5px;
+    margin: 5px 0;
+    transition: background 0.3s;
+}
+
+.sidebar a:hover {
+    background: #ff6600;
+}
+
+/* Logo centrado */
+.logo-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Navbar dentro del sidebar */
+.sidebar .navbar {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.sidebar .navbar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar .navbar-nav .nav-link {
+    color: rgb(11, 11, 11) !important;
+    padding: 8px;
+    text-align: center;
+}
+
+.sidebar .navbar-nav .nav-link:hover {
+    background: #ff6600;
+    border-radius: 5px;
+}
+
+
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+
+
+button {
+    background-color: #ff6600;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #cc5500;
+}
+
+input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.footer {
+    background: #a00b15;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

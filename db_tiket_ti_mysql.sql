@@ -1,0 +1,139 @@
+
+CREATE DATABASE IF NOT EXISTS db_tiket_ti;
+USE db_tiket_ti;
+
+-- Tabla: Puesto
+CREATE TABLE Puesto (
+    ID_Puesto INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(100) NOT NULL,
+    Active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Tabla: Sucursal
+CREATE TABLE Sucursal (
+    ID_Sucursal INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Ciudad VARCHAR(100),
+    Active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE Area (
+    ID_Area INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Activo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Tabla: Sistema
+CREATE TABLE Sistema (
+    ID_Sistema INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion TEXT,
+    Active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Tabla: Error
+CREATE TABLE Error (
+    ID_Error INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion TEXT NOT NULL,
+    Active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Tabla: Solucion
+CREATE TABLE Solucion (
+    ID_Solucion INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion TEXT NOT NULL,
+    Active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Tabla: Rol (opcional para permisos)
+CREATE TABLE Rol (
+    ID_Rol INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Activo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE Estatus (
+    ID_Estatus INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+
+-- Tabla: Usuario
+CREATE TABLE Usuario (
+    ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    FotoURL VARCHAR(255),
+    ID_Rol INT,
+	ID_Area INT,
+    FechaCreacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (ID_Rol) REFERENCES Rol(ID_Rol),
+	FOREIGN KEY (ID_Area) REFERENCES Area(ID_Area)
+);
+
+-- Tabla: Login
+CREATE TABLE Login (
+    ID_Login INT AUTO_INCREMENT PRIMARY KEY,
+    Cuenta VARCHAR(70) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(512) NOT NULL,
+    IntentosFallidos INT NOT NULL DEFAULT 0,
+    ID_Usuario INT NOT NULL,
+    FechaCreacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    SesionID VARCHAR(100),
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario)
+);
+
+-- Tabla: Empleado
+CREATE TABLE Empleado (
+    Numero_Empleado INT(10) PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Correo VARCHAR(100),
+    ID_Sucursal INT,
+    ID_Puesto INT,
+    ID_Usuario INT,
+	ID_Area INT,
+    CreateDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdateDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Active BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (ID_Sucursal) REFERENCES Sucursal(ID_Sucursal),
+    FOREIGN KEY (ID_Puesto) REFERENCES Puesto(ID_Puesto),
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
+	FOREIGN KEY (ID_Area) REFERENCES Area(ID_Area)
+);
+  
+-- Tabla: Tiket
+CREATE TABLE Tiket (
+    ID_Tiket INT AUTO_INCREMENT PRIMARY KEY,
+    Numero_Empleado INT NOT NULL,
+    ID_Sistema INT NOT NULL,
+    ID_Error INT NOT NULL,
+    Descripcion TEXT NOT NULL,
+    FechaReporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaSolucion DATETIME,
+    ID_Solucion INT,
+	ID_Soporte INT NULL,
+	ID_Estatus INT,
+    Estatus VARCHAR(50) NOT NULL DEFAULT 'Abierto',
+    CreateDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdateDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Active BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (Numero_Empleado) REFERENCES Empleado(Numero_Empleado),
+    FOREIGN KEY (ID_Sistema) REFERENCES Sistema(ID_Sistema),
+    FOREIGN KEY (ID_Error) REFERENCES Error(ID_Error),
+    FOREIGN KEY (ID_Solucion) REFERENCES Solucion(ID_Solucion),
+	FOREIGN KEY (ID_Soporte) REFERENCES Usuario(ID_Usuario),
+	FOREIGN KEY (ID_Estatus) REFERENCES Estatus(ID_Estatus)
+);
+
+CREATE TABLE Comentario (
+    ID_Comentario INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Tiket INT NOT NULL,
+    ID_Usuario INT NOT NULL,
+    Mensaje TEXT NOT NULL,
+    Fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_Tiket) REFERENCES Tiket(ID_Tiket),
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario)
+);
