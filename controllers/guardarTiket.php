@@ -1,31 +1,20 @@
 <?php
+require_once __DIR__ . '/../config/db_connection.php';
+require_once __DIR__ . '/../models/tiket.php';
+
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: nuevo_tiket.php');
-    exit();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $idSistema = intval($_POST['id_sistema']);
+    $descripcion = $_POST['descripcion'];
+    $numEmpleado = $_SESSION['login_id']; // debe empatar con Número_Empleado
+
+    $modelo = new Tiket($conn);
+    $ok = $modelo->crear($numEmpleado, $idSistema, $descripcion);
+
+    if ($ok) {
+        echo "Ticket registrado correctamente. <a href='../views/dashboard.php'>Volver</a>";
+    } else {
+        echo "Error al guardar el ticket.";
+    }
 }
-
-require_once __DIR__ . '/config/db_connection.php';
-
-$descripcion = trim($_POST['descripcion']);
-$branch = (int)$_POST['branch'];
-$system = (int)$_POST['system'];
-$priority = (int)$_POST['priority'];
-$empleado = (int)$_POST['empleado'];
-
-$estatus = 'pendiente';
-$fecha = date('Y-m-d H:i:s');
-
-$stmt = $conn->prepare("INSERT INTO tiket (id_empleado, id_sucursal, id_sistema, descripcion, id_prioridad, fecha, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("iiisiss", $empleado, $branch, $system, $descripcion, $priority, $fecha, $estatus);
-
-if ($stmt->execute()) {
-    header("Location: dashboard.php?mensaje=Ticket+registrado+correctamente");
-    exit();
-} else {
-    echo "<p>Error al guardar el ticket: " . $stmt->error . "</p>";
-}
-
-$conn->close();
-?>
