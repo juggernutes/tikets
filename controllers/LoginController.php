@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/db_connection.php';
 require_once __DIR__ . '/../models/login.php';
-
 session_start();
 
 class LoginController {
@@ -15,17 +13,15 @@ class LoginController {
         $usuario = $this->loginModel->validarUsuarioSP($cuenta);
 
         if ($usuario && password_verify($passwordIngresado, $usuario['PasswordHash'])) {
+            $_SESSION['login_id'] = $usuario['ID_Login'];
+            $_SESSION['rol'] = $usuario['Rol'];
+
             if ($usuario['DebeCambiarPassword']) {
-                // Redirigir a formulario de cambio de contraseña
                 header("Location: ../views/cambiar_password.php?id=" . $usuario['ID_Login']);
-                exit;
             } else {
-                // Registrar sesión y redirigir al dashboard
-                $_SESSION['login_id'] = $usuario['ID_Login'];
-                $this->loginModel->registrarSesionSP($usuario['ID_Login'], session_id());
                 header("Location: ../views/dashboard.php");
-                exit;
             }
+            exit;
         } else {
             echo "Usuario o contraseña incorrectos.";
         }
@@ -33,12 +29,12 @@ class LoginController {
 
     public function cambiarPassword($idLogin, $nuevoPassword) {
         $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
-        $resultado = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
+        $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
 
-        if ($resultado) {
+        if ($ok) {
             echo "Contraseña actualizada correctamente. <a href='../public/index.php'>Iniciar sesión</a>";
         } else {
-            echo "Hubo un error al actualizar la contraseña.";
+            echo "Error al cambiar la contraseña.";
         }
     }
 }
