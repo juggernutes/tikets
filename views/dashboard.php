@@ -19,7 +19,7 @@ $rol = $_SESSION['rol'];
     <p><strong>Tu rol:</strong> <?= htmlspecialchars($rol) ?></p>
 
     <ul>
-        <?php if ($rol === 'USUARIO' || $rol === 'ADMINISTRADOR'): ?>
+        <?php if ($rol === 'USUARIO' || $rol === 'EMPLEADO'): ?>
             <li><a href="registrar_tiket.php">Registrar nuevo ticket</a></li>
             <li><a href="validar_tiket.php">Validar solución (cerrar ticket)</a></li>
         <?php endif; ?>

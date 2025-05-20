@@ -16,11 +16,11 @@ class Tiket {
 
     // Operación 2: Obtener tickets activos
     public function obtenerTodos() {
-        $op = 2;
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
-        $stmt->bind_param("i", $op);
-        $stmt->execute();
-        return $stmt->get_result();
+    $op = 2;
+    $stmt = $this->conn->prepare("CALL sp_tiket(?, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+    $stmt->bind_param("i", $op);
+    $stmt->execute();
+    return $stmt->get_result();
     }
 
     // Operación 3: Asignar soporte y pasar a EN PROCESO
