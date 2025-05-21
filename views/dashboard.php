@@ -1,35 +1,32 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['login_id']) || !isset($_SESSION['rol'])) {
     header("Location: ../public/index.php");
     exit;
 }
 
+$title = "Panel de control";
 $rol = $_SESSION['rol'];
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Panel de Control</title>
-</head>
-<body>
-    <h2>Bienvenido al sistema de tickets</h2>
-    <p><strong>Tu rol:</strong> <?= htmlspecialchars($rol) ?></p>
+<?php include __DIR__ . '/layout/header.php'; ?>
 
-    <ul>
-        <?php if ($rol === 'USUARIO' || $rol === 'EMPLEADO'): ?>
-            <li><a href="registrar_tiket.php">Registrar nuevo ticket</a></li>
-            <li><a href="validar_tiket.php">Validar solución (cerrar ticket)</a></li>
+<h3 style="text-align: center;">Bienvenido al sistema de tickets</h3>
+
+<div style="max-width: 600px; margin: 30px auto;">
+    <ul style="list-style: none; padding: 0; text-align: center;">
+        <?php if ($rol === 'USUARIO' || $rol === 'ADMINISTRADOR'): ?>
+            <li style="margin: 10px;"><a href="registrar_tiket.php"><button>Registrar nuevo ticket</button></a></li>
+            <li style="margin: 10px;"><a href="validar_tiket.php"><button>Validar solución (cerrar ticket)</button></a></li>
         <?php endif; ?>
 
         <?php if ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR'): ?>
-            <li><a href="asignar_tiket.php">Asignar tickets (en proceso)</a></li>
-            <li><a href="resolver_tiket.php">Resolver tickets asignados</a></li>
+            <li style="margin: 10px;"><a href="asignar_tiket.php"><button>Asignar tickets</button></a></li>
+            <li style="margin: 10px;"><a href="resolver_tiket.php"><button>Resolver tickets</button></a></li>
+            <li style="margin: 10px;"><a href="reporte_tickets.php"><button>Reporte general</button></a></li>
         <?php endif; ?>
-
-        <li><a href="../public/logout.php">Cerrar sesión</a></li>
     </ul>
-</body>
-</html>
+</div>
+
+<?php include __DIR__ . '/layout/footer.php'; ?>

@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Iniciar sesión</h2>
-    <form method="POST" action="index.php">
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$title = "Iniciar sesión";
+include __DIR__ . '/layout/header.php';
+?>
+
+<div style="max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <h3 style="text-align:center;">Acceso al sistema</h3>
+    <form method="POST" action="../public/index.php">
         <label for="cuenta">Usuario:</label><br>
-        <input type="text" name="cuenta" required><br><br>
+        <input type="text" name="cuenta" required style="width:100%; padding:8px; margin-bottom:10px;"><br>
 
         <label for="password">Contraseña:</label><br>
-        <input type="password" name="password" required><br><br>
+        <input type="password" name="password" required style="width:100%; padding:8px; margin-bottom:20px;"><br>
 
-        <button type="submit">Ingresar</button>
+        <button type="submit" style="width:100%;">Iniciar sesión</button>
     </form>
-</body>
-</html>
+</div>
+
+<?php include __DIR__ . '/layout/footer.php'; ?>
