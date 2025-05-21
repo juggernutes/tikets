@@ -2,6 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+if (isset($_SESSION['login_id']) && isset($_SESSION['rol'])) {
+    header("Location: dashboard.php");
+    exit;
+}
+
 $title = "Iniciar sesión";
 include __DIR__ . '/layout/header.php';
 ?>
@@ -10,7 +16,7 @@ include __DIR__ . '/layout/header.php';
     <h3 style="text-align:center;">Acceso al sistema</h3>
     <form method="POST" action="../public/index.php">
         <label for="cuenta">Usuario:</label><br>
-        <input type="text" name="cuenta" required style="width:100%; padding:8px; margin-bottom:10px;"><br>
+        <input type="text" name="cuenta" value="<?= htmlspecialchars($_POST['cuenta'] ?? '') ?>" required style="width:100%; padding:8px; margin-bottom:10px;"><br>
 
         <label for="password">Contraseña:</label><br>
         <input type="password" name="password" required style="width:100%; padding:8px; margin-bottom:20px;"><br>
@@ -20,3 +26,4 @@ include __DIR__ . '/layout/header.php';
 </div>
 
 <?php include __DIR__ . '/layout/footer.php'; ?>
+

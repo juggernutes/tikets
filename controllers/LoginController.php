@@ -15,16 +15,19 @@ class LoginController {
         if ($usuario && password_verify($passwordIngresado, $usuario['PasswordHash'])) {
             $_SESSION['login_id'] = $usuario['ID_Login'];
             $_SESSION['rol'] = $usuario['Rol'];
+            $_SESSION['nombre'] = $usuario['Nombre'];
 
             if ($usuario['DebeCambiarPassword']) {
                 header("Location: ../views/cambiar_password.php?id=" . $usuario['ID_Login']);
+                exit;  // ✅ AGREGA ESTE EXIT AQUÍ
             } else {
                 header("Location: ../views/dashboard.php");
+                exit;  // ✅ Y TAMBIÉN AQUÍ
             }
-            exit;
         } else {
             echo "Usuario o contraseña incorrectos.";
         }
+
     }
 
     public function cambiarPassword($idLogin, $nuevoPassword) {

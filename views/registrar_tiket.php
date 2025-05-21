@@ -4,15 +4,11 @@ if (!isset($_SESSION['login_id'])) {
     header("Location: ../public/index.php");
     exit;
 }
+$title = "Registrar Ticket";
+include __DIR__ . '/layout/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar Ticket</title>
-</head>
-<body>
+<div style="max-width: 600px; margin: 30px auto;">
     <h2>Registrar nuevo Ticket</h2>
     <form action="../controllers/guardarTiket.php" method="POST">
         <label>Sistema:</label><br>
@@ -27,5 +23,5 @@ if (!isset($_SESSION['login_id'])) {
 
         <button type="submit">Guardar</button>
     </form>
-</body>
-</html>
+</div>
+<?php include __DIR__ . '/layout/footer.php'; ?>

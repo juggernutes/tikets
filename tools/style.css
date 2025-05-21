@@ -1,96 +1,20 @@
-/* Estilo basado en la nueva paleta de colores del logo */
+
+:root {
+    --rosarito-red: #c8102e;
+    --rosarito-dark: #930505;
+    --rosarito-gray: #f2f2f2;
+    --rosarito-white: #ffffff;
+    --rosarito-negro: #000000;
+    --rosarito-azul: #003366;
+    --rosarito-fondo1: ('..img/fondo_2.png');
+    --rosarito-fondo2: ('..img/LOGO_4.png');
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--rosarito-gray);
     margin: 0;
     padding: 0;
-}
-
-header, footer {
-    background-color: #003366;
-    color: white;
-    padding: 15px;
-    text-align: center;
-}
-
-header h2 {
-    margin: 0;
-}
-
-nav a {
-    color: #ffffff;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-h2, h3 {
-    color: #003366;
-    text-align: center;
-    margin-top: 20px;
-}
-
-table {
-    width: 90%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-table, th, td {
-    border: 1px solid #ccc;
-}
-
-th {
-    background-color: #e3e6ea;
-    padding: 10px;
-}
-
-td {
-    padding: 8px;
-    text-align: center;
-}
-
-button, input[type="submit"] {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-button:hover, input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-footer p {
-    margin: 0;
-    font-size: 13px;
-}
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
 }
 
 .wrapper {
@@ -99,7 +23,99 @@ html, body {
     min-height: 100vh;
 }
 
+header, footer {
+    background-image: linear-gradient( rgba(255, 255, 255, 0.595), rgb(255, 255, 255)), url('../img/LOGO_3.png');
+    background-position: right;  /* Centra la imagen */
+    background-repeat: repeat; /* Evita que se repita */
+    background-color: var(--rosarito-white);
+    color: var(--rosarito-azul);
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a button {
+    background-color: var(--rosarito-azul);
+    color: var(--rosarito-white);
+    border: 2px solid var(--rosarito-azul);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: bold;
+    margin: 0 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav a button:hover {
+    background-color: var(--rosarito-dark);
+    color: var(--rosarito-white);
+    border-color: var(--rosarito-dark);
+}
+
 main {
     flex: 1;
     padding: 20px;
+}
+
+footer {
+    background-color: var(--rosarito-red);
+    color: var(--rosarito-azul);
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+}
+
+form {
+    background-color: var(--rosarito-white);
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    background-color: var(--rosarito-azul);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--rosarito-dark);
+}
+
+h3 {
+    text-align: center;
+    color: var(--rosarito-red);
 }
