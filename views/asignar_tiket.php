@@ -10,15 +10,11 @@ if (!isset($_SESSION['login_id']) || ($_SESSION['rol'] !== 'SOPORTE' && $_SESSIO
 
 $tiketModel = new Tiket($conn);
 $tickets = $tiketModel->obtenerTodos();
+
+$title = "Asignar Ticket";
+include __DIR__ . '/layout/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Asignar Tickets</title>
-</head>
-<body>
     <h2>Tickets abiertos</h2>
 
     <table border="1" cellpadding="5">
@@ -57,5 +53,4 @@ $tickets = $tiketModel->obtenerTodos();
 
     <br>
     <a href="dashboard.php">Volver al panel</a>
-</body>
-</html>
+<?php include __DIR__ . '/layout/footer.php'; ?>

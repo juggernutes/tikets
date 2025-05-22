@@ -11,15 +11,12 @@ if (!isset($_SESSION['login_id'])) {
 $tiketModel = new Tiket($conn);
 $tickets = $tiketModel->obtenerTodos();
 $usuarioActual = $_SESSION['login_id'];
+
+$title = "Validar Ticket";
+include __DIR__ . '/layout/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Validar Tickets</title>
-</head>
-<body>
+
     <h2>Tickets resueltos por validar</h2>
 
     <table border="1" cellpadding="5">
@@ -54,5 +51,4 @@ $usuarioActual = $_SESSION['login_id'];
 
     <br>
     <a href="dashboard.php">Volver al panel</a>
-</body>
-</html>
+<?php include __DIR__ . '/layout/footer.php'; ?>

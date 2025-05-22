@@ -23,15 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 }
+
+$title = "Cambiar Contraseña";
+include __DIR__ . '/layout/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Cambiar contraseña</title>
-</head>
-<body>
     <h2>Cambiar contraseña</h2>
     <?php if (isset($mensaje)) echo "<p style='color:red;'>$mensaje</p>"; ?>
     <form method="POST">
@@ -43,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <button type="submit">Actualizar</button>
     </form>
-</body>
-</html>
+<?php include __DIR__ . '/layout/footer.php'; ?>
 
 // Cerrar la conexión a la base de datos

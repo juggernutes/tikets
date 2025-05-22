@@ -12,11 +12,9 @@ $rol = $_SESSION['rol'];
 
 <?php include __DIR__ . '/layout/header.php'; ?>
 
-<h3 style="text-align: center;">Bienvenido al sistema de tickets</h3>
-
 <div style="max-width: 600px; margin: 30px auto;">
     <ul style="list-style: none; padding: 0; text-align: center;">
-        <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
+        <?php if ($rol === 'EMPLEADO' ): ?>
             <li style="margin: 10px;"><a href="registrar_tiket.php"><button>Registrar nuevo ticket</button></a></li>
             <li style="margin: 10px;"><a href="validar_tiket.php"><button>Validar solución (cerrar ticket)</button></a></li>
         <?php endif; ?>

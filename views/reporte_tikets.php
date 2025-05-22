@@ -10,15 +10,10 @@ if (!isset($_SESSION['login_id']) || ($_SESSION['rol'] !== 'ADMINISTRADOR' && $_
 
 $tiketModel = new Tiket($conn);
 $tickets = $tiketModel->obtenerTodos();
+$title = "Reporte de Tickets";
+include __DIR__ . '/layout/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Reporte de Tickets</title>
-</head>
-<body>
     <h2>Reporte general de tickets</h2>
 
     <table border="1" cellpadding="5">
@@ -52,5 +47,4 @@ $tickets = $tiketModel->obtenerTodos();
 
     <br>
     <a href="dashboard.php">Volver al panel</a>
-</body>
-</html>
+<?php include __DIR__ . '/layout/footer.php'; ?>
