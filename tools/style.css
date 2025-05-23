@@ -6,6 +6,7 @@
     --rosarito-white: #ffffff;
     --rosarito-negro: #000000;
     --rosarito-azul: #003366;
+    --rosarito-amrillo: #c29510;
     --rosarito-fondo1: ('..img/fondo_2.png');
     --rosarito-fondo2: ('..img/LOGO_4.png');
 }
@@ -27,7 +28,7 @@ header, footer {
     background-image: linear-gradient( rgba(255, 255, 255, 0.595), rgb(255, 255, 255)), url('../img/LOGO_3.png');
     background-position: right;  /* Centra la imagen */
     background-repeat: repeat; /* Evita que se repita */
-    background-color: var(--rosarito-white);
+    background-color: var(--rosarito-amrillo);
     color: var(--rosarito-azul);
     padding: 20px;
     text-align: center;
