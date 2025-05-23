@@ -1,23 +1,23 @@
 <?php
-// Leer archivo JSON con las credenciales
-$config = json_decode(file_get_contents(__DIR__ . "/mySqlConnection.json"), true);
+// config/db_connection.php
 
-// Verificar si se pudo leer correctamente
-if (!$config) {
-    die("Error al leer el archivo de configuración.");
+if (!isset($conn)) {
+    $configPath = __DIR__ . "/mySqlConnection.json";
+    $config = json_decode(file_get_contents($configPath), true);
+
+    if (!$config) {
+        die("Error al leer el archivo de configuración en: $configPath");
+    }
+
+    $conn = new mysqli(
+        $config["server"],
+        $config["user"],
+        $config["password"],
+        $config["database"]
+    );
+
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
 }
 
-// Extraer valores
-$servername = $config["server"];
-$username = $config["user"];
-$password = $config["password"];
-$database = $config["database"];
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-?>

@@ -37,7 +37,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
             <nav style="text-align: center; margin: 10px 0;">
                 <a href="../views/dashboard.php"><button>Inicio</button></a>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'EMPLEADO' || $rol === 'SOPORTE'): ?>
-                    <a href="../views/registrar_tiket.php"><button>Registrar Ticket</button></a>
+                    <a href="../views/registrar_tiket.php"><button>Crear Ticket</button></a>
                     <a href="../views/validar_tiket.php"><button>Validar Ticket</button></a>
                 <?php endif; ?>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>

@@ -28,9 +28,4 @@ class SistemaController {
 
         return $options;
     }
-
-    public function obtenerDescripcionSistema($id) {
-        $sistema = $this->obtenerSistemaPorId($id);
-        return $sistema ? $sistema['Descripcion'] : 'Descripción no disponible';
-    }
 }
