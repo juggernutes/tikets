@@ -7,15 +7,20 @@ class Tiket {
     }
 
     // Operación 1: Crear nuevo ticket (usuario)
-    public function crear($numEmpleado, $idSistema, $descripcion) {
+    public function creartiket($numEmpleado, $idSistema, $descripcion) {
         $op = 1;
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, NULL, ?, ?, NULL, ?, NULL, NULL)");
-        $stmt->bind_param("iiis", $op, $numEmpleado, $idSistema, $descripcion);
-        return $stmt->execute();
+        $idTiket = null;
+        $idError = 29; // Asumimos que el error es desconocido al crear el ticket
+        $idSoporte = null; // No asignamos soporte al crear el ticket
+        $idSolucion = null; // No asignamos solución al crear el ticket
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiiiisii", $op, $idTiket, $numEmpleado, $idSistema, $idError, $descripcion, $idSoporte, $idSolucion);
+        $stmt->execute();
+        return $stmt->affected_rows > 0; // Retorna true si se creó el ticket correctamente
     }
 
     // Operación 2: Obtener tickets activos
-    public function obtenerTodos() {
+    public function obtenerTodosTikets() {
     $op = 2;
     $stmt = $this->conn->prepare("CALL sp_tiket(?, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
     $stmt->bind_param("i", $op);

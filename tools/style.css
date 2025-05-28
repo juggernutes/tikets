@@ -120,3 +120,34 @@ h3 {
     text-align: center;
     color: var(--rosarito-red);
 }
+
+.contenedor-tickets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+.tarjeta-ticket {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 280px;
+    background-color: #fff;
+    transition: transform 0.2s;
+}
+.tarjeta-ticket:hover {
+    transform: scale(1.02);
+}
+.boton-ver {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+.boton-ver:hover {
+    background-color: #0056b3;
+}
