@@ -11,9 +11,10 @@ if (!isset($_SESSION['login_id'])) {
     exit;
 }
 
-require_once __DIR__ . '/config/db_connection.php';
-require_once __DIR__ . '/controllers/SistemaController.php';
-require_once __DIR__ . '/controllers/EmpleadoController.php';
+require_once __DIR__ . '/../config/db_connection.php';
+require_once __DIR__ . '/../controllers/SistemaController.php';
+require_once __DIR__ . '/../controllers/EmpleadoController.php';
+require_once __DIR__ . '/../controllers/guardarTiket.php';
 
 $sistemaController = new SistemaController($conn);
 $empleadoController = new EmpleadoController($conn);

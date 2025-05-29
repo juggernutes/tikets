@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../config/db_connection.php';
 require_once __DIR__ . '/../models/tiket.php';
 
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idSistema = intval($_POST['id_sistema']);
