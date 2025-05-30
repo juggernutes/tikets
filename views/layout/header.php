@@ -41,7 +41,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
                     <a href="../views/validar_tiket.php"><button>Validar Ticket</button></a>
                 <?php endif; ?>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-                    <a href="../views/asignar_tiket.php"><button>Asignar Tickets</button></a>
+                    <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>
                     <a href="../views/resolver_tiket.php"><button>Resolver Tickets</button></a>
                     <a href="../views/reporte_tickets.php"><button>Reporte</button></a>
                 <?php endif; ?>

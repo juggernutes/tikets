@@ -137,7 +137,8 @@ h3 {
     transition: transform 0.2s;
 }
 .tarjeta-ticket:hover {
-    transform: scale(1.02);
+    transform: scale(1.35);
+    z-index: 10;
 }
 .boton-ver {
     display: inline-block;
@@ -151,3 +152,38 @@ h3 {
 .boton-ver:hover {
     background-color: #0056b3;
 }
+
+.descripcion-limitada {
+    overflow-wrap: break-word;
+    word-break: break-all;
+    max-width: 100%;
+    display: block;
+    white-space: normal; /* permite saltos de línea normales */
+    line-height: 1;
+    max-height: 100px; /* altura máxima para limitar el texto */
+    overflow: hidden; /* oculta el texto que excede la altura máxima */
+    text-overflow: ellipsis; /* agrega puntos suspensivos al final del texto */
+}
+
+/*
+.descripcion-limitada:hover {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-height: 1000px;
+}
+.descripcion-limitada:hover::after {
+    content: attr(data-full);
+    position: absolute;
+    white-space: normal;
+    background: #f9f9f9;
+    color: #333;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}*/

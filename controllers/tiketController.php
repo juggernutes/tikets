@@ -1,21 +1,32 @@
 <?php
-require_once __DIR__ . '/../config/db_connection.php';
-require_once __DIR__ . '/../models/tiket.php';
+class TiketController {
+    private $model;
 
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    
-    $idUsuario = $_SESSION['login_id'] ?? null;
-    if (!$idUsuario) {
-        echo "No estás autenticado. <a href='../public/index.php'>Iniciar sesión</a>";
-        exit;
+    public function __construct($model) {
+        $this->model = $model;
     }
-    $modelo = new Tiket($conn);
-    $result = $modelo->getTiketsByUser($idUsuario);
-    if ($result && $result->num_rows > 0) {
-        include __DIR__ . '/../components/renderCard.php';
-    } else {
-        echo "No tienes tickets registrados.";
+
+    public function getTicketsByUserId($usuarioId) {
+        return $this->model->getTiketsByUser($usuarioId);
+    }
+
+    public function createTicket($numEmpleado, $idSistema, $descripcion) {
+        return $this->model->creartiket($numEmpleado, $idSistema, $descripcion);
+    }
+
+    public function getTicketById($idTiket) {
+        return $this->model->getTiket($idTiket);
+    }
+
+    public function getAllTickets($idSoporte) {
+        return $this->model->obtenerTodosTikets($idSoporte);
+    }
+
+    public function updateTicket($idTiket, $numEmpleado, $idSistema, $descripcion, $idSoporte, $idSolucion) {
+        return $this->model->updatetiket($idTiket, $numEmpleado, $idSistema, $descripcion, $idSoporte, $idSolucion);
+    }
+
+    public function assignSupport($idTiket, $idSoporte) {
+        return $this->model->asignarSoporte($idTiket, $idSoporte);
     }
 }

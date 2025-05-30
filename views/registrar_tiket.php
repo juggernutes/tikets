@@ -1,7 +1,7 @@
 <?php 
     $title = "Registrar Ticket";
     include __DIR__ . '/layout/header.php';
-    include __DIR__ . '/../app/App.php';
+    include __DIR__ . '/../app/apptiket.php';
 
     $idUsuario = $_SESSION['login_id']; 
 ?>
