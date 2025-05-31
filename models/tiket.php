@@ -47,6 +47,28 @@ class Tiket {
         return $stmt->affected_rows > 0;
     }
 
+    // Operación personalizada: soporte toma un ticket
+    public function tomarTiket($idTiket, $idSoporte) {
+        $op = 3;
+        $params = [$idTiket, null, null, null, null, $idSoporte, null, null, null];
+        
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $tiket = $row;
+        }
+
+        $stmt->close();
+
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $tiket;
+    }
+
     // Operación 2: Obtener tickets por usuario
     public function getTiketsByUser($idUsuario) {
         return $this->ejecutarSP(2, [
@@ -59,6 +81,13 @@ class Tiket {
         return $this->ejecutarSP(6, [
             null, null, null, null, null, $idSoporte, null, null, null
         ]);
+    }
+
+    public function getTiketById($idTiket) {
+        $result = $this->ejecutarSP(2, [
+            $idTiket, null, null, null, null, null, null, null, null
+        ]);
+        return $result->fetch_assoc();
     }
 
     // Obtener un ticket específico
@@ -79,6 +108,8 @@ class Tiket {
             $idSoporte,
             null, null
         ]) !== false;
+
+
     }
 
     // Operación 4: Resolver ticket asignando error y solución
@@ -95,11 +126,8 @@ class Tiket {
         ]) !== false;
     }
 
-    // Operación personalizada: soporte toma un ticket
-    public function tomarTiket($idTiket, $idSoporte) {
-        return $this->ejecutarSP(6, [
-            $idTiket, null, null, null, null, null, $idSoporte, null, null
-        ]) !== false;
-    }
+    
+
+
 }
 ?>

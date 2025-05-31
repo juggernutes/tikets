@@ -29,4 +29,13 @@ class TiketController {
     public function assignSupport($idTiket, $idSoporte) {
         return $this->model->asignarSoporte($idTiket, $idSoporte);
     }
+
+    public function tomarControlDeTiket($idTiket, $idSoporte) {
+        if ($this->model->tomarTiket($idTiket, $idSoporte)) {
+            header("Location: ../views/resolver_tiket.php?id_tiket=" . $idTiket);
+            exit;
+        } else {
+            return false;
+        }
+    }
 }
