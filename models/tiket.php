@@ -56,17 +56,7 @@ class Tiket {
         $stmt->bind_param('iiiiisiisi', $op, ...$params);
         $stmt->execute();
 
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $tiket = $row;
-        }
-
-        $stmt->close();
-
-        while ($this->conn->more_results() && $this->conn->next_result()) {
-            $this->conn->use_result();
-        }
-        return $tiket;
+        return $stmt->affected_rows > 0;
     }
 
     // Operación 2: Obtener tickets por usuario
@@ -84,12 +74,13 @@ class Tiket {
     }
 
     public function getTiketById($idTiket) {
-        $result = $this->ejecutarSP(2, [
+        $result = $this->ejecutarSP(7, [
             $idTiket, null, null, null, null, null, null, null, null
         ]);
         return $result->fetch_assoc();
     }
 
+    
     // Obtener un ticket específico
     /*public function getTiket($idTiket) {
         $result = $this->ejecutarSP(2, [

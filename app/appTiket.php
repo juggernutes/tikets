@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -26,9 +27,13 @@ if (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'tomarTiket
     $idSoporte = intval($_SESSION['login_id']);
 
     if ($idTiket > 0 && $idSoporte > 0) {
-        $tiketController->tomarControlDeTiket($idTiket, $idSoporte);
-        // Redirigir a la página de resolución del ticket
-        header("Location: ../views/resolver_tiket.php?id_tiket=" . $idTiket);
+        $tiketTomado = $tiketController->tomarControlDeTiket($idTiket, $idSoporte);
+        if ($tiketTomado) {
+            header("Location: ../views/resolver_tiket.php?id=$idTiket");
+        } else {
+            // Manejo de error: no se pudo tomar el ticket
+            echo "No se pudo tomar el ticket. Inténtalo de nuevo más tarde.";
+        }
         exit;
     } else {
         // Manejo de error: IDs inválidos

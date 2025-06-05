@@ -22,6 +22,7 @@ class Sistema {
             }
         }
 
+        sort($sistemas, SORT_NATURAL | SORT_FLAG_CASE);
         return $sistemas;
     }
 

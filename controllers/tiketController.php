@@ -15,7 +15,7 @@ class TiketController {
     }
 
     public function getTicketById($idTiket) {
-        return $this->model->getTiket($idTiket);
+        return $this->model->getTiketById($idTiket);
     }
 
     public function getAllTickets($idSoporte) {
@@ -32,7 +32,7 @@ class TiketController {
 
     public function tomarControlDeTiket($idTiket, $idSoporte) {
         if ($this->model->tomarTiket($idTiket, $idSoporte)) {
-            header("Location: ../views/resolver_tiket.php?id_tiket=" . $idTiket);
+            header("Location: ../views/resolver_tiket.php?id=$idTiket");
             exit;
         } else {
             return false;
