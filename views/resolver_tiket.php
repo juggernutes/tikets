@@ -51,21 +51,24 @@ include __DIR__ . '/layout/header.php';
             <label for="id_error">Error:</label>
             <select name="id_error" id="id_error" required>
                 <option value="">Selecciona un error</option>
-                <option value="1">Error de red</option>
-                <option value="2">Error de sistema</option>
+                <?php
+                include __DIR__ . '/../partials/combo_errores.php'; // Incluye el combo de errores
+                ?>
             </select>
 
             <label for="id_solucion">Solución:</label>
             <select name="id_solucion" id="id_solucion" required>
                 <option value="">Selecciona una solución</option>
-                <option value="1">Reiniciar equipo</option>
-                <option value="2">Actualizar sistema</option>
+                <?php
+                include __DIR__ . '/../partials/combo_soluciones.php'; // Incluye el combo de soluciones
+                ?>
             </select>
 
             <label for="detalle">Descripción de la solución:</label>
             <textarea name="detalle" id="detalle" rows="6" required></textarea>
 
             <button type="submit" class="btn-guardar">Guardar solución</button>
+            
         </form>
     </div>
 </div>

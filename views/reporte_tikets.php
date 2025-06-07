@@ -9,7 +9,7 @@ if (!isset($_SESSION['login_id']) || ($_SESSION['rol'] !== 'ADMINISTRADOR' && $_
 }
 
 $tiketModel = new Tiket($conn);
-$tickets = $tiketModel->obtenerTodosTikets();
+$tickets = $tiketModel->obtenerTodosTikets($_SESSION['login_id']);
 $title = "Reporte de Tickets";
 include __DIR__ . '/layout/header.php';
 ?>
