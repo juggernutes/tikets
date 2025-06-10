@@ -45,31 +45,27 @@ include __DIR__ . '/layout/header.php';
     </div>
 
     <div class="tiket-solucion">
-        <form action="../app/resolver_tiket_action.php" method="POST">
+        <form action="../app/appTiket.php?accion=solucionar&id_tiket=<?= $ticket['ID_Tiket'] ?>" method="POST">
             <input type="hidden" name="id_tiket" value="<?= htmlspecialchars($ticket['ID_Tiket']) ?>">
 
             <label for="id_error">Error:</label>
             <select name="id_error" id="id_error" required>
                 <option value="">Selecciona un error</option>
-                <?php
-                include __DIR__ . '/../partials/combo_errores.php'; // Incluye el combo de errores
-                ?>
+                <?php include __DIR__ . '/../partials/combo_errores.php'; ?>
             </select>
 
             <label for="id_solucion">Solución:</label>
             <select name="id_solucion" id="id_solucion" required>
                 <option value="">Selecciona una solución</option>
-                <?php
-                include __DIR__ . '/../partials/combo_soluciones.php'; // Incluye el combo de soluciones
-                ?>
+                <?php include __DIR__ . '/../partials/combo_soluciones.php'; ?>
             </select>
 
             <label for="detalle">Descripción de la solución:</label>
-            <textarea name="detalle" id="detalle" rows="6" required></textarea>
+            <textarea name="descripcion_solucion" id="detalle" rows="6" required></textarea>
 
-            <button type="submit" class="btn-guardar">Guardar solución</button>
-            
+            <button type="submit">Solucionar</button>
         </form>
+
     </div>
 </div>
 

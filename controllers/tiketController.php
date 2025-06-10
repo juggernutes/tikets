@@ -38,4 +38,13 @@ class TiketController {
             return false;
         }
     }
+
+    public function resolverTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion = null) {
+        if ($this->model->resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)) {
+            header("Location: ../views/dashboard.php");
+            exit;
+        } else {
+            return false;
+        }
+    }
 }

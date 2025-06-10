@@ -59,6 +59,19 @@ class Tiket {
         return $stmt->affected_rows > 0;
     }
 
+        // Operación 4: Resolver ticket asignando error y solución
+    public function resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
+        $op= 4;
+        $params = [
+            $idTiket, null, null, $idError, null, $idSoporte, $idSolucion, $descripcionSolucion, null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
+    }
+
     // Operación 2: Obtener tickets por usuario
     public function getTiketsByUser($idUsuario) {
         return $this->ejecutarSP(2, [
@@ -103,12 +116,6 @@ class Tiket {
 
     }
 
-    // Operación 4: Resolver ticket asignando error y solución
-    public function resolver($idTiket, $idError, $idSolucion) {
-        return $this->ejecutarSP(4, [
-            $idTiket, null, null, $idError, null, null, null, $idSolucion, null
-        ]) !== false;
-    }
 
     // Operación 5: Validar y cerrar ticket
     public function cerrar($idTiket) {
@@ -116,8 +123,6 @@ class Tiket {
             $idTiket
         ]) !== false;
     }
-
-    
 
 
 }
