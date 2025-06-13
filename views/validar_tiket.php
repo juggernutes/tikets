@@ -9,7 +9,7 @@ if (!isset($_SESSION['login_id'])) {
 }
 
 $tiketModel = new Tiket($conn);
-$tickets = $tiketModel->obtenerTodos();
+
 $usuarioActual = $_SESSION['login_id'];
 
 $title = "Validar Ticket";

@@ -1,30 +1,56 @@
 <?php
-session_start();
+include __DIR__ . '/../app/appTiket.php';
 
-if (!isset($_SESSION['login_id']) || !isset($_SESSION['rol'])) {
-    header("Location: ../public/index.php");
-    exit;
+$tiketController = new TiketController(new Tiket($conn));
+include __DIR__ . '/layout/header.php'; 
+?>
+<h1>DASHBOARD</h1>
+
+<?php
+$tikets = null;
+$abiertos = [];
+$cerrados = [];
+
+if ($rol === 'EMPLEADO') {
+    $tikets = $tiketController->getTicketsByUserId($usuarioId);
+} elseif ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
+    $tikets = $tiketController->getAllTickets($usuarioId);
 }
 
-$title = "Panel de control";
-$rol = $_SESSION['rol'];
+if ($tikets && $tikets->num_rows > 0) {
+    while ($row = $tikets->fetch_assoc()) {
+        if ($rol === 'EMPLEADO') {
+            // Solo mostrar ABIERTO y RESUELTO
+            if ($row['ESTADO'] === 'ABIERTO' || $row['ESTADO'] === 'RESUELTO') {
+                if ($row['ESTADO'] === 'ABIERTO') {
+                    $abiertos[] = $row;
+                } else {
+                    $cerrados[] = $row;
+                }
+            }
+        } else {
+            // SOPORTE y ADMINISTRADOR ven todo
+            if (in_array($row['ESTADO'], ['ABIERTO', 'EN PROCESO'])) {
+                $abiertos[] = $row;
+            } else {
+                $cerrados[] = $row;
+            }
+        }
+    }
+
+    if (!empty($abiertos)) {
+        include __DIR__ . '/../components/renderCardabierto.php'; 
+    } else {
+        echo "<p>No hay tickets abiertos o en proceso.</p>";
+    }
+
+    if (!empty($cerrados)) {
+        include __DIR__ . '/../components/renderCardCerrado.php'; 
+    }
+
+} else {
+    echo "<p>No tienes tickets registrados.</p>";
+}
+
+include __DIR__ . '/layout/footer.php';
 ?>
-
-<?php include __DIR__ . '/layout/header.php'; ?>
-
-<div style="max-width: 600px; margin: 30px auto;">
-    <ul style="list-style: none; padding: 0; text-align: center;">
-        <?php if ($rol === 'EMPLEADO' ): ?>
-            <li style="margin: 10px;"><a href="registrar_tiket.php"><button>Registrar nuevo ticket</button></a></li>
-            <li style="margin: 10px;"><a href="validar_tiket.php"><button>Validar solución (cerrar ticket)</button></a></li>
-        <?php endif; ?>
-
-        <?php if ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR'): ?>
-            <li style="margin: 10px;"><a href="asignar_tiket.php"><button>Asignar tickets</button></a></li>
-            <li style="margin: 10px;"><a href="resolver_tiket.php"><button>Resolver tickets</button></a></li>
-            <li style="margin: 10px;"><a href="reporte_tickets.php"><button>Reporte general</button></a></li>
-        <?php endif; ?>
-    </ul>
-</div>
-
-<?php include __DIR__ . '/layout/footer.php'; ?>

@@ -249,17 +249,6 @@ textarea:focus {
     background-color: #fff;
 }
 
-.contenedor-tiket {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
 
 .tiket-info {
   font-family: 'Segoe UI', sans-serif;
@@ -310,3 +299,71 @@ textarea:focus {
   background-color: #092b5a;
 }
 
+.contenedor-tiket {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.tiket {
+    width: 250px;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 4px 0;
+    line-height: 1.2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease-in-out;
+    background-color: #f8f9fa;
+    border-left: 5px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.tiket h4 {
+  margin: 3px 0 3px 0;  /* elimina espacio inferior */
+  font-size: 15px;
+}
+
+.tiket h5 {
+  margin: 3px 0 3px 0;  /* ajusta espacio debajo del sistema */
+  font-size: 14px;
+  font-weight: bold;
+}
+.tiket p {
+    margin: 3px 0 3px 0; /* Espacio entre párrafos */
+    font-size: 14px;
+    color: #333;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
+}
+
+/* Colores según estado */
+.tiket.abierto {
+    background-color: #fff3cd; /* amarillo claro */
+    border-left: 5px solid #ffc107;
+}
+
+.tiket.en-proceso {
+    background-color: #d1ecf1; /* azul claro */
+    border-left: 5px solid #17a2b8;
+}
+
+.tiket.resuelto {
+    background-color: #d4edda; /* verde claro */
+    border-left: 5px solid #28a745;
+}
+
+.tiket.cerrado {
+    background-color: #f8d7da; /* rojo claro */
+    border-left: 5px solid #dc3545;
+}

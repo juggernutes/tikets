@@ -24,7 +24,7 @@ $result = $tiketController->getAllTickets($idSoporte);
 
 <?php
 if ($result && $result->num_rows > 0) {
-    include __DIR__ . '/../components/renderCard.php';
+    include __DIR__ . '/../components/renderCardabierto.php';
 } else {
     echo "<p>No tienes tickets registrados.</p>";
 }
