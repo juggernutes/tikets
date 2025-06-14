@@ -311,11 +311,18 @@ textarea:focus {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
+.contenedor-tickets-cerrados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
 
 .tiket {
     width: 250px;
-    height: 320px;
-    overflow: hidden;
+    min-height: 320px;
+    overflow: auto; 
     position: relative;
     border-radius: 12px;
     padding: 15px;
@@ -329,6 +336,7 @@ textarea:focus {
     flex-direction: column;
     justify-content: flex-start;
 }
+
 
 .tiket h4 {
   margin: 3px 0 3px 0;  /* elimina espacio inferior */
@@ -350,20 +358,21 @@ textarea:focus {
 /* Colores según estado */
 .tiket.abierto {
     background-color: #fff3cd; /* amarillo claro */
-    border-left: 5px solid #ffc107;
+    border-left: 8px solid #ffc107;
 }
 
 .tiket.en-proceso {
     background-color: #d1ecf1; /* azul claro */
-    border-left: 5px solid #17a2b8;
+    border-left: 8px solid #17a2b8;
 }
 
 .tiket.resuelto {
     background-color: #d4edda; /* verde claro */
-    border-left: 5px solid #28a745;
+ 
+    border-left: 8px solid #2d862d;
 }
 
 .tiket.cerrado {
     background-color: #f8d7da; /* rojo claro */
-    border-left: 5px solid #dc3545;
+    border-left: 8px solid #dc3545;
 }

@@ -24,7 +24,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
 
                 <!-- Título centrado -->
                 <div style="flex: 1; text-align: center;">
-                    <h2 style="margin: 0;">Sistema de Tickets</h2>
+                    <h1 style="margin: 0;">SISTEMA DE GESTION TIKETS</h1>
                 </div>
 
                 <!-- Usuario a la derecha -->

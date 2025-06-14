@@ -39,13 +39,13 @@ if ($tikets && $tikets->num_rows > 0) {
     }
 
     if (!empty($abiertos)) {
-        include __DIR__ . '/../components/renderCardabierto.php'; 
+        include __DIR__ . '/../components/renderCardAbierto.php'; 
     } else {
         echo "<p>No hay tickets abiertos o en proceso.</p>";
     }
 
     if (!empty($cerrados)) {
-        include __DIR__ . '/../components/renderCardCerrado.php'; 
+        include __DIR__ . '/../components/renderCardCerrardo.php'; 
     }
 
 } else {

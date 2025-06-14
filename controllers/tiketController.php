@@ -39,7 +39,7 @@ class TiketController {
         }
     }
 
-    public function resolverTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion = null) {
+    public function resolverTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
         if ($this->model->resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)) {
             header("Location: ../views/dashboard.php");
             exit;
