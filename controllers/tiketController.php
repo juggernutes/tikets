@@ -40,7 +40,21 @@ class TiketController {
     }
 
     public function resolverTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
-        if ($this->model->resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)) {
+        // Validar que los IDs sean válidos
+        if (empty($idTiket) || empty($idSoporte) || empty($idError) || empty($idSolucion) || empty($descripcionSolucion)) {
+            echo "Todos los campos son obligatorios.";
+            return false;
+        }
+        elseif ($this->model->resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)) {
+            header("Location: ../views/dashboard.php");
+            exit;
+        } else {
+            return false;
+        }
+    }
+
+    public function closeTicket($idTiket, $idUsuario) {
+        if ($this->model->cerrar($idTiket, $idUsuario)) {
             header("Location: ../views/dashboard.php");
             exit;
         } else {

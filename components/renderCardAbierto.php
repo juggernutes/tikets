@@ -12,7 +12,9 @@
         <p><strong>Empleado:</strong> <?= htmlspecialchars($row['EMPLEADO']) ?></p>
         <p><strong>Puesto:</strong> <?= htmlspecialchars($row['PUESTO']) ?></p>
         <p><strong>Sucursal:</strong> <?= htmlspecialchars($row['SUCURSAL']) ?></p>
-        <a href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Tomar</button></a>
+        <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] === 'SOPORTE')): ?>
+            <a href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Tomar</button></a>
+        <?php endif; ?>
     </div>
 <?php endforeach; ?>
 </div>

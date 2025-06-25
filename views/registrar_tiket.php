@@ -32,8 +32,6 @@
                 var descripcion = selectedOption.getAttribute('data-descripcion');
                 document.getElementById('descripcionSistema').textContent = descripcion || 'Seleccione un sistema';
             });
-
-
         </script>
         <br><br>
         <label for="descripcion">Descripción:</label><br>

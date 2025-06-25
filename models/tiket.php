@@ -72,14 +72,27 @@ class Tiket {
         return $stmt->affected_rows > 0;
     }
 
-    // Operación 2: Obtener tickets por usuario
+     // Operación 5: cerrar ticket
+    public function cerrar($idTiket, $idUsuario) {
+        $op = 5;
+        $params = [
+            $idTiket, null, null, null, null, null, null, null, $idUsuario
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
+    }
+
+    //                                Operación 2: Obtener tickets por usuario
     public function getTiketsByUser($idUsuario) {
         return $this->ejecutarSP(2, [
             null, null, null, null, null, null, null, null, $idUsuario
         ]);
     }
 
-    // Operación 2: Obtener todos los tickets
+    //                                  Operación 6: Obtener todos los tickets
     public function obtenerTodosTikets($idSoporte) {
         return $this->ejecutarSP(6, [
             null, null, null, null, null, $idSoporte, null, null, null
@@ -115,15 +128,5 @@ class Tiket {
 
 
     }
-
-
-    // Operación 5: Validar y cerrar ticket
-    public function cerrar($idTiket) {
-        return $this->ejecutarSP(5, [
-            $idTiket
-        ]) !== false;
-    }
-
-
 }
 ?>

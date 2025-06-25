@@ -66,4 +66,24 @@ if (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'tomarTiket
         // Manejo de error: IDs inválidos
         echo "Parámetros inválidos.";
     }
+}elseif (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'cerrarTiket') {
+    $idTiket = intval($_GET['id_tiket']);
+    $idUsuario = intval($_SESSION['login_id']);
+
+echo "ID del ticket: $idTiket, ID del usuario: $idUsuario";
+
+    if ($idTiket > 0 && $idUsuario > 0) {
+        $tiketResuelto = $tiketController->closeTicket($idTiket, $idUsuario);
+        echo "\nTicket cerrado: $tiketResuelto";
+        if ($tiketResuelto) {
+            header("Location: ../views/dashboard.php");
+        } else {
+            // Manejo de error: no se pudo resolver el ticket
+            echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+        }
+        exit;
+    } else {
+        // Manejo de error: IDs inválidos
+        echo "Parámetros inválidos.";
+    }
 }

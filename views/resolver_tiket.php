@@ -20,6 +20,7 @@ if (!$ticket) {
 
 $title = "Detalles del ticket";
 include __DIR__ . '/layout/header.php';
+$descripcionSolucion = $ticket['DESCRIPCION_SOLUCION'] ?? '';
 ?>
 
 
@@ -61,8 +62,9 @@ include __DIR__ . '/layout/header.php';
             </select>
 
             <label for="detalle">Descripción de la solución:</label>
-            <textarea name="descripcion_solucion" id="descripcion_solucion" rows="6" required></textarea>
-
+            
+            <textarea name="descripcion_solucion" id="descripcion_solucion" rows="6" required><?= htmlspecialchars($descripcionSolucion) ?></textarea>
+            
             <button type="submit">Solucionar</button>
         </form>
 

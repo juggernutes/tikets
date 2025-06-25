@@ -1,8 +1,8 @@
 <div class="contenedor-tickets-cerrados">
 <?php foreach ($cerrados as $row): ?>
     <?php $estadoClass = strtolower(str_replace(' ', '-', $row['ESTADO'])); 
-    $descripcion = wordwrap($row['DESCRIPCION'] ?? '', 30, "\n", true);
-    $descripcionSolucion = wordwrap($row['DESCRIPCION_SOLUCION'] ?? '', 30, "\n", true);
+    $descripcion = wordwrap($row['DESCRIPCION'] ?? '', 40, "\n", true);
+    $descripcionSolucion = wordwrap($row['DESCRIPCION_SOLUCION'] ?? '', 40, "\n", true);
     ?>
     <div class="tiket <?= $estadoClass ?>">
         <h4><?= htmlspecialchars($row['Folio']) ?> - <?= htmlspecialchars($row['SISTEMA']) ?></h4>
@@ -16,8 +16,10 @@
         <p><strong>Fecha de resolución:</strong> <?= htmlspecialchars($row['FECHA_SOLUCION'] ?? '') ?></p>
         <p><strong>Error:</strong> <?= htmlspecialchars($row['ERROR'] ?? '') ?></p>
         <p><strong>Solución:</strong> <?= htmlspecialchars($row['SOLUCION'] ?? '') ?></p>
-        <p><strong>Descripción de la solución:</strong> <?= nl2br(htmlspecialchars($descripcionSolucion, ENT_QUOTES, 'UTF-8')) ?></p>
-        <a href="../app/appTiket.php?accion=cerrarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Cerrar</button></a>
+        <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] === 'SOPORTE')): ?>
+            <p><strong>Descripción de la solución:</strong> <?= nl2br(htmlspecialchars($descripcionSolucion, ENT_QUOTES, 'UTF-8')) ?></p>
+        <?php endif; ?>
+            <a href="../app/appTiket.php?accion=cerrarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Cerrar</button></a>
     </div>
 <?php endforeach; ?>
 </div>
