@@ -55,7 +55,7 @@ class TiketController {
 
     public function closeTicket($idTiket, $idUsuario) {
         if ($this->model->cerrar($idTiket, $idUsuario)) {
-            header("Location: ../views/dashboard.php");
+            header("Location: ../views/encuesta.php?id_tiket=$idTiket");
             exit;
         } else {
             return false;
