@@ -19,7 +19,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;"> 
                 <!-- Logo a la izquierda -->
                 <div style="flex: 1; text-align: left;">
-                    <img src="../img/LOGO_3.png" alt="Rosarito Logo" style="max-height: 120px; height: auto; width: auto;">
+                    <img src="../img/LOGO_3.png" alt="Rosarito Logo" style="max-height: 120px; height: auto; width: auto;" class="logo-movible">
                 </div>
 
                 <!-- Título centrado -->
@@ -29,8 +29,8 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
 
                 <!-- Usuario a la derecha -->
                 <div style="flex: 1; text-align: right; padding-right: 10px;">
-                    <small><strong>Usuario:</strong> <?= htmlspecialchars($nombreUsuario) ?> |
-                    <strong>Rol:</strong> <?= htmlspecialchars($rol) ?></small>
+                    <small>Usuario: </small> <strong><?= htmlspecialchars($nombreUsuario) ?> ||</strong>
+                    <small> Rol: </small><strong><?= htmlspecialchars($rol) ?></strong>
                 </div>
             </div>
 
@@ -41,9 +41,9 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
                     <a href="../views/validar_tiket.php"><button>Validar Ticket</button></a>
                 <?php endif; ?>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-                    <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>
+                   <!-- <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>
                     <a href="../views/resolver_tiket.php"><button>Resolver Tickets</button></a>
-                    <a href="../views/reporte_tickets.php"><button>Reporte</button></a>
+                    <a href="../views/reporte_tickets.php"><button>Reporte</button></a> -->
                 <?php endif; ?>
                 <a href="../public/logout.php"><button>Cerrar sesión</button></a>
             </nav>

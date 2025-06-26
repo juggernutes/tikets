@@ -380,3 +380,22 @@ textarea:focus {
     background-color: #f8d7da; /* rojo claro */
     border-left: 8px solid #dc3545;
 }
+
+@keyframes girarYMover {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  50% {
+    transform: rotate(180deg) translateX(15px);
+  }
+  100% {
+    transform: rotate(360deg) translateX(0);
+  }
+}
+
+.logo-movible {
+  animation: girarYMover 4s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+

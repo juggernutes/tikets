@@ -28,17 +28,17 @@ $title = "Cambiar Contraseña";
 include __DIR__ . '/layout/header.php';
 ?>
 
-    <h2>Cambiar contraseña</h2>
-    <?php if (isset($mensaje)) echo "<p style='color:red;'>$mensaje</p>"; ?>
-    <form method="POST">
-        <label>Nueva contraseña:</label><br>
-        <input type="password" name="nueva_password" required><br><br>
+<h2>Cambiar contraseña</h2>
+<?php if (isset($mensaje)) echo "<p style='color:red;'>$mensaje</p>"; ?>
+<form method="POST">
+    <label>Nueva contraseña:</label><br>
+    <input type="password" name="nueva_password" required><br><br>
 
-        <label>Confirmar contraseña:</label><br>
-        <input type="password" name="confirmar_password" required><br><br>
+    <label>Confirmar contraseña:</label><br>
+    <input type="password" name="confirmar_password" required><br><br>
 
-        <button type="submit">Actualizar</button>
-    </form>
+    <button type="submit">Actualizar</button>
+</form>
 <?php include __DIR__ . '/layout/footer.php'; ?>
 
 // Cerrar la conexión a la base de datos

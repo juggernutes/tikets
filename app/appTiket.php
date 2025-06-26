@@ -41,6 +41,25 @@ $usuarioId = $_SESSION['login_id'] ?? null;
 
 if (isset($_GET['accion'])) {
     switch ($_GET['accion']) {
+        case 'crearTiket':
+            $numEmpleado = intval($_POST['Numero_Empleado']);
+            $idSistema = intval($_POST['id_sistema']);
+            $descripcion = trim($_POST['descripcion']);
+
+            if ($numEmpleado > 0 && $idSistema > 0 && !empty($descripcion)) {
+                $tiketCreado = $tiketController->createTicket($numEmpleado, $idSistema, $descripcion);
+                if ($tiketCreado) {
+                    header("Location: ../views/dashboard.php");
+                } else {
+                    // Manejo de error: no se pudo crear el ticket
+                    echo "No se pudo crear el ticket. Inténtalo de nuevo más tarde.";
+                }
+                exit;
+            } else {
+                // Manejo de error: parámetros inválidos
+                echo "Parámetros inválidos.";
+            }
+            break;
         case 'tomarTiket':
             $idTiket = intval($_GET['id_tiket']);
             $idSoporte = intval($_SESSION['login_id']);

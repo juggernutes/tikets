@@ -17,21 +17,21 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 
-    <h2>Tickets resueltos por validar</h2>
+<h2>Tickets resueltos por validar</h2>
 
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Descripción</th>
-                <th>Solución</th>
-                <th>Sistema</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $tickets->fetch_assoc()): ?>
-                <?php if ($row['Estatus'] === 'RESUELTO' && $row['Numero_Empleado'] == $usuarioActual): ?>
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Solución</th>
+            <th>Sistema</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while ($row = $tickets->fetch_assoc()): ?>
+            <?php if ($row['Estatus'] === 'RESUELTO' && $row['Numero_Empleado'] == $usuarioActual): ?>
                 <tr>
                     <td><?= $row['ID_Tiket'] ?></td>
                     <td><?= $row['Descripcion'] ?></td>
@@ -44,11 +44,11 @@ include __DIR__ . '/layout/header.php';
                         </form>
                     </td>
                 </tr>
-                <?php endif; ?>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+            <?php endif; ?>
+        <?php endwhile; ?>
+    </tbody>
+</table>
 
-    <br>
-    <a href="dashboard.php">Volver al panel</a>
+<br>
+<a href="dashboard.php">Volver al panel</a>
 <?php include __DIR__ . '/layout/footer.php'; ?>

@@ -1,14 +1,14 @@
 <?php
 session_start();
 if (!isset($_SESSION['login_id'])) {
-    header("Location: ../public/index.php");
-    exit;
+  header("Location: ../public/index.php");
+  exit;
 }
 
 $idTiket = $_GET['id_tiket'] ?? null;
 if (!$idTiket) {
-    echo "ID de ticket no válido.";
-    exit;
+  echo "ID de ticket no válido.";
+  exit;
 }
 ?>
 
@@ -19,7 +19,7 @@ if (!$idTiket) {
       <div class="modal-body text-center">
         <h5 class="mb-3">Cual a sido tu experiencia?</h5>
         <input type="hidden" name="calificacion" id="calificacion">
-        
+
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
           <?php for ($i = 1; $i <= 5; $i++): ?>
             <button type="button" class="btn btn-outline-danger btn-score" onclick="seleccionarCalificacion(<?= $i ?>)"><?= $i ?></button>
@@ -42,18 +42,18 @@ if (!$idTiket) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function seleccionarCalificacion(valor) {
-  document.getElementById('calificacion').value = valor;
-  document.getElementById('btnEnviar').disabled = false;
+  function seleccionarCalificacion(valor) {
+    document.getElementById('calificacion').value = valor;
+    document.getElementById('btnEnviar').disabled = false;
 
-  document.querySelectorAll('.btn-danger').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-}
+    document.querySelectorAll('.btn-danger').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+  }
 </script>
 
 <style>
-.btn-danger.active {
-  background-color: #dc3545 !important;
-  color: white !important;
-}
+  .btn-danger.active {
+    background-color: #dc3545 !important;
+    color: white !important;
+  }
 </style>

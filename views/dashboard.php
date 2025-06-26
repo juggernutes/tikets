@@ -2,7 +2,7 @@
 include __DIR__ . '/../app/appTiket.php';
 
 $tiketController = new TiketController(new Tiket($conn));
-include __DIR__ . '/layout/header.php'; 
+include __DIR__ . '/layout/header.php';
 ?>
 <h1>DASHBOARD</h1>
 
@@ -39,15 +39,14 @@ if ($tikets && $tikets->num_rows > 0) {
     }
 
     if (!empty($abiertos)) {
-        include __DIR__ . '/../components/renderCardAbierto.php'; 
+        include __DIR__ . '/../components/renderCardAbierto.php';
     } else {
         echo "<p>No hay tickets abiertos o en proceso.</p>";
     }
 
     if (!empty($cerrados)) {
-        include __DIR__ . '/../components/renderCardCerrardo.php'; 
+        include __DIR__ . '/../components/renderCardCerrardo.php';
     }
-
 } else {
     echo "<p>No tienes tickets registrados.</p>";
 }

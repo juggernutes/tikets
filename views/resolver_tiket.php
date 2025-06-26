@@ -1,10 +1,5 @@
 <?php
-include __DIR__ . '/../app/App.php';
-
-require_once __DIR__ . '/../models/tiket.php';
-require_once __DIR__ . '/../controllers/tiketController.php';
-
-$tiketController = new TiketController(new Tiket($conn));
+include __DIR__ . '/../app/appTiket.php';
 
 $idTiket = $_GET['id'] ?? null;
 if (!$idTiket) {
@@ -33,10 +28,10 @@ $descripcionSolucion = $ticket['DESCRIPCION_SOLUCION'] ?? '';
         <p><strong>Estado:</strong> <?= htmlspecialchars($ticket['ESTADO']) ?></p>
 
         <?php
-            $descripcion = $ticket['DESCRIPCION'];
-            if (strpos($descripcion, ' ') === false) {
-                $descripcion = wordwrap($descripcion, 40, "\n", true);
-            }
+        $descripcion = $ticket['DESCRIPCION'];
+        if (strpos($descripcion, ' ') === false) {
+            $descripcion = wordwrap($descripcion, 40, "\n", true);
+        }
         ?>
         <p><strong>Descripción:</strong><br><?= nl2br(htmlspecialchars($descripcion)) ?></p>
 
@@ -62,9 +57,9 @@ $descripcionSolucion = $ticket['DESCRIPCION_SOLUCION'] ?? '';
             </select>
 
             <label for="detalle">Descripción de la solución:</label>
-            
+
             <textarea name="descripcion_solucion" id="descripcion_solucion" rows="6" required><?= htmlspecialchars($descripcionSolucion) ?></textarea>
-            
+
             <button type="submit">Solucionar</button>
         </form>
 
