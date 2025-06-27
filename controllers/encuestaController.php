@@ -10,4 +10,8 @@ class EncuestaController {
     public function calificarEncuesta($idTiket, $calificacion, $comentarios) {
         return $this->encuestaModel->calificarEncuesta($idTiket, $calificacion, $comentarios);
     }
+
+    public function getEncuestaByIdTiket($idTiket) {
+        return $this->encuestaModel->getEncuestaByIdTiket($idTiket);
+    }
 }

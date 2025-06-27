@@ -61,4 +61,17 @@ class TiketController {
             return false;
         }
     }
+
+    public function getTicketsCerrados($idUsuario, $rol) {
+        echo "Rol: $rol";
+        echo "ID Usuario: $idUsuario";
+        if ($rol === 'EMPLEADO') {
+            return $this->model->getTicketsCerradosPorEmpleado($idUsuario);
+        } elseif ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
+            return $this->model->getTicketsCerrados();
+        }
+        return false;
+    }
+
+
 }

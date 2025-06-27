@@ -394,8 +394,105 @@ textarea:focus {
 }
 
 .logo-movible {
-  animation: girarYMover 4s infinite ease-in-out;
-  transition: transform 0.3s ease;
+  animation: girarYMover 5s infinite ease-in-out;
+  transition: transform 3s ease;
 }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+h2 {
+    color: #B71C1C;
+    letter-spacing: 1px;
+}
+
+.tickets-table {
+    border-collapse: collapse;
+    width: 98%;
+    margin: 25px auto;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px #0001;
+}
+
+.tickets-table th, .tickets-table td {
+    padding: 12px 10px;
+    text-align: left;
+    min-width: 150px;
+}
+
+.tickets-table th {
+    background: #B71C1C;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    border-bottom: 2px solid #960a0a;
+    letter-spacing: .5px;
+}
+
+.tickets-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.tickets-table tr:hover {
+    background: #fbe9e7;
+}
+
+.tickets-table td {
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+@media (max-width: 900px) {
+    .tickets-table, .tickets-table thead, .tickets-table tbody, .tickets-table th, .tickets-table td, .tickets-table tr {
+        display: block;
+    }
+    .tickets-table tr {
+        margin-bottom: 20px;
+    }
+    .tickets-table td, .tickets-table th {
+        padding: 8px 5px;
+    }
+    .tickets-table th {
+        background: #B71C1C;
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+}
+
+.ticket-details {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff7e6;
+    padding: 32px 36px 24px 36px;
+    border-radius: 15px;
+    box-shadow: 0 4px 18px 2px rgba(0,0,0,0.09);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2d2d2d;
+}
+
+.ticket-details h2 {
+    color: #c8102e;
+    text-align: center;
+    margin-bottom: 22px;
+    letter-spacing: 1px;
+}
+
+.ticket-details p {
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+
+.ticket-details strong {
+    color: #930505;
+}
+
+
 
 

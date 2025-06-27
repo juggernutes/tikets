@@ -18,23 +18,13 @@ if ($rol === 'EMPLEADO') {
 }
 
 if ($tikets && $tikets->num_rows > 0) {
+    $abiertos = [];
+    $cerrados = [];
     while ($row = $tikets->fetch_assoc()) {
-        if ($rol === 'EMPLEADO') {
-            // Solo mostrar ABIERTO y RESUELTO
-            if ($row['ESTADO'] === 'ABIERTO' || $row['ESTADO'] === 'RESUELTO') {
-                if ($row['ESTADO'] === 'ABIERTO') {
-                    $abiertos[] = $row;
-                } else {
-                    $cerrados[] = $row;
-                }
-            }
+        if (in_array($row['ESTADO'], ['ABIERTO', 'EN PROCESO'])) {
+            $abiertos[] = $row;
         } else {
-            // SOPORTE y ADMINISTRADOR ven todo
-            if (in_array($row['ESTADO'], ['ABIERTO', 'EN PROCESO'])) {
-                $abiertos[] = $row;
-            } else {
-                $cerrados[] = $row;
-            }
+            $cerrados[] = $row;
         }
     }
 
@@ -46,10 +36,13 @@ if ($tikets && $tikets->num_rows > 0) {
 
     if (!empty($cerrados)) {
         include __DIR__ . '/../components/renderCardCerrardo.php';
+    } else {
+        echo "<p>No hay tickets cerrados.</p>";
     }
 } else {
     echo "<p>No tienes tickets registrados.</p>";
 }
+
 
 include __DIR__ . '/layout/footer.php';
 ?>

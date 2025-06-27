@@ -38,7 +38,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
                 <a href="../views/dashboard.php"><button>Inicio</button></a>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'EMPLEADO' || $rol === 'SOPORTE'): ?>
                     <a href="../views/registrar_tiket.php"><button>Crear Ticket</button></a>
-                    <a href="../views/validar_tiket.php"><button>Validar Ticket</button></a>
+                    <a href="../views/cerrado_tiket.php"><button>Ticket cerrados</button></a>
                 <?php endif; ?>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
                    <!-- <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>

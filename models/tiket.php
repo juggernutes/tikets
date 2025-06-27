@@ -125,8 +125,20 @@ class Tiket {
             $idSoporte,
             null, null
         ]) !== false;
+    }
 
+    public function getTicketsCerradosPorEmpleado($idUsuario) {
+        $result = $this->ejecutarSP(8, [
+            null, null, null, null, null, null, null, null, $idUsuario
+        ]);
+        return $result;
+    }
 
+    public function getTicketsCerrados() {
+        $result = $this->ejecutarSP(9, [
+            null, null, null, null, null, null, null, null, null
+        ]);
+        return $result;
     }
 }
 ?>
