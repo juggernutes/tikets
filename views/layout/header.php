@@ -8,19 +8,34 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $title ?? 'Sistema de Tickets' ?></title>
     <link rel="stylesheet" href="../tools/style.css">
 </head>
+
 <body>
     <div class="wrapper">
         <header>
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;"> 
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
                 <!-- Logo a la izquierda -->
-                <div style="flex: 1; text-align: left;">
-                    <img src="../img/LOGO_3.png" alt="Rosarito Logo" style="max-height: 120px; height: auto; width: auto;" class="logo-movible">
+                <div class="contenedor-animacion" id="animacionRosarito">
+                    <img src="../img/Exterior.png" alt="Exterior" class="exterior">
+                    <img src="../img/Centro.png" alt="Centro" class="centro">
                 </div>
+                <script>
+                    const animacion = document.getElementById('animacionRosarito');
+
+                    function reiniciarAnimacion() {
+                        animacion.classList.add('reiniciar');
+                        void animacion.offsetWidth;
+                        animacion.classList.remove('reiniciar');
+                    }
+
+                    setInterval(reiniciarAnimacion, 30000);
+                </script>
+
 
                 <!-- Título centrado -->
                 <div style="flex: 1; text-align: center;">
@@ -41,7 +56,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
                     <a href="../views/cerrado_tiket.php"><button>Ticket cerrados</button></a>
                 <?php endif; ?>
                 <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-                   <!-- <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>
+                    <!-- <a href="../views/asignar_tiket.php"><button>Tickets abiertos</button></a>
                     <a href="../views/resolver_tiket.php"><button>Resolver Tickets</button></a>
                     <a href="../views/reporte_tickets.php"><button>Reporte</button></a> -->
                 <?php endif; ?>

@@ -28,7 +28,6 @@ function renderStars($calificacion)
     return $out;
 }
 
-
 $title = "DETALLES DEL TICKET";
 include __DIR__ . '/layout/header.php';
 ?>
@@ -61,6 +60,7 @@ include __DIR__ . '/layout/header.php';
         }
         ?>
     </p>
+    <a href="../views/dashboard.php"><button>Volver al Dashboard</button></a>
     <a href="../views/cerrado_tiket.php"><button>Volver a Tickets Cerrados</button></a>
 </div>
 

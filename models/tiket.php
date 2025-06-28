@@ -140,5 +140,15 @@ class Tiket {
         ]);
         return $result;
     }
+
+    public function activarTiket($idTiket) {
+        $op = 10;
+        $params = [$idTiket, null, null, null, null, null, null, null, null];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
+    }
 }
 ?>

@@ -35,7 +35,7 @@ class LoginController {
         $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
 
         if ($ok) {
-            echo "Contraseña actualizada correctamente. <a href='../public/index.php'>Iniciar sesión</a>";
+            echo "../public/index.php";
         } else {
             echo "Error al cambiar la contraseña.";
         }

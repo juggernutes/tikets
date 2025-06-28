@@ -132,6 +132,23 @@ if (isset($_GET['accion'])) {
                 echo "Parámetros inválidos.";
             }
             break;
+        case 'activarTiket':
+            $idTiket = intval($_GET['id_tiket']);
+
+            if ($idTiket > 0) {
+                $tiketActivado = $tiketController->activarTiket($idTiket);
+                if ($tiketActivado) {
+                    header("Location: ../views/dashboard.php");
+                } else {
+                    // Manejo de error: no se pudo activar el ticket
+                    echo "No se pudo activar el ticket. Inténtalo de nuevo más tarde.";
+                }
+                exit;
+            } else {
+                // Manejo de error: ID inválido
+                echo "Parámetros inválidos.";
+            }
+            break;
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";

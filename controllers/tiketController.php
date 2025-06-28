@@ -73,5 +73,14 @@ class TiketController {
         return false;
     }
 
+    public function activarTiket($idTiket) {
+        if ($this->model->activarTiket($idTiket)) {
+            header("Location: ../views/detalles_tiket.php?ID_Tiket=$idTiket");
+            exit;
+        } else {
+            return false;
+        }
+    }
+
 
 }
