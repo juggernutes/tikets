@@ -564,3 +564,21 @@ h2 {
   transform: translate(-50%, -50%) scaleX(0);
 }
 
+.btn-score {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 4px;
+}
+.btn-score:focus {
+  outline: none !important;
+}
+.btn-score img {
+  width: 56px;
+  height: 56px;
+  pointer-events: none;
+}
+.btn-danger.active {
+    background-color: #dc3545 !important;
+    color: white !important;
+  }

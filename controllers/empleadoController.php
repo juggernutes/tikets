@@ -15,4 +15,12 @@ class EmpleadoController {
     public function obtenerEmpleadoPorId($numeroEmpleado) {
         return $this->empleadoModel->obtenerEmpleadoPorId($numeroEmpleado);
     }
+
+    public function obtenerTodosLosEmpleados() {
+        return $this->empleadoModel->obtenerTodosLosEmpleados();
+    }
+
+    public function obtenerEmpleadoporNumero($numeroEmpleado) {
+        return $this->empleadoModel->obtenerEmpleadoporNumero($numeroEmpleado);
+    }
 }

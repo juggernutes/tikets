@@ -37,5 +37,35 @@ class Empleado {
         return $result->fetch_assoc();
     }
 
+    public function obtenerTodosLosEmpleados() {
+        $op = 3;
+        $params = [null, null];
+
+        $stmt = $this->conn->prepare("CALL sp_empleados(?, ?, ?)");
+        $stmt->bind_param("iii", $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $empleados = [];
+        while ($row = $result->fetch_assoc()) {
+            $empleados[] = $row;
+        }   
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $empleados;
+    }
+
+    public function obtenerEmpleadoporNumero($numeroEmpleado) {
+        $op = 4;
+        $userId = null; 
+        $sql = "CALL sp_empleados(?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iii", $op, $userId, $numeroEmpleado);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
 
 }
