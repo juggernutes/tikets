@@ -20,7 +20,7 @@ class EmpleadoController {
         return $this->empleadoModel->obtenerTodosLosEmpleados();
     }
 
-    public function obtenerEmpleadoporNumero($numeroEmpleado) {
+    public function obtenerEmpleadoporNumeroC($numeroEmpleado) {
         return $this->empleadoModel->obtenerEmpleadoporNumero($numeroEmpleado);
     }
 }

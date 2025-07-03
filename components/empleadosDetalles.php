@@ -8,7 +8,7 @@ if (!isset($_SESSION['login_id'])) {
 $empleadoController = new EmpleadoController($conn);
 $numeroEmpleado = $_GET['id'] ?? null;
 
-$empleado = $empleadoController->obtenerEmpleadoporNumero($numeroEmpleado);
+$empleado = $empleadoController->obtenerEmpleadoporNumeroC($numeroEmpleado);
 if (!$empleado) {
     http_response_code(404);
     include __DIR__ . '/../views/404.php';
@@ -16,7 +16,7 @@ if (!$empleado) {
 }
 include __DIR__ . '/../views/layout/header.php';
 ?>
-<div class="empleado-detalles">
+<div class="ticket-details">
     <h2>Detalles del Empleado</h2>
     <p><strong>Usuario:</strong> <?= htmlspecialchars($empleado['USUARIO']) ?></p>
     <p><strong>Numero de empleado:</strong> <?= htmlspecialchars($empleado['Numero_Empleado']) ?></p>
