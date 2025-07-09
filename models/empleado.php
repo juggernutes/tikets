@@ -74,11 +74,9 @@ class Empleado
         $stmt->execute();
         $result = $stmt->get_result();
         $empleado = $result->fetch_assoc();
-
         if (!$empleado) {
-            return null; // No se encontró el empleado
+            return null;
         }
-        // Desencriptar los campos sensibles
         $empleado['UsuarioSAP'] = !empty($empleado['UsuarioSAP']) ? desencriptar($empleado['UsuarioSAP']) : null;
         $empleado['ClaveSAP'] = !empty($empleado['ClaveSAP']) ? desencriptar($empleado['ClaveSAP']) : null;
         $empleado['ClaveUsuarioWindows'] = !empty($empleado['ClaveUsuarioWindows']) ? desencriptar($empleado['ClaveUsuarioWindows']) : null;
@@ -89,7 +87,6 @@ class Empleado
         while ($this->conn->more_results() && $this->conn->next_result()) {
             $this->conn->use_result();
         }
-        // Retornar el empleado con los datos desencriptados 
         return $empleado;
     }
 
@@ -133,13 +130,11 @@ class Empleado
             $claveAnyDesk,
             $claveCorreo
         );
-
         $stmt->execute();
         $stmt->close();
         while ($this->conn->more_results() && $this->conn->next_result()) {
             $this->conn->use_result();
         }
-
         return $stmt->affected_rows > 0;
     }
 

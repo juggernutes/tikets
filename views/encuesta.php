@@ -28,6 +28,7 @@ if (!$idTiket) {
             </button>
           <?php endfor; ?>
         </div>
+        <?php $calificacion = $calificacion ?? ''; ?>
 
         <h4 class="mb-4"><?php echo htmlspecialchars($calificacion); ?></h4>
         <div class="mb-3 text-start">
@@ -46,24 +47,23 @@ if (!$idTiket) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function seleccionarCalificacion(valor) {
-  // Obtiene todos los botones de puntuación
-  const botones = document.querySelectorAll('.btn-score');
-  
-  // Remueve la clase 'seleccionado' de todos los botones
-  botones.forEach((btn, i) => {
-    if (i < valor) {
-      btn.classList.add('seleccionado');
-    } else {
-      btn.classList.remove('seleccionado');
-    }
-  });
-  
-  // Guarda el valor en el campo oculto
-  document.getElementById('calificacion').value = valor;
+  function seleccionarCalificacion(valor) {
+    // Obtiene todos los botones de puntuación
+    const botones = document.querySelectorAll('.btn-score');
 
-  // (Opcional) Habilita el botón de enviar
-  document.getElementById('btnEnviar').disabled = false;
-}
+    // Remueve la clase 'seleccionado' de todos los botones
+    botones.forEach((btn, i) => {
+      if (i < valor) {
+        btn.classList.add('seleccionado');
+      } else {
+        btn.classList.remove('seleccionado');
+      }
+    });
+
+    // Guarda el valor en el campo oculto
+    document.getElementById('calificacion').value = valor;
+
+    // (Opcional) Habilita el botón de enviar
+    document.getElementById('btnEnviar').disabled = false;
+  }
 </script>
-

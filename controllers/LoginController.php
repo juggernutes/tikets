@@ -35,7 +35,7 @@ class LoginController {
         $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
 
         if ($ok) {
-            echo "../public/index.php";
+            header("Location: ../views/dashboard.php");
         } else {
             echo "Error al cambiar la contraseña.";
         }

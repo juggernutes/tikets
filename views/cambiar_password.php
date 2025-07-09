@@ -29,7 +29,13 @@ include __DIR__ . '/layout/header.php';
 ?>
 
 <h2>Cambiar contraseña</h2>
-<?php if (isset($mensaje)) echo "<p style='color:red;'>$mensaje</p>"; ?>
+<?php if (isset($mensaje)): ?>
+  <div style="background: #ffd6d6; color: #e53935; border:1px solid #e53935; border-radius:7px; padding:14px; font-weight:bold; display:flex; align-items:center; gap:12px; font-size:1.1em; box-shadow:0 1px 7px #e5393530;">
+    <span style="font-size:1.7em;">&#9888;&#65039;</span>
+    <?= htmlspecialchars($mensaje) ?>
+  </div>
+<?php endif; ?>
+
 <form method="POST">
     <label>Nueva contraseña:</label><br>
     <input type="password" name="nueva_password" required><br><br>

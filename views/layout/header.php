@@ -50,18 +50,20 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
             </div>
 
             <nav style="text-align: center; margin: 10px 0;">
-                <a href="../views/dashboard.php"><button>Inicio</button></a>
-                <?php if ($rol === 'ADMINISTRADOR' || $rol === 'EMPLEADO' || $rol === 'SOPORTE'): ?>
+                <?php if ($rol != 'Invitado'): ?>
+                    <a href="../views/dashboard.php"><button>Inicio</button></a>
                     <a href="../views/registrar_tiket.php"><button>Crear Ticket</button></a>
                     <a href="../views/cerrado_tiket.php"><button>Ticket cerrados</button></a>
-                <?php endif; ?>
-                <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-                    <a href="../views/empleado.php"><button>Empleados</button></a>
-                    <!-- <a href="../views/resolver_tiket.php"><button>Resolver Tickets</button></a>
+                    <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
+                        <a href="../views/empleado.php"><button>Empleados</button></a>
+                        <!-- <a href="../views/resolver_tiket.php"><button>Resolver Tickets</button></a>
                     <a href="../views/reporte_tickets.php"><button>Reporte</button></a> -->
+                    <?php endif; ?>
+                    <a href="../public/logout.php"><button>Cerrar sesión</button></a>
+                    
                 <?php endif; ?>
-                <a href="../public/logout.php"><button>Cerrar sesión</button></a>
             </nav>
+            
             <hr>
         </header>
         <main style="background-image: url('../img/FONDO_2.png'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px;">
