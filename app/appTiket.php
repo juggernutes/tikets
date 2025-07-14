@@ -20,6 +20,7 @@ require_once __DIR__ . '/../models/errorModel.php';
 require_once __DIR__ . '/../models/sistema.php';
 require_once __DIR__ . '/../models/solucion.php';
 require_once __DIR__ . '/../models/encuesta.php';
+require_once __DIR__ . '/../models/equipo.php';
 
 // Cargar los controladores necesarios
 require_once __DIR__ . '/../controllers/solucionController.php';
@@ -28,6 +29,7 @@ require_once __DIR__ . '/../controllers/SistemaController.php';
 require_once __DIR__ . '/../controllers/tiketController.php';
 require_once __DIR__ . '/../controllers/errorModelController.php';
 require_once __DIR__ . '/../controllers/encuestaController.php';
+require_once __DIR__ . '/../controllers/equipoController.php';
 
 // Crear instancias de los controladores y modelos
 $sistemaController = new SistemaController($conn);
@@ -36,6 +38,7 @@ $tiketController = new TiketController(new Tiket($conn));
 $errorController = new ErrorModelController(new ErrorModel($conn));
 $solucionController = new SolucionController(new Solucion($conn));
 $encuestaController = new EncuestaController($conn);
+$equipoController = new EpicoController($conn);
 
 $usuarioId = $_SESSION['login_id'] ?? null;
 
