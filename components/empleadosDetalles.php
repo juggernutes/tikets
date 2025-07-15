@@ -47,16 +47,21 @@ include __DIR__ . '/../views/layout/header.php';
             <th>DIRECCION IP</th>
         </tr>
     </thead>
-    <tbody>
-        <?php while ($equipos = $equipo->fetch_assoc()): ?>
+   <tbody>
+    <?php if ($equipos && is_array($equipos) && count($equipos) > 0): ?>
+        <?php foreach ($equipos as $row): ?>
             <tr class="ticket-row" data-tiket="<?= htmlspecialchars($row['ID_EQUIPO']) ?>">
                 <td><?= htmlspecialchars($row['TIPO_EQUIPO']) ?></td>
                 <td><?= htmlspecialchars($row['NUMERO_ACTIVO_FIJO']) ?></td>
                 <td><?= htmlspecialchars($row['FECHA_ASIGNACION']) ?></td>
                 <td><?= htmlspecialchars($row['DIRECCION_IP']) ?></td>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr><td colspan="4">Sin equipos asignados.</td></tr>
+    <?php endif; ?>
+</tbody>
+
 </table>
 
 <?php
