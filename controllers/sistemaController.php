@@ -1,4 +1,5 @@
 <?php
+// controllers/sistemaController.php
 require_once '../models/Sistema.php';
 
 class SistemaController {
@@ -9,7 +10,7 @@ class SistemaController {
         $this->sistemaModel = new Sistema($conn);
     }
 
-    public function obtenerSistemas() {
+    public function obtenerSistemas() {   
         return $this->sistemaModel->obtenerTodos();
     }
 
