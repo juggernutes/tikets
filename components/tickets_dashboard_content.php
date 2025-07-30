@@ -1,12 +1,11 @@
 <?php
+// tickets_dashboard_content.php
 include __DIR__ . '/../app/appTiket.php';
 
-$tiketController = new TiketController(new Tiket($conn));
-include __DIR__ . '/layout/header.php';
-?>
-<h1>DASHBOARD</h1>
+$rol = $_SESSION['rol'] ?? null;
+$usuarioId = $_SESSION['usuarioId'] ?? null;
 
-<?php
+$tiketController = new TiketController(new Tiket($conn));
 $tikets = null;
 $abiertos = [];
 $cerrados = [];
@@ -42,10 +41,4 @@ if ($tikets && $tikets->num_rows > 0) {
 } else {
     echo "<p>No tienes tickets registrados.</p>";
 }
-
-
-include __DIR__ . '/layout/footer.php';
-?>
-<?php 
-$cronos = 2;
 ?>

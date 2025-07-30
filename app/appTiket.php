@@ -39,6 +39,7 @@ $errorController = new ErrorModelController(new ErrorModel($conn));
 $solucionController = new SolucionController(new Solucion($conn));
 $encuestaController = new EncuestaController($conn);
 $equipoController = new EpicoController($conn);
+/*$loginController = new LoginController($conn);*/
 
 $usuarioId = $_SESSION['login_id'] ?? null;
 
@@ -150,6 +151,29 @@ if (isset($_GET['accion'])) {
             } else {
                 // Manejo de error: ID inválido
                 echo "Parámetros inválidos.";
+            }
+            break;
+        case 'reestablecerContrasena':
+            if (isset($_POST['usuario'])) {
+                $usuario = $_POST['usuario'];
+                $loginController->reestablecerContrasena($usuario);
+            } else {
+                echo "Usuario no especificado.";
+            }
+            break;
+        case 'crearTiketRestablecerContrasena':
+            if (isset($_GET['usuario'])) {
+                $usuario = $_GET['usuario'];
+                $ok = $loginController->reestablecerContrasena($usuario);
+                if ($ok) {
+                    
+                    echo "Se genero un tiket para restablecer la contraseña del usuario: $usuario. El personal de soporte se pondrá en contacto.";
+                } else {
+                    echo "No se encontró el usuario para restablecer la contraseña.";
+                }
+                header("Location: ../views/login_form.php");
+            } else {
+                echo "Usuario no especificado.";
             }
             break;
         default:

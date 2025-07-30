@@ -21,6 +21,8 @@ include __DIR__ . '/layout/header.php';
         <label for="password">Contraseña:</label><br>
         <input type="password" name="password" required style="width:100%; padding:8px; margin-bottom:20px;"><br>
 
+        <a href="../views/usuario_contr.php" style="display:block; text-align:center; margin-bottom:10px;">¿Olvidaste tu contraseña?</a>
+
         <button type="submit" style="width:100%;">Iniciar sesión</button>
     </form>
 </div>

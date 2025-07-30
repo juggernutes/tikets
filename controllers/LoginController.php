@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/login.php';
+/*require_once __DIR__ . '/../app/appTiket.php';*/
 session_start();
 
 class LoginController {
@@ -19,10 +20,10 @@ class LoginController {
 
             if ($usuario['DebeCambiarPassword']) {
                 header("Location: ../views/cambiar_password.php?id=" . $usuario['ID_Login']);
-                exit;  // ✅ AGREGA ESTE EXIT AQUÍ
+                exit;  
             } else {
                 header("Location: ../views/dashboard.php");
-                exit;  // ✅ Y TAMBIÉN AQUÍ
+                exit;  
             }
         } else {
             echo "Usuario o contraseña incorrectos.";
@@ -40,4 +41,24 @@ class LoginController {
             echo "Error al cambiar la contraseña.";
         }
     }
+
+    public function reestablecerContrasena($usuario){
+        $nuevoPassword = "12345";
+        $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
+        $ok = $this->loginModel->restaurarPws($usuario, $hash);
+        if($ok) {
+            echo "todo bien";
+        } else {
+            echo "no se encontro el usuario";
+        }
+    }
+    public function crearTiketRestablecerContrasena($cuenta) {
+        $ok = $this->loginModel->crearTiketRestablecerContrasena($cuenta);
+        if ($ok) {
+            echo "Ticket creado para restablecer la contraseña.";
+        } else {
+            echo "Error al crear el ticket.";
+        }
+    }
+
 }
