@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/login.php';
-/*require_once __DIR__ . '/../app/appTiket.php';*/
+require_once __DIR__ . '/../helpers/EmailHelper.php';
 session_start();
 
 class LoginController {
@@ -42,23 +42,25 @@ class LoginController {
         }
     }
 
-    public function reestablecerContrasena($usuario){
-        $nuevoPassword = "12345";
-        $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
-        $ok = $this->loginModel->restaurarPws($usuario, $hash);
-        if($ok) {
-            echo "todo bien";
+    public function restablecerContrasena($correo) {
+        $Userid = $this->loginModel->obtenerCuentaPorCorreo($correo);
+        if ($Userid) {
+            $token = bin2hex(random_bytes(32));
+            $fechaExpiracion = date('Y-m-d H:i:s', strtotime('+1 hour'));
+            $this->loginModel->guardarToken($Userid['ID_Login'], $token,$fechaExpiracion);
+            $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExpiracion);
+            echo "Se ha enviado un enlace para restablecer la contraseña a su correo.";
         } else {
-            echo "no se encontro el usuario";
+            echo "No se encontró una cuenta asociada a ese correo.";
         }
     }
-    public function crearTiketRestablecerContrasena($cuenta) {
+    /*public function enviaCorreoParaRestablecerContrasena($cuenta) {
         $ok = $this->loginModel->crearTiketRestablecerContrasena($cuenta);
         if ($ok) {
             echo "Ticket creado para restablecer la contraseña.";
         } else {
             echo "Error al crear el ticket.";
         }
-    }
+    }*/
 
 }

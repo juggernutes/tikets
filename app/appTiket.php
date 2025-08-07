@@ -153,27 +153,21 @@ if (isset($_GET['accion'])) {
                 echo "Parámetros inválidos.";
             }
             break;
-        case 'reestablecerContrasena':
+        case 'restablecerContrasena':
             if (isset($_POST['usuario'])) {
                 $usuario = $_POST['usuario'];
-                $loginController->reestablecerContrasena($usuario);
+                $loginController->restablecerContrasena($usuario);
             } else {
                 echo "Usuario no especificado.";
             }
             break;
-        case 'crearTiketRestablecerContrasena':
-            if (isset($_GET['usuario'])) {
-                $usuario = $_GET['usuario'];
-                $ok = $loginController->reestablecerContrasena($usuario);
-                if ($ok) {
-                    
-                    echo "Se genero un tiket para restablecer la contraseña del usuario: $usuario. El personal de soporte se pondrá en contacto.";
-                } else {
-                    echo "No se encontró el usuario para restablecer la contraseña.";
-                }
-                header("Location: ../views/login_form.php");
+        case 'enviarCorreoRestablecerContrasena':
+            if (isset($_POST['correo'])) {
+                $correo = $_POST['correo'];
+                $loginController->restablecerContrasena($correo);
+                echo "Se ha enviado un enlace para restablecer la contraseña a su correo.";
             } else {
-                echo "Usuario no especificado.";
+                echo "Correo no encontrado.";
             }
             break;
         default:
