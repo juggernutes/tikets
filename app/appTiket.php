@@ -72,9 +72,13 @@ if (isset($_GET['accion'])) {
                 $tiketTomado = $tiketController->tomarControlDeTiket($idTiket, $idSoporte);
                 if ($tiketTomado) {
                     header("Location: ../views/resolver_tiket.php?id=$idTiket");
-                } else  {echo "No se pudo tomar el ticket. Inténtalo de nuevo más tarde.";}
+                } else {
+                    echo "No se pudo tomar el ticket. Inténtalo de nuevo más tarde.";
+                }
                 exit;
-            } else {echo "Parámetros inválidos.";}
+            } else {
+                echo "Parámetros inválidos.";
+            }
             break;
         case 'solucionar':
             $idTiket = intval($_GET['id_tiket']);
@@ -166,6 +170,14 @@ if (isset($_GET['accion'])) {
                 $correo = $_POST['correo'];
                 $loginController->restablecerContrasena($correo);
                 echo "Se ha enviado un enlace para restablecer la contraseña a su correo.";
+            } else {
+                echo "Correo no encontrado.";
+            }
+            break;
+        case 'buscarUsuario':
+            if (isset($_POST['correo'])) {
+                $correo = $_POST['correo'];
+                $loginController->buscarUsuario($correo);
             } else {
                 echo "Correo no encontrado.";
             }

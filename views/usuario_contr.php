@@ -1,6 +1,20 @@
 <?php
+require_once __DIR__ . '/../config/db_connection.php';
+require_once __DIR__ . '/../controllers/LoginController.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+$loginController = new LoginController($conn);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['correo'])) {
+        $correo = $_POST['correo'];
+        $loginController->restablecerContrasena($correo);
+    } else {
+        echo "Correo no encontrado.";
+    }
 }
 
 $title = "Solicitar Reinicio de Contraseña";
@@ -9,7 +23,7 @@ include __DIR__ . '/layout/header.php';
 
 <div style="max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <h3 style="text-align:center;">Solicitar Reinicio de Contraseña</h3>
-    <form method="POST" action="../app/appTiket.php?accion=restablecerContrasena&usuario=<?= htmlspecialchars($_POST['correo'] ?? '') ?>">
+    <form method="POST">
         <label for="correo">Correo:</label><br>
         <input type="text" id="correo" name="correo" required style="width:100%; padding:8px; margin-bottom:20px;"><br>
 

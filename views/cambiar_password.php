@@ -16,13 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($nuevaPassword !== $confirmarPassword) {
         $mensaje = "Las contraseñas no coinciden.";
-    } elseif (strlen($nuevaPassword) < 6) {
-        $mensaje = "La contraseña debe tener al menos 6 caracteres.";
+    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $nuevaPassword)) {
+        $mensaje = "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, un número y un carácter especial.";
     } else {
         $controller->cambiarPassword($idLogin, $nuevaPassword);
         exit;
     }
 }
+
 
 $title = "Cambiar Contraseña";
 include __DIR__ . '/layout/header.php';
@@ -35,16 +36,28 @@ include __DIR__ . '/layout/header.php';
     <?= htmlspecialchars($mensaje) ?>
   </div>
 <?php endif; ?>
+<div class="contrasena-wrapper">
+    <div class="contrasena-box">
+        <h3>Características</h3>
+        <ul>
+            <li><strong>Longitud:</strong> Al menos 8 caracteres</li>
+            <li><strong>Mayúsculas:</strong> Una letra mayúscula</li>
+            <li><strong>Números:</strong> Un número</li>
+            <li><strong>Especial:</strong> Un carácter especial</li>
+        </ul>
+    </div>
 
-<form method="POST">
-    <label>Nueva contraseña:</label><br>
-    <input type="password" name="nueva_password" required><br><br>
+    <div class="contrasena-box">
+        <form method="POST">
+            <label for="nueva_password">Nueva contraseña:</label>
+            <input type="password" id="nueva_password" name="nueva_password" required>
 
-    <label>Confirmar contraseña:</label><br>
-    <input type="password" name="confirmar_password" required><br><br>
+            <label for="confirmar_password">Confirmar contraseña:</label>
+            <input type="password" id="confirmar_password" name="confirmar_password" required>
 
-    <button type="submit">Actualizar</button>
-</form>
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+</div>
+
 <?php include __DIR__ . '/layout/footer.php'; ?>
-
-// Cerrar la conexión a la base de datos

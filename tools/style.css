@@ -582,3 +582,19 @@ h2 {
     background-color: #dc3545 !important;
     color: white !important;
   }
+
+  .contrasena-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.contrasena-box {
+  background-color: var(--rosarito-white);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  width: 350px;
+}

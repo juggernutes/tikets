@@ -1,12 +1,15 @@
 <?php
-class Login {
+class Login
+{
     private $conn;
 
-    public function __construct($dbConnection) {
+    public function __construct($dbConnection)
+    {
         $this->conn = $dbConnection;
     }
 
-    public function validarUsuarioSP($cuenta) {
+    public function validarUsuarioSP($cuenta)
+    {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL)");
         $op = 1;
         $stmt->bind_param("is", $op, $cuenta);
@@ -14,56 +17,78 @@ class Login {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function actualizarPasswordSP($idLogin, $nuevoHash) {
+    public function actualizarPasswordSP($idLogin, $nuevoHash)
+    {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, ?, NULL, NULL, NULL)");
         $op = 2;
         $stmt->bind_param("iis", $op, $idLogin, $nuevoHash);
         return $stmt->execute();
     }
 
-    public function insertarLoginSP($cuenta, $hash, $idUsuario) {
+    public function insertarLoginSP($cuenta, $hash, $idUsuario)
+    {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, ?, ?, NULL, NULL)");
         $op = 3;
         $stmt->bind_param("issi", $op, $cuenta, $hash, $idUsuario);
         return $stmt->execute();
     }
 
-    public function registrarSesionSP($idLogin, $sesionID) {
+    public function registrarSesionSP($idLogin, $sesionID)
+    {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, ?, NULL)");
         $op = 4;
         $stmt->bind_param("iss", $op, $idLogin, $sesionID);
         return $stmt->execute();
     }
 
-    public function restaurarPws( $idLogin,$nuevoHash){
+    public function restaurarPws($idLogin, $nuevoHash)
+    {
         $stmt =  $this->conn->prepare("CALL sp_login(?,?, null,?, null, null, NULL)");
         $op = 5;
-        $stmt->bind_param("iissis",$op, $idLogin,$nuevoHash);
+        $stmt->bind_param("iissis", $op, $idLogin, $nuevoHash);
         return $stmt->execute();
     }
-    
+
 
     /*public function crearTiketRestablecerContrasena($cuenta) {
-        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL)");
-        $op = 7;
-        $stmt->bind_param("is", $op, $cuenta);
-        return $stmt->execute();
-    }*/
+            $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL)");
+            $op = 7;
+            $stmt->bind_param("is", $op, $cuenta);
+            return $stmt->execute();
+        }*/
 
-    public function obtenerCuentaPorCorreo($correo) {
-        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?)");
+    public function obtenerCuentaPorCorreo($correo)
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?, NULL, NULL)");
         $op = 5;
         $stmt->bind_param("is", $op, $correo);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function guardarToken($sesion){
-        $stmt = $this->conn->prepare("CALL sp_login(?, null, null, null, null, ?, NULL)");
+    public function guardarToken($idLogin, $token, $fechaExpiracion)
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?)");
         $op = 6;
-        $stmt->bind_param("iissis",$op,$sesion);
+        $stmt->bind_param("iiss", $op, $idLogin, $token, $fechaExpiracion);
+        return $stmt->execute();
+    }
+
+    public function validarToken($token)
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, ?, NULL, NULL, NULL)");
+        $op = 9;
+        $stmt->bind_param("is", $op, $token);
+        $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    public function cambiarPasswordConToken($token, $nuevaPassword)
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL)");
+        $op = 10;
+        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
+        $stmt->bind_param("iss", $op, $token, $hash);
+        return $stmt->execute();
+    }
 }
-?>
- 
