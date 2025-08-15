@@ -1,5 +1,5 @@
 <?php
-// controllers/sistemaController.php
+
 require_once '../models/Sistema.php';
 
 class SistemaController {

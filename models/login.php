@@ -41,7 +41,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function restaurarPws($idLogin, $nuevoHash)
+    /*public function restaurarPws($idLogin, $nuevoHash)
     {
         $stmt =  $this->conn->prepare("CALL sp_login(?,?, null,?, null, null, NULL)");
         $op = 5;
@@ -50,7 +50,7 @@ class Login
     }
 
 
-    /*public function crearTiketRestablecerContrasena($cuenta) {
+    public function crearTiketRestablecerContrasena($cuenta) {
             $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL)");
             $op = 7;
             $stmt->bind_param("is", $op, $cuenta);
@@ -76,19 +76,20 @@ class Login
 
     public function validarToken($token)
     {
-        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, ?, NULL, NULL, NULL)");
-        $op = 9;
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
+        $op = 7;
         $stmt->bind_param("is", $op, $token);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $res = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $res;
     }
 
     public function cambiarPasswordConToken($token, $nuevaPassword)
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL)");
-        $op = 10;
-        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
-        $stmt->bind_param("iss", $op, $token, $hash);
+        $op = 8;
+        $stmt->bind_param("iss", $op, $token, $nuevaPassword);
         return $stmt->execute();
     }
 }

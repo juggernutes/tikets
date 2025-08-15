@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/login.php';
 require_once __DIR__ . '/../helpers/EmailHelper.php';
-session_start();
+
 
 class LoginController
 {
@@ -56,9 +56,10 @@ class LoginController
 
             $token = bin2hex(random_bytes(32));
             $idLogin = (int)$Usuario['ID_Usuario'];
-            $fechaExpiracion = date('Y-m-d H:i:s', strtotime('+20 minutes'));
+            $fecha = new DateTime();
+            $fecha->modify('+20 minutes');
+            $fechaExpiracion = $fecha->format('Y-m-d H:i:s');
 
-            echo "fecha de expiracion: " . $fechaExpiracion;
 
             $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExpiracion);
 
@@ -146,8 +147,7 @@ class LoginController
             </html>
             HTML;
 
-            $altBody = "{$logoHtml}
-            Hola,
+            $altBody = "Hola,
 
             Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
 
@@ -169,18 +169,21 @@ class LoginController
 
     public function validarToken($token)
     {
-        $datos = $this->loginModel->validarToken($token);
-        if ($datos && strtotime($datos['FechaExpiracion']) > time()) {
-            return $datos['ID_Login'];
+        $row = $this->loginModel->validarToken($token);
+
+        if(is_array($row)&&!empty($row['user_id'])) {
+            return['ok' => true, 'user_id' => (int)($row['user_id'])];
         }
-        return false;
+
+        return ['ok' => false, 'user_id' => 0];
     }
 
     public function cambiarPasswordConToken($token, $nuevaPassword)
     {
+        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
         $idLogin = $this->validarToken($token);
         if ($idLogin) {
-            $this->cambiarPassword($idLogin, $nuevaPassword);
+            $this->cambiarPassword($idLogin, $hash);
         } else {
             echo "Token inválido o expirado.";
         }

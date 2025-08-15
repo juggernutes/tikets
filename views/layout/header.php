@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) {session_start();}
 $rol = $_SESSION['rol'] ?? 'Invitado';
 $usuario = $_SESSION['login_id'] ?? 'Sin sesión';
 $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
@@ -19,7 +17,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
     <div class="wrapper">
         <header>
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-                <!-- Logo a la izquierda -->
+                
                 <div class="contenedor-animacion" id="animacionRosarito">
                     <img src="../img/Exterior.png" alt="Exterior" class="exterior">
                     <img src="../img/Centro.png" alt="Centro" class="centro">
