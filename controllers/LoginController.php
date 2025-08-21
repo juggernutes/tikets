@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/login.php';
 require_once __DIR__ . '/../helpers/EmailHelper.php';
+require_once __DIR__ . '/../helpers/herramientas.php';
 
 
 class LoginController
@@ -52,14 +53,15 @@ class LoginController
     {
         $Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
 
+        // Verificar si se encontró el usuario
         if ($Usuario) {
+            // Generar el inicio del token con la fecha utilizando la letra indice de la fecha
 
-            $token = bin2hex(random_bytes(32));
+            $ahora = new DateTime('now', new DateTimeZone($this->timezone));
+            $token = generarToken($Usuario['ID_Usuario'], $ahora);
+            $fechaExp= (clone $ahora)->modify('+20 minutes')->format('Y-m-d H:i');
             $idLogin = (int)$Usuario['ID_Usuario'];
-            $fecha = new DateTime();
-            $fecha->modify('+20 minutes');
-            $fechaExpiracion = $fecha->format('Y-m-d H:i:s');
-
+            echo "Token: $token, Expiración: $fechaExpiracion";
 
             $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExpiracion);
 
@@ -169,10 +171,15 @@ class LoginController
 
     public function validarToken($token)
     {
-        $row = $this->loginModel->validarToken($token);
+        // $row = $this->loginModel->validarToken($token);
+        list($prefix, $secret) = parcearToken($token) ?? [null, null];
+        if(!$prefix){
+            return ['ok' => false, 'user_id' => 0];
+        }
 
-        if(is_array($row)&&!empty($row['user_id'])) {
-            return['ok' => true, 'user_id' => (int)($row['user_id'])];
+        $row = $this->loginModel->validarToken($token);
+        if (is_array($row) && !empty($row['user_id'])) {
+            return ['ok' => true, 'user_id' => (int)($row['user_id'])];
         }
 
         return ['ok' => false, 'user_id' => 0];

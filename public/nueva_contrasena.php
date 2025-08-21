@@ -59,7 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && empty($error)) {
         $mensaje = "La contraseña debe tener al menos 8 caracteres, con mayúscula, número y carácter especial.";
     } else {
         // Asegúrate de tener $controller instanciado
-        $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword);
+        $cuenta = (int)$val['user_id'];
+        $id_token = $val['id_token'];
+        $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword, $cuenta);
         if ($ok) {
             header("Location: ../public/index.php?reset=ok");
             exit;
@@ -83,17 +85,35 @@ include __DIR__ . '/../views/layout/header.php';
       <div class="alert alert-warning"><?= htmlspecialchars($mensaje) ?></div>
     <?php endif; ?>
 
-    <form method="POST">
-      <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
-      <label for="nuevo_contrasena">Nueva Contraseña</label>
-      <input type="password" name="nuevo_contrasena" id="nuevo_contrasena" required>
+    <div class="contrasena-wrapper">
+      <!-- Formulario -->
+      <div class="contrasena-box">
+        <form method="POST">
+          <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-      <label for="confirmar_contrasena">Confirmar Contraseña</label>
-      <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
+          <label for="nuevo_contrasena">Nueva Contraseña</label>
+          <input type="password" name="nuevo_contrasena" id="nuevo_contrasena" required>
 
-      <button type="submit">Restablecer Contraseña</button>
-    </form>
+          <label for="confirmar_contrasena">Confirmar Contraseña</label>
+          <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
+
+          <button type="submit">Restablecer Contraseña</button>
+        </form>
+      </div>
+
+      <!-- Requerimientos -->
+      <div class="contrasena-box">
+        <h3>Características de la contraseña</h3>
+        <ul>
+          <li><strong>Longitud:</strong> Al menos 8 caracteres</li>
+          <li><strong>Mayúsculas:</strong> Una letra mayúscula</li>
+          <li><strong>Números:</strong> Un número</li>
+          <li><strong>Especial:</strong> Un carácter especial (!@#$%^&*)</li>
+        </ul>
+      </div>
+    </div>
   <?php endif; ?>
 </div>
+
 
 <?php include __DIR__ . '/../views/layout/footer.php'; ?>
