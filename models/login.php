@@ -87,9 +87,17 @@ class Login
 
     public function cambiarPasswordConToken($token, $nuevaPassword)
     {
-        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL)");
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, ?, NULL, NULL, NULL, ? ,NULL)");
         $op = 8;
-        $stmt->bind_param("iss", $op, $token, $nuevaPassword);
+        $stmt->bind_param("iss", $op, $nuevaPassword, $token);
+        return $stmt->execute();
+    }
+
+    public function invalidarToken(int $idLogin, string $tokenHash): bool
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
+        $op = 9;
+        $stmt->bind_param("is", $op, $tokenHash);
         return $stmt->execute();
     }
 }

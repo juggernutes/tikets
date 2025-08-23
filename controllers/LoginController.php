@@ -49,36 +49,55 @@ class LoginController
         }
     }
 
-    public function restablecerContrasena($correo)
+    public function restablecerContrasena(string $correo): array
     {
-        $Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
-
-        // Verificar si se encontró el usuario
-        if ($Usuario) {
+        $resp = ['ok' => false, 'msg' => ''];
+        try{
+            $correo = trim(mb_strtolower($correo));
+            $ahora = new DateTime('now', new DateTimeZone($this->timezone ?? 'America/Tijuana'));
+            $exireaDT = (clone $ahora)->modify('+20 minutes');
+            $usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
+            $resp['message'] = 'Si la cuenta existe, se enviara un enlace para restablecer la contraseña';
+            if ($usuario) {
+                $idlogin = (int)$usuario['ID_Usuario'];
+                $tokenPlano = generarToken($idlogin, $ahora);
+                $tokenHash = hash('sha256', $tokenPlano);
+                $fechaExp = $exireaDT->format('Y-m-d H:i');
+                $ok = $this->loginModel->guardarToken($idlogin, $tokenHash, $fechaExp);
+                if ($ok) {
+                    $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $tokenPlano, $fechaExp);
+                    if ($enviado) {
+                        $resp['ok'] = true;
+                        $resp['message'] = "Si la cuenta existe, te enviaremos un correo…";
+                    } else {
+                        $this->loginModel->invalidarToken($idlogin, $tokenHash);
+                        $resp['message'] = "Error al enviar el correo de restablecimiento.";
+                    }
+                } else {
+                    $resp['message'] = "Ocurrió un problema al procesar la solicitud.";
+                    return $resp;
+                }
+            }
+            return $resp;
+        } catch (Throwable $e) {
+            error_log('[ERROR] ' . $e->getMessage());
+            $resp['message'] = 'Error al procesar el correo.';
+            return $resp;
+        }
+        /*$Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
+        if ($Usuario) {// Verificar si se encontró el usuario
             // Generar el inicio del token con la fecha utilizando la letra indice de la fecha
-
             $ahora = new DateTime('now', new DateTimeZone($this->timezone));
             $token = generarToken($Usuario['ID_Usuario'], $ahora);
             $fechaExp= (clone $ahora)->modify('+20 minutes')->format('Y-m-d H:i');
             $idLogin = (int)$Usuario['ID_Usuario'];
-            echo "Token: $token, Expiración: $fechaExpiracion";
-
-            $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExpiracion);
-
-            if ($ok) { // si guardó bien
-                $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExpiracion);
-                if ($enviado) {
-                    echo "Se ha enviado un enlace para restablecer la contraseña a su correo.";
-                } else {
-                    echo "Error al enviar el correo de restablecimiento.";
-                }
-            } else {
-                echo "Error al guardar el token.";
-            }
-
-        } else {
-            echo "No se encontró una cuenta asociada a ese correo.";
-        }
+            $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExp);
+            if ($ok) { // si guardó bien 
+                $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExp);
+                if ($enviado) { echo "Si la cuenta existe, te enviaremos un correo…";
+                } else { echo "Error al enviar el correo de restablecimiento."; }
+            } else { echo "Error al guardar el token.";}
+        } else { echo "No se encontró una cuenta asociada a ese correo.";}         */
     }
 
     public function enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExpiracion)
