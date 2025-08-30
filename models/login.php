@@ -8,24 +8,25 @@ class Login
         $this->conn = $dbConnection;
     }
 
-    public function validarUsuarioSP($cuenta)
+    public function validarUsuarioSP($cuenta) : ?array
     {
-        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL)");
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL, NULL, NULL)");
         $op = 1;
         $stmt->bind_param("is", $op, $cuenta);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function actualizarPasswordSP($idLogin, $nuevoHash)
+    
+    public function actualizarPasswordSP($idLogin, $nuevoHash) : bool
     {
-        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, ?, NULL, NULL, NULL)");
+        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)");
         $op = 2;
         $stmt->bind_param("iis", $op, $idLogin, $nuevoHash);
         return $stmt->execute();
     }
 
-    public function insertarLoginSP($cuenta, $hash, $idUsuario)
+    public function insertarLoginSP($cuenta, $hash, $idUsuario) : bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, ?, ?, NULL, NULL)");
         $op = 3;
@@ -33,7 +34,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function registrarSesionSP($idLogin, $sesionID)
+    public function registrarSesionSP($idLogin, $sesionID) : bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, ?, NULL)");
         $op = 4;
@@ -41,8 +42,7 @@ class Login
         return $stmt->execute();
     }
 
-    /*public function restaurarPws($idLogin, $nuevoHash)
-    {
+    /*public function restaurarPws($idLogin, $nuevoHash){
         $stmt =  $this->conn->prepare("CALL sp_login(?,?, null,?, null, null, NULL)");
         $op = 5;
         $stmt->bind_param("iissis", $op, $idLogin, $nuevoHash);
@@ -57,7 +57,7 @@ class Login
             return $stmt->execute();
         }*/
 
-    public function obtenerCuentaPorCorreo($correo)
+    public function obtenerCuentaPorCorreo($correo) : ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?, NULL, NULL)");
         $op = 5;
@@ -66,7 +66,7 @@ class Login
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function guardarToken($idLogin, $token, $fechaExpiracion)
+    public function guardarToken($idLogin, $token, $fechaExpiracion) : bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?)");
         $op = 6;
@@ -74,7 +74,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function validarToken($token)
+    public function buscarTokenPorHash($token) : ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 7;
@@ -85,8 +85,7 @@ class Login
         return $res;
     }
 
-    public function cambiarPasswordConToken($token, $nuevaPassword)
-    {
+    /*public function cambiarPasswordConToken($token, $nuevaPassword) : bool {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, ?, NULL, NULL, NULL, ? ,NULL)");
         $op = 8;
         $stmt->bind_param("iss", $op, $nuevaPassword, $token);
@@ -96,8 +95,16 @@ class Login
     public function invalidarToken(int $idLogin, string $tokenHash): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
-        $op = 9;
+        $op = 9; // Suponiendo que la operación 9 es para invalidar el token
         $stmt->bind_param("is", $op, $tokenHash);
         return $stmt->execute();
-    }
+    }*/
+
+    public function marcarTokenUsado($token) : bool
+    {
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
+        $op = 8; // Suponiendo que la operación 8 es para marcar el token como usado
+        $stmt->bind_param("is", $op, $token);
+        return $stmt->execute();
+    } 
 }

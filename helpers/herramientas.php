@@ -1,14 +1,34 @@
 <?php
-function generarToken($usuarioId)
+/**
+ * Genera un token de restablecimiento.
+ * Formato: [fechaCodificada(14)] + [usuarioId(6)] + '-' + [hex(32)]
+ * Ej.: A...J000123-4f8a... (total 53 chars)
+ */
+function generarToken(int $usuarioId, ?DateTimeInterface $ahora = null, string $tz = 'America/Tijuana'): string
 {
-    $ahora = $ahora ?:new DateTime('now', new DateTimeZone('America/Tijuana'));
-    $fechaCode = deFechaANombre($ahora->format('Ymdhis'));
-    $prefix = $fechaCode . sprintf('%06d', (int)$usuarioId);//20 caracteres
-    $secret = bin2hex(random_bytes(16));
-    $token = $prefix . '-' . $secret;
+    // Normaliza $ahora y usa DateTimeImmutable para evitar mutaciones
+    if ($ahora === null) {
+        $ahora = new DateTimeImmutable('now', new DateTimeZone($tz));
+    } elseif (!($ahora instanceof DateTimeImmutable)) {
+        $ahora = DateTimeImmutable::createFromInterface($ahora);
+    }
 
-    return $token;
+    // Usa 24h (H) para evitar ambigüedad 12h
+    $fechaNum  = $ahora->format('YmdHis'); // 14 dígitos
+    $fechaCode = deFechaANombre($fechaNum); // A-J para 0-9 → 14 letras
+
+    // 6 posiciones para el ID (con ceros a la izquierda)
+    $idPadded = str_pad((string)$usuarioId, 6, '0', STR_PAD_LEFT);
+
+    // Prefijo de 20 caracteres
+    $prefix = $fechaCode . $idPadded;
+
+    // Secreto criptográficamente aleatorio: 16 bytes → 32 hex
+    $secret = bin2hex(random_bytes(16));
+
+    return $prefix . '-' . $secret; // 20 + 1 + 32 = 53 chars
 }
+
 
 function deFechaANombre($fecha)
 {

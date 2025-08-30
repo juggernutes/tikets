@@ -9,19 +9,19 @@ $mensaje = null;
 $token = $_GET["token"] ?? '';
 
 if ($token === '') {
-    header("Location: ../public/index.php");
-    exit;
+  header("Location: ../public/index.php");
+  exit;
 }
 
 $controller = new LoginController($conn);
 $val = $controller->validarToken($token);
 
 if (!$val['ok']) {
-    $error = "Token inválido";
-    echo $error;
-    header("Location: ../public/index.php");
-    exit;
-} 
+  $error = "Token inválido";
+  echo $error;
+  header("Location: ../public/index.php");
+  exit;
+}
 
 
 /*
@@ -50,25 +50,29 @@ if ($token === '' || !preg_match('/^[a-f0-9]{64}$/i', $token)) {
 }*/
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && empty($error)) {
-    $nuevoPassword     = $_POST['nuevo_contrasena']     ?? '';
-    $confirmarPassword = $_POST['confirmar_contrasena'] ?? '';
+  $nuevoPassword     = $_POST['nuevo_contrasena']     ?? '';
+  $confirmarPassword = $_POST['confirmar_contrasena'] ?? '';
 
-    if ($nuevoPassword !== $confirmarPassword) {
-        $mensaje = "Las contraseñas no coinciden.";
-    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $nuevoPassword)) {
-        $mensaje = "La contraseña debe tener al menos 8 caracteres, con mayúscula, número y carácter especial.";
+  if ($nuevoPassword !== $confirmarPassword) {
+    $mensaje = "Las contraseñas no coinciden.";
+  } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $nuevoPassword)) {
+    $mensaje = "La contraseña debe tener al menos 8 caracteres, con mayúscula, número y carácter especial.";
+  } else {
+    // Asegúrate de tener $controller instanciado
+    $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword);
+    if ($ok) {
+      header("Location: ../public/index.php?reset=ok");
+      //limpiamos bariableas
+      unset($_SESSION['login_id']);
+      unset($_SESSION['rol']);
+      unset($_SESSION['nombre']);
+
+      
+      exit;
     } else {
-        // Asegúrate de tener $controller instanciado
-        $cuenta = (int)$val['user_id'];
-        $id_token = $val['id_token'];
-        $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword, $cuenta);
-        if ($ok) {
-            header("Location: ../public/index.php?reset=ok");
-            exit;
-        } else {
-            $mensaje = "No se pudo actualizar la contraseña. Intenta de nuevo.";
-        }
+      $mensaje = "No se pudo actualizar la contraseña. Intenta de nuevo.";
     }
+  }
 }
 
 $title = "Reestablecer Contraseña";

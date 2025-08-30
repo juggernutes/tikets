@@ -7,7 +7,7 @@ require_once __DIR__ . '/../helpers/herramientas.php';
 class LoginController
 {
     private $loginModel;
-    private $timezone ;
+    private $timezone;
 
     public function __construct($conn)
     {
@@ -49,10 +49,10 @@ class LoginController
         }
     }
 
-    public function restablecerContrasena(string $correo): array
+    /*public function restablecerContrasena(string $correo): array
     {
-        $resp = ['ok' => false, 'msg' => ''];
-        try{
+        $resp = ['ok' => false, 'message' => ''];
+        try {
             $correo = trim(mb_strtolower($correo));
             $ahora = new DateTime('now', new DateTimeZone($this->timezone ?? 'America/Tijuana'));
             $exireaDT = (clone $ahora)->modify('+20 minutes');
@@ -83,30 +83,80 @@ class LoginController
             error_log('[ERROR] ' . $e->getMessage());
             $resp['message'] = 'Error al procesar el correo.';
             return $resp;
+        } /*$Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo); if ($Usuario) {// Verificar si se encontró el usuario // Generar el inicio del token con la fecha utilizando la letra indice de la fecha $ahora = new DateTime('now', new DateTimeZone($this->timezone)); $token = generarToken($Usuario['ID_Usuario'], $ahora); $fechaExp= (clone $ahora)->modify('+20 minutes')->format('Y-m-d H:i'); $idLogin = (int)$Usuario['ID_Usuario']; $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExp); if ($ok) { // si guardó bien $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExp); if ($enviado) { echo "Si la cuenta existe, te enviaremos un correo…"; } else { echo "Error al enviar el correo de restablecimiento."; } } else { echo "Error al guardar el token.";} } else { echo "No se encontró una cuenta asociada a ese correo.";} */
+    /*}*/
+
+    public function restablecerContrasena(string $correo): array
+    {
+        // Respuesta uniforme para evitar enumeración de cuentas
+        $resp = ['ok' => false, 'message' => 'Si la cuenta existe, se enviará un enlace para restablecer la contraseña.'];
+
+        try {
+            $correo = trim(mb_strtolower($correo));
+
+            // Valida email antes de seguir
+            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                // Mismo mensaje neutro al usuario
+                return $resp;
+            }
+
+            $tz = $this->timezone ?? 'America/Tijuana';
+            $ahora = new DateTime('now', new DateTimeZone($tz));
+            $expiraDT = (clone $ahora)->modify('+20 minutes');
+
+            // Busca cuenta
+            $usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
+
+            // No reveles si existe o no; continúa solo si existe
+            if ($usuario) {
+                $idLogin = (int)$usuario['ID_Usuario'];
+
+                // Genera token (plano para el link), hashea para guardar
+                $tokenPlano = generarToken($idLogin, $ahora);        // asegúrate que esta firma exista
+                //$tokenHash  = hash('sha256', $tokenPlano);
+                $fechaExp   = $expiraDT->format('Y-m-d H:i:s');
+
+                // Guarda token (hash) + expiración
+                $ok = $this->loginModel->guardarToken($idLogin, $tokenPlano, $fechaExp);
+
+                if ($ok) {
+                    // Envía correo con el token PLANO
+                    $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $tokenPlano, $fechaExp);
+
+                    if (!$enviado) {
+                        // Revierte si no se pudo enviar
+                        try {
+                            $this->loginModel->marcarTokenUsado($tokenPlano);
+                        } catch (\Throwable $e2) {
+                            error_log('[ERROR marcarTokenUsado] ' . $e2->getMessage());
+                        }
+                        // Mantén respuesta neutra al usuario
+                    } else {
+                        $resp['ok'] = true;
+                    }
+                } else {
+                    // Mantén respuesta neutra, log interno
+                    error_log('[ERROR guardarToken] No se pudo guardar el token para ID_Login=' . $idLogin);
+                }
+            }
+
+            return $resp;
+        } catch (\Throwable $e) {
+            error_log('[ERROR restablecerContrasena] ' . $e->getMessage());
+            // Mantén respuesta neutra para el usuario
+            return $resp;
         }
-        /*$Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo);
-        if ($Usuario) {// Verificar si se encontró el usuario
-            // Generar el inicio del token con la fecha utilizando la letra indice de la fecha
-            $ahora = new DateTime('now', new DateTimeZone($this->timezone));
-            $token = generarToken($Usuario['ID_Usuario'], $ahora);
-            $fechaExp= (clone $ahora)->modify('+20 minutes')->format('Y-m-d H:i');
-            $idLogin = (int)$Usuario['ID_Usuario'];
-            $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExp);
-            if ($ok) { // si guardó bien 
-                $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExp);
-                if ($enviado) { echo "Si la cuenta existe, te enviaremos un correo…";
-                } else { echo "Error al enviar el correo de restablecimiento."; }
-            } else { echo "Error al guardar el token.";}
-        } else { echo "No se encontró una cuenta asociada a ese correo.";}         */
     }
 
-    public function enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExpiracion)
+
+
+    public function enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExpiracion): bool
     {
         $link = "http://localhost/tikets/public/nueva_contrasena.php?token=" . $token;
 
-       $asunto = "Instrucciones para restablecer tu contraseña";
-            $fechaFmt = date('d/m/Y H:i', strtotime($fechaExpiracion));
-            $mensaje = <<<HTML
+        $asunto = "Instrucciones para restablecer tu contraseña";
+        $fechaFmt = date('d/m/Y H:i', strtotime($fechaExpiracion));
+        $mensaje = <<<HTML
             <!DOCTYPE html>
             <html lang="es">
             <head>
@@ -168,7 +218,7 @@ class LoginController
             </html>
             HTML;
 
-            $altBody = "Hola,
+        $altBody = "Hola,
 
             Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
 
@@ -188,11 +238,11 @@ class LoginController
         return $email->enviarCorreo($correo, $asunto, $mensaje, $altBody);
     }
 
-    public function validarToken($token)
+    /*public function validarToken($token)
     {
         // $row = $this->loginModel->validarToken($token);
         list($prefix, $secret) = parcearToken($token) ?? [null, null];
-        if(!$prefix){
+        if (!$prefix) {
             return ['ok' => false, 'user_id' => 0];
         }
 
@@ -202,16 +252,102 @@ class LoginController
         }
 
         return ['ok' => false, 'user_id' => 0];
+    }*/
+
+    /**
+     * Valida un token de restablecimiento enviado en el link (plano).
+     * - Hashea el token y lo busca en BD.
+     * - Verifica expiración y si ya fue usado.
+     * - (Opcional) marca el token como usado.
+     */
+    public function validarToken(string $tokenPlano, bool $marcarUso = false): array
+    {
+        $resp = ['ok' => false, 'user_id' => 0, 'message' => 'Token inválido o expirado.'];
+
+        // 1) Formato rápido: [A-J]{14}[0-9]{6}-[0-9a-f]{32}  (total ~53 chars)
+        //if (!self::parsearToken($tokenPlano)) {
+        //    return $resp; // no revelar detalles
+        //}
+
+        // 2) Hash del token plano para consultar en BD
+        //$tokenHash = hash('sha256', $tokenPlano);
+
+        // 3) Buscar en BD por hash
+        //    Devuelve: ['id','user_id','expires_at','used'] o null
+
+        $row = $this->loginModel->buscarTokenPorHash($tokenPlano);
+        if ($row) {
+            $resp = [
+                'ok'      => true,
+                'user_id' => (int)$row['user_id'],
+                'message' => 'OK'
+            ];
+            return $resp;
+        }
+
+        /*// 4) Verificar expiración y usado
+        $tz   = $this->timezone ?? 'America/Tijuana';
+        $ahora = new DateTimeImmutable('now', new DateTimeZone($tz));
+        $exp   = new DateTimeImmutable($row['expires_at'] ?? '1970-01-01 00:00:00');
+
+        if (!empty($row['used']) || $exp < $ahora) {
+            return $resp;
+        }
+
+        // 5) (Opcional) marcar como usado ya mismo
+        if ($marcarUso) {
+            try {
+                $this->loginModel->marcarTokenUsado($tokenPlano);
+            } catch (\Throwable $e) {
+                error_log('[WARN marcarTokenUsado] ' . $e->getMessage());
+                // Aun así podemos permitir continuar si no fue posible marcar por ahora
+            }
+        }*/
+
+        return $row;
     }
 
-    public function cambiarPasswordConToken($token, $nuevaPassword)
+    /**
+     * Valida el patrón del token y retorna partes si aplica.
+     * Prefijo: 14 letras (A-J) de fecha codificada + 6 dígitos de userId,
+     * Guion, y 32 hex de secreto.
+     
+     *private static function parsearToken(string $token): ?array
+     *{
+     *   if (!preg_match('/^([A-J]{14}\d{6})-([0-9a-f]{32})$/i', $token, $m)) {
+     *      return null;
+     *  }
+     * return ['prefix' => $m[1], 'secret' => $m[2]];
+     *}
+     */
+
+
+    public function cambiarPasswordConToken($token, $nuevoPassword)
     {
-        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
-        $idLogin = $this->validarToken($token);
+        $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
+
+        $idLogin = $this->loginModel->buscarTokenPorHash($token);
+
         if ($idLogin) {
-            $this->cambiarPassword($idLogin, $hash);
+            $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
+            if ($ok) {
+                // Marca el token como usado
+                try {
+                    $this->loginModel->marcarTokenUsado($token);
+                } catch (\Throwable $e) {
+                    error_log('[WARN marcarTokenUsado] ' . $e->getMessage());
+                    // Aun así podemos permitir continuar si no fue posible marcar por ahora
+                }
+            }else {
+
+                echo "no se guardo la nueva contraseña";
+                echo $idLogin;
+            }
+            return $ok;
         } else {
-            echo "Token inválido o expirado.";
+            return false;
         }
+        //liberamos recursos
+        $stmt->close();
     }
 }
