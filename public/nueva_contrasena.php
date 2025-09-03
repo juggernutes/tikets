@@ -58,19 +58,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && empty($error)) {
   } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $nuevoPassword)) {
     $mensaje = "La contraseña debe tener al menos 8 caracteres, con mayúscula, número y carácter especial.";
   } else {
+    //echo "Token: $token, Nueva Contraseña: $nuevoPassword"; // Para depuración
     // Asegúrate de tener $controller instanciado
     $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword);
     if ($ok) {
       header("Location: ../public/index.php?reset=ok");
       //limpiamos bariableas
-      unset($_SESSION['login_id']);
-      unset($_SESSION['rol']);
-      unset($_SESSION['nombre']);
-
-      
+      //unset($_SESSION['login_id']);
+      //unset($_SESSION['rol']);
+      //unset($_SESSION['nombre']); 
+      //echo "Contraseña actualizada con éxito. Redirigiendo...";     
       exit;
     } else {
       $mensaje = "No se pudo actualizar la contraseña. Intenta de nuevo.";
+      
     }
   }
 }

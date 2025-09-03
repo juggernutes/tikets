@@ -262,7 +262,7 @@ class LoginController
      */
     public function validarToken(string $tokenPlano, bool $marcarUso = false): array
     {
-        $resp = ['ok' => false, 'user_id' => 0, 'message' => 'Token inválido o expirado.'];
+        $resp = ['ok' => false, 'user_id' => 0, 'message' => 'Token inválido o expirado.', 'code' => 'invalido'];
 
         // 1) Formato rápido: [A-J]{14}[0-9]{6}-[0-9a-f]{32}  (total ~53 chars)
         //if (!self::parsearToken($tokenPlano)) {
@@ -275,12 +275,13 @@ class LoginController
         // 3) Buscar en BD por hash
         //    Devuelve: ['id','user_id','expires_at','used'] o null
 
-        $row = $this->loginModel->buscarTokenPorHash($tokenPlano);
+        $row = (int)$this->loginModel->buscarTokenPorHash($tokenPlano);
         if ($row) {
             $resp = [
                 'ok'      => true,
                 'user_id' => (int)$row['user_id'],
-                'message' => 'OK'
+                'message' => 'OK',
+                'code'    => 'OK'
             ];
             return $resp;
         }
@@ -304,7 +305,7 @@ class LoginController
             }
         }*/
 
-        return $row;
+        return $resp;
     }
 
     /**
@@ -325,10 +326,26 @@ class LoginController
     public function cambiarPasswordConToken($token, $nuevoPassword)
     {
         $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
+        $pre = $this->loginModel->buscarTokenPorHash($token);
+        $idLogin = (int)$pre['user_id'];
+        
+        //echo "\n idlogin: $idLogin";
 
-        $idLogin = $this->loginModel->buscarTokenPorHash($token);
+        if ($idLogin <= 0) {
+            return false;
+        }
 
-        if ($idLogin) {
+        $this->loginModel->actualizarPasswordSP($idLogin, $hash);
+        $this->loginModel->marcarTokenUsado($token);
+        /*echo "\n ok: $ok";
+        if(!$ok){
+            return false;
+        }
+
+        $marcarUso = 
+        echo "\n marcarUso: $marcarUso";*/
+        return true;
+        /*if ($idLogin) {
             $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
             if ($ok) {
                 // Marca el token como usado
@@ -348,6 +365,6 @@ class LoginController
             return false;
         }
         //liberamos recursos
-        $stmt->close();
+        $stmt->close();*/
     }
 }

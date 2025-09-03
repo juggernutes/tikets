@@ -8,7 +8,7 @@ class Login
         $this->conn = $dbConnection;
     }
 
-    public function validarUsuarioSP($cuenta) : ?array
+    public function validarUsuarioSP($cuenta): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, NULL, NULL, NULL, NULL, NULL, NULL)");
         $op = 1;
@@ -17,16 +17,20 @@ class Login
         return $stmt->get_result()->fetch_assoc();
     }
 
-    
-    public function actualizarPasswordSP($idLogin, $nuevoHash) : bool
+
+    public function actualizarPasswordSP($idLogin, $nuevoHash): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)");
         $op = 2;
         $stmt->bind_param("iis", $op, $idLogin, $nuevoHash);
-        return $stmt->execute();
+        $ok = $stmt->execute();
+        $err = $stmt->error;
+        $stmt->close();
+        $this->_flushResults();
+        return $ok && $err === 0;
     }
 
-    public function insertarLoginSP($cuenta, $hash, $idUsuario) : bool
+    public function insertarLoginSP($cuenta, $hash, $idUsuario): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, ?, ?, ?, NULL, NULL)");
         $op = 3;
@@ -34,7 +38,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function registrarSesionSP($idLogin, $sesionID) : bool
+    public function registrarSesionSP($idLogin, $sesionID): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, ?, NULL)");
         $op = 4;
@@ -57,7 +61,7 @@ class Login
             return $stmt->execute();
         }*/
 
-    public function obtenerCuentaPorCorreo($correo) : ?array
+    public function obtenerCuentaPorCorreo($correo): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?, NULL, NULL)");
         $op = 5;
@@ -66,7 +70,7 @@ class Login
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function guardarToken($idLogin, $token, $fechaExpiracion) : bool
+    public function guardarToken($idLogin, $token, $fechaExpiracion): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?)");
         $op = 6;
@@ -74,7 +78,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function buscarTokenPorHash($token) : ?array
+    public function buscarTokenPorHash($token): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 7;
@@ -85,14 +89,15 @@ class Login
         return $res;
     }
 
-    /*public function cambiarPasswordConToken($token, $nuevaPassword) : bool {
+    public function cambiarPasswordConToken($token, $nuevaPassword): bool
+    {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, ?, NULL, NULL, NULL, ? ,NULL)");
         $op = 8;
         $stmt->bind_param("iss", $op, $nuevaPassword, $token);
         return $stmt->execute();
     }
 
-    public function invalidarToken(int $idLogin, string $tokenHash): bool
+    /*public function invalidarToken(int $idLogin, string $tokenHash): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 9; // Suponiendo que la operación 9 es para invalidar el token
@@ -100,11 +105,23 @@ class Login
         return $stmt->execute();
     }*/
 
-    public function marcarTokenUsado($token) : bool
+    public function marcarTokenUsado($token): bool
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 8; // Suponiendo que la operación 8 es para marcar el token como usado
         $stmt->bind_param("is", $op, $token);
         return $stmt->execute();
-    } 
+    }
+    // En class Login
+    private function _flushResults(): void
+    {
+        // Cierra el result actual si existe
+        while ($this->conn->more_results()) {
+            $this->conn->next_result();
+            // Opcional: consumir cualquier result set pendiente
+            if ($res = $this->conn->store_result()) {
+                $res->free();
+            }
+        }
+    }
 }

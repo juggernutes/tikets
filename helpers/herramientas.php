@@ -55,3 +55,6 @@ function parcearToken($token)
     // Extrae la fecha codificada y el secreto
     return [$m[1], $m[2]];
 }
+
+
+?>
