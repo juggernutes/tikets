@@ -7,7 +7,7 @@ if (!isset($_SESSION['login_id'])) {
 }
 
 $empleadoController = new EmpleadoController($conn);
-//$equipoController   = new EquipoController($conn);
+$equipoController   = new EquipoController($conn);
 
 $numeroEmpleado = $_GET['id'] ?? null;
 if (!$numeroEmpleado) {
@@ -232,7 +232,7 @@ function e($v){ return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
   async function guardarCampo(numero, key, value, valueNode, actions, esSensible=false){
     try{
       // POST a endpoint (crea este handler en appEmpleado.php)
-      const res = await fetch('../app/appEmpleado.php?accion=actualizarCampo', {
+      const res = await fetch('../app/appEmpleado.php?accion=actualizarCampoDeUsuario', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ numero_empleado: numero, campo: key, valor: value })

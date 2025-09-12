@@ -38,7 +38,7 @@ $tiketController = new TiketController(new Tiket($conn));
 $errorController = new ErrorModelController(new ErrorModel($conn));
 $solucionController = new SolucionController(new Solucion($conn));
 $encuestaController = new EncuestaController($conn);
-$equipoController = new EpicoController($conn);
+$equipoController = new EquipoController($conn);
 $loginController = new LoginController($conn);
 
 $usuarioId = $_SESSION['login_id'] ?? null;
@@ -177,11 +177,46 @@ if (isset($_GET['accion'])) {
         case 'buscarUsuario':
             if (isset($_POST['correo'])) {
                 $correo = $_POST['correo'];
-                $loginController->buscarUsuario($correo);
+                //$loginController->buscarUsuario($correo);
             } else {
                 echo "Correo no encontrado.";
             }
             break;
+        case 'actualizarCampoDeUsuario':
+            // Actualizar un campo específico del usuario
+            $numeroEmpleado = intval($_POST['numero_empleado'] ?? 0);
+            $campo = $_POST['campo'] ?? '';
+            $valor = $_POST['valor'] ?? '';
+
+            if ($numeroEmpleado > 0 && !empty($campo)) {
+                $actualizado = $empleadoController->actualizarCampoDeUsuario($numeroEmpleado, $campo, $valor);
+                if ($actualizado) {
+                    echo "Campo actualizado correctamente.";
+                } else {
+                    echo "No se pudo actualizar el campo. Inténtalo de nuevo más tarde.";
+                }
+            } else {
+                echo "Parámetros inválidos.";
+            }
+            break;
+        case 'actualizarCampoDeEquipo':
+            // Actualizar un campo específico del equipo
+            $idEquipo = intval($_POST['id_equipo'] ?? 0);
+            $campo = $_POST['campo'] ?? '';
+            $valor = $_POST['valor'] ?? '';
+
+            if ($idEquipo > 0 && !empty($campo)) {
+                $actualizado = $equipoController->actualizarCampoDeEquipo($idEquipo, $campo, $valor);
+                if ($actualizado) {
+                    echo "Campo actualizado correctamente.";
+                } else {
+                    echo "No se pudo actualizar el campo. Inténtalo de nuevo más tarde.";
+                }
+            } else {
+                echo "Parámetros inválidos.";
+            }
+            break;
+        
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";

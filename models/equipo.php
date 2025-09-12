@@ -57,4 +57,35 @@ class equipo
 
     }
 
+    public function actualizarCampoDeEquipo($idEquipo, $campo, $valor) {
+        $allowedFields = [
+            'Marca', 'Modelo', 'NumeroSerie', 'IPDireccion', 'MacDireccion',
+            'NuActvoFijo', 'SistemaOperativo', 'ClaveUsuarioWindows',
+            'Descripcion', 'FechaCompra', 'Active'
+        ];
+
+        if (!in_array($campo, $allowedFields)) {
+            throw new InvalidArgumentException("Campo no permitido: " . $campo);
+        }
+
+        $sql = "UPDATE equipo SET $campo = ? WHERE ID_Equipo = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            throw new RuntimeException("Error en la preparación de la consulta: " . $this->conn->error);
+        }
+
+        // Determinar el tipo de dato para bind_param
+        $tipo = is_int($valor) ? 'i' : (is_double($valor) ? 'd' : 's');
+        $stmt->bind_param($tipo . 'i', $valor, $idEquipo);
+
+        if (!$stmt->execute()) {
+            throw new RuntimeException("Error en la ejecución de la consulta: " . $stmt->error);
+        }
+
+        $affectedRows = $stmt->affected_rows;
+        $stmt->close();
+
+        return $affectedRows > 0;
+    }
+
 }

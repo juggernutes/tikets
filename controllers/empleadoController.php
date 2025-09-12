@@ -23,4 +23,8 @@ class EmpleadoController {
     public function obtenerEmpleadoporNumeroC($numeroEmpleado) {
         return $this->empleadoModel->obtenerEmpleadoporNumero($numeroEmpleado);
     }
+
+    public function actualizarCampoDeUsuario($numeroEmpleado, $campo, $valor) {
+        return $this->empleadoModel->actualizarCampoDeUsuario($numeroEmpleado, $campo, $valor);
+    }
 }

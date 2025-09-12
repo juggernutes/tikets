@@ -188,4 +188,30 @@ class Empleado
         return $empleados;
     }
 
+    public function actualizarCampoDeUsuario($numeroEmpleado, $campo, $valor) {
+        $allowedFields = [
+            'USUARIO', 'Nombre', 'PUESTO', 'SUCURSAL', 'AREA', 
+            'Correo', 'Telefono', 'Extencion', 
+            'ClaveCorreo', 'UsuarioAnyDesk', 'ClaveAnyDesk', 
+            'UsuarioSAP', 'ClaveSAP', 'ClaveUsuarioWindows'
+        ];
+
+        if (!in_array($campo, $allowedFields)) {
+            throw new InvalidArgumentException("Campo no permitido: " . $campo);
+        }
+
+        // Encriptar si es un campo sensible
+        if (in_array($campo, ['ClaveCorreo', 'UsuarioAnyDesk', 'ClaveAnyDesk', 'UsuarioSAP', 'ClaveSAP', 'ClaveUsuarioWindows'])) {
+            $valor = encriptar($valor);
+        }
+
+        $sql = "UPDATE empleados SET $campo = ? WHERE Numero_Empleado = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $valor, $numeroEmpleado);
+        $stmt->execute();
+        $affectedRows = $stmt->affected_rows;
+        $stmt->close();
+        return $affectedRows > 0;
+    }
+
 }

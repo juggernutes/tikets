@@ -268,6 +268,10 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       .divider{ display:none; }
     }
   </style>
+  <?php if ($rol === 'SOPORTE'  && $title === 'DASHBOARD'): ?>
+    <!-- Auto-refresh cada 180 segundos solo para soporte -->
+    <meta http-equiv="refresh" content="180">
+  <?php endif; ?>
 </head>
 <body>
   <header class="site-header">

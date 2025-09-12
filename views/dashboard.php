@@ -36,6 +36,7 @@ if ($tikets && $tikets->num_rows > 0) {
 $totalTickets   = ($tikets ? $tikets->num_rows : 0);
 $totalAbiertos  = count($soloAbiertos) + count($enProceso);
 $totalCerrados  = count($cerrados);
+
 ?>
 
 <style>
