@@ -86,19 +86,19 @@ class LoginController
         } /*$Usuario = $this->loginModel->obtenerCuentaPorCorreo($correo); if ($Usuario) {// Verificar si se encontró el usuario // Generar el inicio del token con la fecha utilizando la letra indice de la fecha $ahora = new DateTime('now', new DateTimeZone($this->timezone)); $token = generarToken($Usuario['ID_Usuario'], $ahora); $fechaExp= (clone $ahora)->modify('+20 minutes')->format('Y-m-d H:i'); $idLogin = (int)$Usuario['ID_Usuario']; $ok = $this->loginModel->guardarToken($idLogin, $token, $fechaExp); if ($ok) { // si guardó bien $enviado = $this->enviaCorreoParaRestablecerContrasena($correo, $token, $fechaExp); if ($enviado) { echo "Si la cuenta existe, te enviaremos un correo…"; } else { echo "Error al enviar el correo de restablecimiento."; } } else { echo "Error al guardar el token.";} } else { echo "No se encontró una cuenta asociada a ese correo.";} */
     /*}*/
 
-    public function restablecerContrasena(string $correo): array
+    public function restablecerContrasena(string $correo)
     {
         // Respuesta uniforme para evitar enumeración de cuentas
-        $resp = ['ok' => false, 'message' => 'Si la cuenta existe, se enviará un enlace para restablecer la contraseña.'];
+        $resp = false;
 
         try {
             $correo = trim(mb_strtolower($correo));
 
             // Valida email antes de seguir
-            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            //if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
                 // Mismo mensaje neutro al usuario
-                return $resp;
-            }
+                //return $resp;
+            //}
 
             $tz = $this->timezone ?? 'America/Tijuana';
             $ahora = new DateTime('now', new DateTimeZone($tz));
@@ -110,7 +110,9 @@ class LoginController
             // No reveles si existe o no; continúa solo si existe
             if ($usuario) {
                 $idLogin = (int)$usuario['ID_Usuario'];
-
+                if ($idLogin <= 0) {
+                    return $resp; // seguridad extra
+                }
                 // Genera token (plano para el link), hashea para guardar
                 $tokenPlano = generarToken($idLogin, $ahora);        // asegúrate que esta firma exista
                 //$tokenHash  = hash('sha256', $tokenPlano);
@@ -131,16 +133,17 @@ class LoginController
                             error_log('[ERROR marcarTokenUsado] ' . $e2->getMessage());
                         }
                         // Mantén respuesta neutra al usuario
+                        return $resp;
+
                     } else {
-                        $resp['ok'] = true;
+                        $resp = true;
+                        return $resp;
                     }
                 } else {
                     // Mantén respuesta neutra, log interno
                     error_log('[ERROR guardarToken] No se pudo guardar el token para ID_Login=' . $idLogin);
                 }
             }
-
-            return $resp;
         } catch (\Throwable $e) {
             error_log('[ERROR restablecerContrasena] ' . $e->getMessage());
             // Mantén respuesta neutra para el usuario
@@ -275,7 +278,7 @@ class LoginController
         // 3) Buscar en BD por hash
         //    Devuelve: ['id','user_id','expires_at','used'] o null
 
-        $row = (int)$this->loginModel->buscarTokenPorHash($tokenPlano);
+        $row = $this->loginModel->buscarTokenPorHash($tokenPlano);
         if ($row) {
             $resp = [
                 'ok'      => true,

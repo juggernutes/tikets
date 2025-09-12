@@ -80,13 +80,20 @@ class Login
 
     public function buscarTokenPorHash($token): ?array
     {
+        $user_id = [];
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 7;
         $stmt->bind_param("is", $op, $token);
         $stmt->execute();
-        $res = $stmt->get_result()->fetch_assoc();
+        $res = $stmt->get_result();
+        while($row = $res->fetch_assoc()) {
+            $user_id[] = $row;
+        }
         $stmt->close();
-        return $res;
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $user_id;
     }
 
     public function cambiarPasswordConToken($token, $nuevaPassword): bool
