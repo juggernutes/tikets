@@ -1,20 +1,21 @@
-<div class="contenedor-tickets">
-<?php foreach ($abiertos as $row): ?>
-    <?php $estadoClass = strtolower(str_replace(' ', '-', $row['ESTADO'])); 
-    $descripcion = wordwrap($row['DESCRIPCION'], 30, "\n", true);
-    ?>
-    <div class="tiket <?= $estadoClass ?>">
-        <h4><?= htmlspecialchars($row['Folio']) ?></h4>
-        <H4><?= htmlspecialchars($row['SISTEMA']) ?></H4>
-        <p><strong>Fecha:</strong> <?= htmlspecialchars($row['FECHA']) ?></p>
-        <p><strong>Estado:</strong> <?= htmlspecialchars($row['ESTADO']) ?></p>
-        <p><strong>Descripción:</strong><br><?= nl2br(htmlspecialchars($descripcion, ENT_QUOTES, 'UTF-8')) ?></p>
-        <p><strong>Empleado:</strong> <?= htmlspecialchars($row['EMPLEADO']) ?></p>
-        <p><strong>Puesto:</strong> <?= htmlspecialchars($row['PUESTO']) ?></p>
-        <p><strong>Sucursal:</strong> <?= htmlspecialchars($row['SUCURSAL']) ?></p>
-        <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] === 'SOPORTE')): ?>
-            <a href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Tomar</button></a>
-        <?php endif; ?>
-    </div>
-<?php endforeach; ?>
+<!-- /components/renderCardAbierto.php -->
+<?php /*
+<div class="ticket">
+<?php $folio = $row['Folio'] ?? ('#' . ($row['ID_Tiket'] ?? '')); $desc = wordwrap($row['DESCRIPCION'] ?? '', 90, "\n", true); $css = estado_css($row['ESTADO'] ?? ''); ?>
+<h4><?= e($folio) ?> — <?= e($row['SISTEMA'] ?? '') ?></h4>
+<span class="chip <?= e($css) ?>"><?= e($row['ESTADO'] ?? '') ?></span>
+<p class="desc"><?= nl2br(e($desc)) ?></p>
+<div class="meta">
+<p><strong>Fecha:</strong> <?= e($row['FECHA'] ?? '') ?></p>
+<p><strong>Empleado:</strong> <?= e($row['EMPLEADO'] ?? '') ?></p>
+<p><strong>Puesto:</strong> <?= e($row['PUESTO'] ?? '') ?></p>
+<p><strong>Sucursal:</strong> <?= e($row['SUCURSAL'] ?? '') ?></p>
 </div>
+<div class="acciones">
+<?php if(isset($_SESSION['rol']) && $_SESSION['rol']==='SOPORTE'): ?>
+<a class="btn primary" href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= urlencode((string)($row['ID_Tiket'] ?? '')) ?>" onclick="return confirm('¿Tomar este ticket?')">Tomar</a>
+<?php endif; ?>
+<a class="btn" href="ticket.php?id=<?= urlencode((string)($row['ID_Tiket'] ?? '')) ?>">Ver detalle</a>
+</div>
+</div>
+*/ ?>

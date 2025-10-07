@@ -4,9 +4,10 @@ $ALLOW_PUBLIC = true;
 
 require_once __DIR__ . '/../config/db_connection.php';
 require __DIR__ . "/../controllers/LoginController.php";
-$error = null;
+
+$error   = null;
 $mensaje = null;
-$token = $_GET["token"] ?? '';
+$token   = $_GET["token"] ?? '';
 
 if ($token === '') {
   header("Location: ../public/index.php");
@@ -15,40 +16,12 @@ if ($token === '') {
 
 $controller = new LoginController($conn);
 $val = $controller->validarToken($token);
-
-if (!$val['ok']) {
-  $error = "Token inválido";
-  echo $error;
+if ($val === 0) {
   header("Location: ../public/index.php");
   exit;
 }
 
-
-/*
-// Validación básica del token: 64 hex (si usas bin2hex(random_bytes(32)))
-if ($token === '' || !preg_match('/^[a-f0-9]{64}$/i', $token)) {
-    $error = "Token no válido.";
-} else {
-    // Instanciar controller (NO estático)
-    
-
-    if (!$data || empty($data['user_id'])) {
-        $error = "Token no válido o usuario no encontrado.";
-    } elseif (!empty($data['used'])) {
-        $error = "El token ya ha sido utilizado.";
-    } else {
-        // Validar fecha una vez (el SP ya filtró > NOW, esto es redundancia defensiva)
-        $expira = $data['expires_at'] ?? null;
-        $ts = $expira ? strtotime($expira) : false;
-
-        if ($ts === false) {
-            $error = "Fecha de expiración inválida.";
-        } elseif ($ts <= time()) {
-            $error = "El token ha expirado.";
-        }
-    }
-}*/
-
+// POST: procesar cambio (tu lógica tal cual)...
 if ($_SERVER["REQUEST_METHOD"] === "POST" && empty($error)) {
   $nuevoPassword     = $_POST['nuevo_contrasena']     ?? '';
   $confirmarPassword = $_POST['confirmar_contrasena'] ?? '';
@@ -58,67 +31,81 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && empty($error)) {
   } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $nuevoPassword)) {
     $mensaje = "La contraseña debe tener al menos 8 caracteres, con mayúscula, número y carácter especial.";
   } else {
-    //echo "Token: $token, Nueva Contraseña: $nuevoPassword"; // Para depuración
-    // Asegúrate de tener $controller instanciado
     $ok = $controller->cambiarPasswordConToken($token, $nuevoPassword);
     if ($ok) {
+      unset($_SESSION['login_id'], $_SESSION['rol'], $_SESSION['nombre']);
       header("Location: ../public/index.php?reset=ok");
-      //limpiamos bariableas
-      //unset($_SESSION['login_id']);
-      //unset($_SESSION['rol']);
-      //unset($_SESSION['nombre']); 
-      //echo "Contraseña actualizada con éxito. Redirigiendo...";     
       exit;
     } else {
       $mensaje = "No se pudo actualizar la contraseña. Intenta de nuevo.";
-      
     }
   }
 }
 
-$title = "Reestablecer Contraseña";
-include __DIR__ . '/../views/layout/header.php';
+$title = "Restablecer contraseña";
+$pageClass = 'auth-page darker';
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><?= htmlspecialchars($title) ?></title>
+  <link rel="stylesheet" href="../tools/auth.css?v=<?= time() ?>">
+</head>
+<body class="<?= htmlspecialchars($pageClass) ?>">
 
-<div class="restablecer-form">
-  <h3>Reiniciar contraseña</h3>
+<div class="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <section class="auth-modal auth-modal--wide">
+    <div class="auth-header">
+      <img src="../img/Centro.png" alt="Centro" class="centro">
+    </div>
 
-  <?php if (!empty($error)): ?>
-    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-  <?php else: ?>
-    <?php if (!empty($mensaje)): ?>
-      <div class="alert alert-warning"><?= htmlspecialchars($mensaje) ?></div>
-    <?php endif; ?>
+    <div class="auth-body">
+      <h1 id="authTitle" class="auth-title">Restablecer contraseña</h1>
 
-    <div class="contrasena-wrapper">
-      <!-- Formulario -->
-      <div class="contrasena-box">
-        <form method="POST">
-          <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+      <?php if (!empty($mensaje)): ?>
+        <div class="alert-info"><?= htmlspecialchars($mensaje) ?></div>
+      <?php endif; ?>
 
-          <label for="nuevo_contrasena">Nueva Contraseña</label>
-          <input type="password" name="nuevo_contrasena" id="nuevo_contrasena" required>
+      <div class="grid-2">
+        <!-- Columna: Formulario -->
+        <div>
+          <form method="POST" autocomplete="off" novalidate>
+            <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
-          <label for="confirmar_contrasena">Confirmar Contraseña</label>
-          <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
+            <div class="field">
+              <label for="nuevo_contrasena" class="label">Nueva contraseña</label>
+              <input class="input" type="password" name="nuevo_contrasena" id="nuevo_contrasena" required autocomplete="new-password">
+            </div>
 
-          <button type="submit">Restablecer Contraseña</button>
-        </form>
-      </div>
+            <div class="field">
+              <label for="confirmar_contrasena" class="label">Confirmar contraseña</label>
+              <input class="input" type="password" name="confirmar_contrasena" id="confirmar_contrasena" required autocomplete="new-password">
+            </div>
 
-      <!-- Requerimientos -->
-      <div class="contrasena-box">
-        <h3>Características de la contraseña</h3>
-        <ul>
-          <li><strong>Longitud:</strong> Al menos 8 caracteres</li>
-          <li><strong>Mayúsculas:</strong> Una letra mayúscula</li>
-          <li><strong>Números:</strong> Un número</li>
-          <li><strong>Especial:</strong> Un carácter especial (!@#$%^&*)</li>
-        </ul>
+            <div class="actions">
+              <a class="link" href="../public/index.php">Volver a iniciar sesión</a>
+              <button type="submit" class="btn">Guardar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Columna: Requisitos -->
+        <div class="req-box">
+          <h3 class="req-title">Características de la contraseña</h3>
+          <ul class="req-list">
+            <li>Al menos <strong>8 caracteres</strong></li>
+            <li>Al menos <strong>1 mayúscula</strong></li>
+            <li>Al menos <strong>1 número</strong></li>
+            <li>Al menos <strong>1 carácter especial</strong> (!@#$%^&*)</li>
+          </ul>
+          <p class="req-note">Por seguridad, evita reutilizar contraseñas anteriores.</p>
+        </div>
       </div>
     </div>
-  <?php endif; ?>
+  </section>
 </div>
 
-
-<?php include __DIR__ . '/../views/layout/footer.php'; ?>
+</body>
+</html>

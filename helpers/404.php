@@ -12,29 +12,50 @@ http_response_code(404);
             color: #333;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 10%;
+            padding-top: 26%;   
+            background-image: url("../img/Tecnologias.png");
+            background-repeat: no-repeat;    
+            background-position: center 8%;  /* lo mantenemos más arriba */
+            background-size: 40%;            /* ahora el logo es más chico */
         }
+
+        .contenido {
+            margin-top: 20px; /* separa el texto del logo */
+        }
+
         h1 {
             font-size: 5em;
             margin-bottom: 0.2em;
         }
+
         p {
             font-size: 1.5em;
             margin-bottom: 1em;
         }
+
         a {
-            color: #007bff;
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 1.1em;
             text-decoration: none;
-            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         a:hover {
-            text-decoration: underline;
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
     </style>
 </head>
-<body>
-    <h1>404</h1>
-    <p>La página que buscas no existe.</p>
-    <a href="/">Volver al inicio</a>
-</body>
+    <body>
+        <div class="contenido">
+            <h1>404</h1>
+            <p>La página que buscas no existe.</p>
+            <a href="../public/index.php">Volver al inicio</a>
+        </div>
+    </body>
+
 </html>

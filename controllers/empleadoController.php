@@ -8,8 +8,8 @@ class EmpleadoController {
         $this->empleadoModel = new Empleado($conn);
     }
 
-    public function obtenerEmpleados($idUsuario) {
-        return $this->empleadoModel->obtenerEmpleados($idUsuario);
+    public function obtenerEmpleados($idsucursal) {
+        return $this->empleadoModel->obtenerEmpleados($idsucursal);
     }
 
     public function obtenerEmpleadoPorId($numeroEmpleado) {
@@ -22,5 +22,9 @@ class EmpleadoController {
 
     public function obtenerEmpleadoporNumeroC($numeroEmpleado) {
         return $this->empleadoModel->obtenerEmpleadoporNumero($numeroEmpleado);
+    }
+
+    public function obtenerSucursales(){
+        return $this->empleadoModel->obtenerSucursales();
     }
 }

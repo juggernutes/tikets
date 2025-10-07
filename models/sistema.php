@@ -9,7 +9,7 @@ class Sistema {
    public function obtenerTodos() {
         $sistemas = [];
 
-        if ($stmt = $this->conn->prepare("CALL sp_sistemas(1, 0)")) {
+        if ($stmt = $this->conn->prepare("CALL sp_sistemas(1, 0, null, null)")) {
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
@@ -27,12 +27,17 @@ class Sistema {
     }
 
     public function obtenerPorId($id) {
-        $sql = "CALL sp_sistemas(2, ?)";
+        $sql = "CALL sp_sistemas(2, ?, null, null)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function crear($nombre, $descripcion) {
+        $sql = "CALL sp_sistemas(3, 0, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$nombre, $descripcion]);
+    }
 }
 
 // Usando SP para crear un nuevo sistema

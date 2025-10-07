@@ -1,0 +1,561 @@
+ /* ================================
+   Variables de diseño (ajústalas)
+==================================*/
+:root{
+    --bg:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --muted-2:#334155;
+    --border:#e2e8f0;
+    --border-2:#e9e9e9;
+    --surface:#f8fafc;
+    --brand:#0ea5e9;
+    --brand-ink:#0369a1;
+    --shadow:0 6px 20px rgba(0,0,0,.05);
+    --shadow-hover:0 8px 24px rgba(2,132,199,.12);
+    --radius-card:16px;
+    --radius-elm:12px;
+    --space:14px;
+    --fs-12:12px;
+    --fs-14:14px;
+    --fs-18:18px;
+    --fs-20:20px;
+  }
+  
+  /* ================================
+     Layout base
+  ==================================*/
+  .container{
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0 var(--space);
+  }
+  h1,h2{ color:var(--text); }
+  
+  /* ================================
+     Toolbar de filtros
+  ==================================*/
+  .toolbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:end;
+    margin:10px 0 16px;
+  }
+  .toolbar .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .toolbar input,
+  .toolbar select{
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:var(--fs-14);
+  }
+  .toolbar button{
+    padding:9px 14px;
+    border:1px solid var(--brand);
+    background:var(--brand);
+    color:#fff;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .toolbar a.reset{
+    padding:9px 12px;
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:12px;
+    text-decoration:none;
+    color:var(--muted-2);
+    font-weight:600;
+  }
+  
+  /* ================================
+     Card contenedor
+  ==================================*/
+  .card{
+    background:var(--bg);
+    border:1px solid var(--border-2);
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow);
+  }
+  .card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 16px;
+    border-bottom:1px solid #f1f5f9;
+  }
+  .card-title{
+    margin:0;
+    font-size:var(--fs-18);
+    font-weight:800;
+    letter-spacing:.2px;
+    color:var(--text);
+  }
+  
+  /* Acciones header */
+  .tools-right{ display:flex; gap:8px; align-items:center; }
+  .copy,.export{
+    padding:6px 10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:#fff;
+    cursor:pointer;
+    font-weight:600;
+  }
+  
+  /* =======================================================
+   KPIs (cardKpis) – base
+   - Ocupa 100% del ancho
+   - Tarjetas responsivas en grid
+======================================================= */
+.container .cardKpis{
+    background: var(--bg);
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+  
+    display: grid !important;
+    grid-auto-flow: row dense;
+    gap: 14px;
+    padding: var(--space);
+    width: 100%;
+  
+    /* Base (móvil / tablet chica): tantas columnas como quepan, min 260px */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  
+  /* Tarjeta KPI */
+  .container .cardKpis .kpi{
+    background: var(--surface);
+    margin-top: 0 !important; 
+    border: 1px solid var(--border);
+    border-radius: var(--radius-elm);
+    padding: 14px 16px;
+    transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .container .cardKpis .kpi:hover{
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+    border-color: #cfe9f7;
+  }
+  
+  /* Tipografía KPI */
+  .container .cardKpis .kpi-label{
+    font-size: var(--fs-12);
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .container .cardKpis .kpi-value{
+    font-weight: 800;
+    color: var(--text);
+    font-size: var(--fs-20);
+    line-height: 1.2;
+  }
+  
+  /* Si quieres que una card (contenedor) ignore max-width del layout */
+  .card.card--fluid{
+    max-width: none !important;
+    width: 100% !important;
+  }
+  
+  /* ===========================================
+     Efecto "escalerita" (stagger) opcional
+     - Se desplaza sutilmente la segunda y tercera
+       tarjeta en layouts de 2 y 3+ columnas
+  =========================================== */
+  :root{ --stagger: 14px; }
+  
+  /* Cuando hay ~2 columnas (>=560 y <960) */
+  @media (min-width: 560px) and (max-width: 959.98px){
+    .container .cardKpis .kpi:nth-child(2n){ margin-top: var(--stagger); }
+  }
+  
+  /* Cuando hay 3+ columnas (>=960) */
+  @media (min-width: 960px){
+    .container .cardKpis .kpi:nth-child(3n+2){ margin-top: calc(var(--stagger) * 1); }
+    .container .cardKpis .kpi:nth-child(3n+3){ margin-top: calc(var(--stagger) * 2); }
+  }
+  
+  /* =======================================================
+     Breakpoints de columnas (forzados y predecibles)
+     - 960+: 3 columnas
+     - 1280+: 4 columnas
+     - 1536+: 5 columnas
+     (Si prefieres comportamiento fluido, comenta estos bloques)
+  ======================================================= */
+  @media (min-width: 960px){
+    .container .cardKpis{
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+  }
+  @media (min-width: 1280px){
+    .container .cardKpis{ grid-template-columns: repeat(5, 1fr); }
+  }
+  @media (min-width: 1536px){
+    .container .cardKpis{ grid-template-columns: repeat(5, 1fr); }
+  }
+  
+  /* =======================================================
+     Toolbar en línea (>=960)
+     - Muestra los campos en una hilera ordenada
+     - Ajusta la cantidad de "auto" según tus inputs
+  ======================================================= */
+  @media (min-width: 960px){
+    .toolbar{
+      display: grid;
+      grid-template-columns: repeat(6, auto) 1fr; /* ajusta según tus campos */
+      align-items: end;
+      gap: 12px 16px;
+    }
+    .toolbar .field{ width: auto; }
+  }
+  
+  /* =======================================================
+     Tablas: asegurar modo "tabla" en escritorio
+     - Evita quedarse en modo "cards" si venías de móvil
+  ======================================================= */
+  @media (min-width: 641px){
+    .tickets-table thead{ display: table-header-group; }
+    .tickets-table,
+    .tickets-table tbody,
+    .tickets-table tr,
+    .tickets-table td{
+      display: table;
+      width: auto;
+    }
+    .tickets-table{
+      width: 100%;
+      border-collapse: separate;
+    }
+    .tickets-table tr{ display: table-row; }
+    .tickets-table td{
+      display: table-cell;
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+  }
+  
+  /* ================================
+     Tablas
+  ==================================*/
+  /* wrapper: controla el scroll y no "rompe" el layout */
+  .table-wrap {
+    overflow: auto;           /* scroll horizontal cuando sea necesario */
+    max-width: 100%;
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* La tabla se ajusta al contenido; pero al menos ocupará el ancho del contenedor */
+  .table-wrap table {
+    width: max-content;   /* ancho = suma de columnas */
+    min-width: 100%;      /* si las columnas son pequeñas, ocupa todo el ancho */
+    border-collapse: collapse;
+    font-size: var(--fs-14);
+    box-sizing: border-box;
+    table-layout: auto;   /* permitir que las columnas auto-determinen su ancho */
+  }
+
+  /* caja para th/td (útil para cálculo correcto de padding/width) */
+  .tickets-table, .tickets-table th, .tickets-table td {
+    box-sizing: border-box;
+  }
+
+  /* por defecto no hacer wrap (evita filas muy altas) - luego se habilita por columna */
+  .table-wrap th,
+  .table-wrap td {
+    white-space: nowrap;
+    vertical-align: top;
+    padding: 10px 12px;
+  }
+
+  /* Header sticky (asegúrate de z-index para que quede encima del contenido) */
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    background: var(--surface);
+    color: var(--muted-2);
+    text-align: left;
+    font-weight: 700;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Filas / hover */
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--text);
+  }
+  tbody tr:hover { background: var(--surface); }
+
+  /* Columnas que deben poder romper y tener ancho controlado */
+  .tickets-table :is(th,td):nth-child(7),
+  .tickets-table :is(th,td):nth-child(14) {
+    min-width: 300px;
+    max-width: 450px;
+    white-space: normal;          /* permitir wrap aquí */
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Otras columnas medianas */
+  .tickets-table :is(th,td):nth-child(16),
+  .tickets-table :is(th,td):nth-child(15),
+  .tickets-table :is(th,td):nth-child(11),
+  .tickets-table :is(th,td):nth-child(8),
+  .tickets-table :is(th,td):nth-child(2),
+  .tickets-table :is(th,td):nth-child(1) {
+    min-width: 165px;
+    max-width: 450px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Si prefieres forzar una columna a no quebrar (ej. folio) */
+  .tickets-table :is(th,td):nth-child(1) { white-space: nowrap; }
+
+  /* Mobile: evita scroll horizontal en lo posible, permite wrap */
+  @media (max-width: 900px) {
+    .tickets-table, .tickets-table thead, .tickets-table tbody, .tickets-table th, .tickets-table td, .tickets-table tr {
+      display: block;}
+    .tickets-table {
+        width: 100%;
+        display: table;
+    }
+    .tickets-table thead {
+        display: table-header-group;
+    }
+    .tickets-table tbody {
+        display: table-row-group;
+    }
+    .tickets-table tr {
+        margin-bottom: 20px;
+        display: table-row;
+    }
+    .tickets-table td, .tickets-table th,
+    .tickets-table td,
+    .tickets-table th {
+        display: table-cell;
+        padding: 8px 5px;
+    }
+    .tickets-table th {
+        background: #B71C1C;
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+  }
+  /* ================================
+     Tabla de “por día” (métricas)
+  ==================================*/
+  .day-table-wrap{ overflow:auto; padding:0 16px 12px; }
+  .day-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:var(--fs-14);
+  }
+  .day-table thead th{
+    position:sticky;
+    top:0;
+    background:var(--surface);
+    color:var(--muted-2);
+    text-align:left;
+    font-weight:700;
+    padding:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .day-table tbody td{
+    padding:8px 10px;
+    border-bottom:1px solid #f1f5f9;
+    color:var(--text);
+    background:#fff;              /* visible sin depender del hover */
+  }
+  .day-table tbody tr:hover td{
+    background:#f1f5f9;
+  }
+  
+  /* ================================
+     Paginación
+  ==================================*/
+  .pager{
+    display:flex;
+    gap:8px;
+    justify-content:flex-end;
+    align-items:center;
+    padding:12px 16px;
+  }
+  .pager a,
+  .pager span{
+    padding:8px 12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    text-decoration:none;
+    color:var(--muted-2);
+  }
+  .pager .active{
+    background:var(--brand);
+    color:#fff;
+    border-color:var(--brand);
+  }
+  
+  /* ================================
+     Responsivo
+  ==================================*/
+  /* Utilidades */
+  .hide-sm{ display:table-cell; }        /* por defecto visible */
+  .only-sm{ display:none; }
+
+  /* ===== Breakpoint: ≤ 1024px ===== */
+  @media (max-width:1024px){
+    .toolbar{ gap:8px; }
+    .toolbar .field{ width:calc(50% - 8px); } /* 2 columnas */
+    .toolbar .field:nth-last-child(2){ width:auto; } /* botón "Aplicar" */
+    thead th, tbody td{ padding:9px 10px; }
+    .container .cardKpis{
+      grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    }
+  }
+
+  /* ===== Breakpoint: ≤ 768px ===== */
+  @media (max-width:768px){
+    /* Toolbar a 1 columna */
+    .toolbar{ gap:10px; }
+    .toolbar .field{ width:100%; }
+    .toolbar button, .toolbar a.reset{ width:100%; text-align:center; }
+
+    /* KPIs más compactos */
+    .container .cardKpis{
+      grid-template-columns:repeat(auto-fit, minmax(170px,1fr));
+      gap:10px; padding:12px;
+    }
+    .container .cardKpis .kpi{ padding:12px 14px; }
+    .container .cardKpis .kpi-value{ font-size:18px; }
+  }
+
+  /* ===== Breakpoint: ≤ 640px ===== */
+  @media (max-width:640px){
+
+    /* Oculta columnas menos críticas (ajústalas si quieres) */
+    /* Aplicar tanto a th como td para evitar inconsistencias */
+    .tickets-table th:nth-child(7),
+    .tickets-table td:nth-child(7),
+    .tickets-table th:nth-child(9),
+    .tickets-table td:nth-child(9),
+    .tickets-table th:nth-child(10),
+    .tickets-table td:nth-child(10),
+    .tickets-table th:nth-child(11),
+    .tickets-table td:nth-child(11),
+    .tickets-table th:nth-child(12),
+    .tickets-table td:nth-child(12) {
+      display: none !important;
+    }
+  
+    /* Vista tipo “cards” para móviles */
+    .tickets-table thead { display: none; }
+  
+    /* Convertimos tabla a "cards" */
+    .tickets-table,
+    .tickets-table tbody,
+    .tickets-table tr,
+    .tickets-table td {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  
+    .tickets-table tr {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+  
+    /* cada celda es una fila del "card" con label a la izquierda */
+    .tickets-table tbody td {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 8px 0;
+      border: none; /* sin líneas internas */
+      color: var(--text);
+      word-break: break-word;
+    }
+  
+    .tickets-table tbody td::before {
+      content: attr(data-label);
+      flex: 0 0 42%;              /* ancho etiqueta */
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      white-space: normal;
+    }
+  
+    .tickets-table tbody td > * {
+      flex: 1 1 auto;
+    }
+  
+    /* Mantén la posibilidad de que filas clicables sean enfocables */
+    .tickets-table .ticket-row {
+      cursor: pointer;
+    }
+    .tickets-table .ticket-row[tabindex],
+    .tickets-table .ticket-row:focus {
+      outline: 3px solid rgba(11,117,214,0.12);
+      outline-offset: 4px;
+    }
+  
+    /* Tabla "day-table" también en cards */
+    .day-table thead{ display:none; }
+    .day-table, .day-table tbody, .day-table tr, .day-table td{
+      display:block; width:100%;
+    }
+    .day-table tr{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      margin:10px 0;
+      background:#fff;
+    }
+    .day-table tbody td{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:8px 0; border:none; color:var(--text);
+    }
+    .day-table tbody td::before{
+      content: attr(data-label);
+      flex:0 0 48%;
+      color:var(--muted);
+      font-size:12px;
+    }
+  
+    /* KPIs a una columna si el ancho es muy estrecho */
+    .container .cardKpis{
+      grid-template-columns:1fr;
+    }
+  }
+  
+
+/* ===== Breakpoint: ≤ 400px (extra compacto) ===== */
+@media (max-width:400px){
+  .container{ padding:0 10px; }
+  .card-header{ padding:10px 12px; }
+  .tools-right{ gap:6px; }
+  .copy,.export{ padding:6px 8px; }
+}
+
+  
+  

@@ -1,30 +1,75 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (isset($_SESSION['login_id']) && isset($_SESSION['rol'])) {
     header("Location: dashboard.php");
     exit;
 }
-
 $title = "Iniciar sesión";
-include __DIR__ . '/layout/header.php';
+
+$pageClass = 'auth-page';
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title><?= htmlspecialchars($title) ?></title>
+<link rel="stylesheet" href = "../tools/auth.css?v=<?= time() ?>">
 
-<div style="max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-    <h3 style="text-align:center;">Acceso al sistema</h3>
-    <form method="POST" action="../public/index.php">
-        <label for="cuenta">Usuario:</label><br>
-        <input type="text" name="cuenta" value="<?= htmlspecialchars($_POST['cuenta'] ?? '') ?>" required style="width:100%; padding:8px; margin-bottom:10px;"><br>
+</head>
+<body class="<?= htmlspecialchars($pageClass) ?>">
 
-        <label for="password">Contraseña:</label><br>
-        <input type="password" name="password" required style="width:100%; padding:8px; margin-bottom:20px;"><br>
+<div class="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <section class="auth-modal">
+    <div class="auth-header">
+        <img src="../img/Centro.png" alt="Centro" class="centro" >         
+    </div>
 
-        <a href="../views/usuario_contr.php" style="display:block; text-align:center; margin-bottom:10px;">¿Olvidaste tu contraseña?</a>
+    <div class="auth-body">
+      <h1 id="authTitle" class="auth-title">Iniciar sesión</h1>
 
-        <button type="submit" style="width:100%;">Iniciar sesión</button>
-    </form>
+      <form method="POST" action="../public/index.php" autocomplete="on" novalidate>
+        <div class="field">
+          <label for="cuenta" class="label">Correo electrónico, teléfono o usuario</label>
+          <input
+            class="input"
+            type="text"
+            id="cuenta"
+            name="cuenta"
+            value="<?= htmlspecialchars($_POST['cuenta'] ?? '') ?>"
+            required
+            autocapitalize="none"
+            spellcheck="false"
+            autocomplete="username"  
+          />
+        </div>
+
+        <div class="field">
+          <label for="password" class="label">Contraseña</label>
+          <input
+            class="input"
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+
+        <div class="actions">
+          <a class="link" href="../views/usuario_contr.php">¿No puede acceder a su cuenta?</a>
+          <button type="submit" class="btn">Iniciar sesión</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="meta">
+      <span></span>
+      <a class="link" href="#" onclick="return false;"></a>
+    </div>
+  </section>
 </div>
 
-<?php include __DIR__ . '/layout/footer.php'; ?>
+</body>
+</html>
