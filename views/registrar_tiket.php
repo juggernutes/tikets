@@ -59,6 +59,34 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
             <option value="">Seleccione un sistema</option>
             <?php include __DIR__ . '/../partials/combo_sistemas.php'; ?>
           </select>
+          <button type="button" id="btn-abrir-sistema">+ Nuevo sistema</button>
+          <div id="modal-sistema" class="modal hidden" aria-hidden="true">
+            <div class="modal__backdrop" data-close></div>
+            <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="ms-title">
+              <header class="modal__head">
+                <h3 id="ms-title">Crear sistema</h3>
+              </header>
+
+              <form id="form-sistema" class="modal__body">
+                <div class="field">
+                  <label for="ms-nombre">Nombre *</label>
+                  <input id="ms-nombre" name="nombre" type="text" required maxlength="120" />
+                </div>
+
+                <div class="field">
+                  <label for="ms-desc">Descripción</label>
+                  <textarea id="ms-desc" name="descripcion" rows="3" maxlength="500"></textarea>
+                </div>
+
+                <p id="ms-error" class="error" hidden></p>
+
+                <footer class="modal__foot">
+                  <button type="button" id="ms-cancelar" class="btn-sec">Cancelar</button>
+                  <button type="submit" id="ms-guardar" class="btn-pri">Guardar</button>
+                </footer>
+              </form>
+            </div>
+          </div>
         </div>
 
         <!-- Descripción del sistema -->
@@ -105,6 +133,90 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
     ta.addEventListener('input', grow);
     window.addEventListener('load', grow);
   }
+  
+  (function(){
+    const btnAbrir   = document.getElementById('btn-abrir-sistema');
+    const modal      = document.getElementById('modal-sistema');
+    const form       = document.getElementById('form-sistema');
+    const inpNombre  = document.getElementById('ms-nombre');
+    const txtDesc    = document.getElementById('ms-desc');
+    const btnGuardar = document.getElementById('ms-guardar');
+    const btnCancel  = document.getElementById('ms-cancelar');
+    const errorBox   = document.getElementById('ms-error');
+    const selSys     = document.getElementById('id_sistema'); // ← Tu combo de sistemas
+
+    function abrirModal(){
+      errorBox.hidden = true; errorBox.textContent = '';
+      form.reset();
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      setTimeout(()=> inpNombre.focus(), 0);
+    }
+    function cerrarModal(){
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Abrir/cerrar
+    btnAbrir?.addEventListener('click', abrirModal);
+    btnCancel?.addEventListener('click', cerrarModal);
+    modal?.addEventListener('click', (e)=>{
+      if (e.target.hasAttribute('data-close')) cerrarModal();
+    });
+    // ESC para cerrar
+    window.addEventListener('keydown', (e)=>{
+      if(!modal.classList.contains('hidden') && e.key === 'Escape') cerrarModal();
+    });
+
+    // Envío
+    form?.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      errorBox.hidden = true; errorBox.textContent = '';
+
+      const nombre = inpNombre.value.trim();
+      const descripcion = txtDesc.value.trim();
+
+      if(!nombre){
+        errorBox.textContent = 'El nombre es obligatorio.';
+        errorBox.hidden = false;
+        inpNombre.focus();
+        return;
+      }
+
+      btnGuardar.disabled = true;
+
+      try{
+        const resp = await fetch('../app/appTiket.php?accion=CrearSistema', {
+          method: 'POST',
+          headers: {'Content-Type':'application/x-www-form-urlencoded'},
+          body: new URLSearchParams({ nombre, descripcion })
+        });
+
+        // Esperamos JSON: { ok:true, id:123, nombre:"X" }
+        const data = await resp.json().catch(()=> ({}));
+
+        if(!resp.ok || !data.ok){
+          throw new Error(data?.error || `Error HTTP ${resp.status}`);
+        }
+
+        // Agregar opción al <select> y seleccionarla
+        if (selSys) {
+          const opt = new Option(data.nombre, data.id, true, true);
+          selSys.add(opt);
+          selSys.dispatchEvent(new Event('change'));
+        }
+
+        cerrarModal();
+        alert('Sistema creado exitosamente.');
+      }catch(err){
+        console.error(err);
+        errorBox.textContent = String(err.message || err) || 'No se pudo crear el sistema.';
+        errorBox.hidden = false;
+      }finally{
+        btnGuardar.disabled = false;
+      }
+    });
+  })()
 </script>
 
 <?php include __DIR__ . '/layout/footer.php'; ?>

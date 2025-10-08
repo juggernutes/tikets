@@ -113,4 +113,21 @@
     .logo-anim .centro{ width:56px; }
     .user-badge{ display:none; } /* si quieres ocultarlo en móvil */
   }
+
+
+   .hidden{display:none}
+  .modal{position:fixed;inset:0;z-index:1000}
+  .modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+  .modal__dialog{
+    position:relative;margin:8vh auto 0;max-width:520px;background:#fff;border-radius:12px;
+    padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.2)
+  }
+  .modal__head{margin-bottom:8px}
+  .field{display:grid;gap:6px;margin:10px 0}
+  .field input,.field textarea{border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px;width:100%}
+  .modal__foot{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+  .btn-pri{background:#0ea5e9;color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .btn-sec{background:#e2e8f0;color:#0f172a;border:none;padding:8px 14px;border-radius:8px;cursor:pointer}
+  .btn-pri[disabled]{opacity:.6;cursor:not-allowed}
+  .error{color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-radius:8px;padding:8px}
   

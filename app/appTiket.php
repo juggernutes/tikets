@@ -101,6 +101,27 @@ if (isset($_GET['accion'])) {
                 echo "Parámetros inválidos.";
             }
             break;
+        case 'tiket.avance':
+            $idTiket = intval($_GET['id_tiket']);
+            $idSoporte = intval($_SESSION['login_id']);
+            $idError = intval($_POST['id_error']) || 42;
+            $idSolucion = intval($_POST['id_solucion']) || 12;
+            $descripcionSolucion = $_POST['descripcion_solucion'];
+
+            if ($idTiket > 0 && $idSoporte > 0) {
+                $tiketResuelto = $tiketController->avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
+                if ($tiketResuelto) {
+                    header("Location: ../views/dashboard.php");
+                } else {
+                    // Manejo de error: no se pudo resolver el ticket
+                    echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+                }
+                exit;
+            } else {
+                // Manejo de error: IDs inválidos
+                echo "Parámetros inválidos.";
+            }
+            break;
         case 'cerrarTiket':
             $idTiket = intval($_GET['id_tiket']);
             $idUsuario = intval($_SESSION['login_id']);
@@ -174,13 +195,14 @@ if (isset($_GET['accion'])) {
                 echo "Correo no encontrado.";
             }
             break;
-        case 'buscarUsuario':
-            //manejo de busquda de correo
-            if (isset($_POST['correo'])) {
-                $correo = $_POST['correo'];
-                $loginController->buscarUsuario($correo);
+        case 'CrearSistema':
+            //manejo de crear registro de sistema
+            if (isset($_POST['nombre'], $_POST['descripcion'])) {
+                $nombre = $_POST['nombre'];
+                $descripcion = $_POST['descripcion'];
+                $sistemaController->crearSistema($nombre, $descripcion);
             } else {
-                echo "Correo no encontrado.";
+                echo "Datos no válidos.";
             }
             break;
         case 'cancelarTiket':

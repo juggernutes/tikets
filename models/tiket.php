@@ -72,6 +72,18 @@ class Tiket {
         return $stmt->affected_rows > 0;
     }
 
+    public function updatetiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
+        $op = 11;
+        $params = [
+            $idTiket, null, null, $idError, null, $idSoporte, $idSolucion, $descripcionSolucion, null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
+    }
+
      // Operación 5: cerrar ticket
     public function cerrar($idTiket, $idUsuario) {
         $op = 5;

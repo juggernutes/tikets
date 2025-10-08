@@ -8,7 +8,7 @@ if (!$idTiket) { echo 'No se proporcionó un ticket.'; exit; }
 $ticket = $tiketController->getTicketById($idTiket);
 if (!$ticket) { echo 'No se encontró el ticket.'; exit; }
 
-// 🔧 FIX: variable mal escrita ($tiket -> $ticket)
+// 🔧 FIX ya aplicado arriba ($ticket correcto)
 $empleado = null;
 if (isset($empleadoController)) {
   $empleado = $empleadoController->obtenerEmpleadoporNumeroC($ticket['Numero_Empleado'] ?? null);
@@ -16,8 +16,8 @@ if (isset($empleadoController)) {
 
 $title = 'Resolver ticket';
 $descripcionSolucion = $ticket['DESCRIPCION_SOLUCION'] ?? '';
-$selectedErrorId     = $ticket['ID_Error']    ?? '';
-$selectedSolucionId  = $ticket['ID_Solucion'] ?? '';
+$selectedErrorId     = (string)($ticket['ID_Error']    ?? '');
+$selectedSolucionId  = (string)($ticket['ID_Solucion'] ?? '');
 
 include __DIR__ . '/layout/header.php';
 ?>
@@ -58,11 +58,13 @@ include __DIR__ . '/layout/header.php';
       <p><strong>Sistema:</strong> <?= htmlspecialchars($ticket['SISTEMA']) ?></p>
       <p><strong>Fecha:</strong> <?= htmlspecialchars($ticket['FECHA']) ?></p>
       <p><strong>Estado:</strong>
-        <?php $s = strtolower($ticket['ESTADO'] ?? '');
-          $cls = $s==='abierto'?'b-abierto':($s==='en proceso'?'b-proceso':'b-cerrado'); ?>
+        <?php $s = strtolower($ticket['ESTADO'] ?? ''); $cls = $s==='abierto'?'b-abierto':($s==='en proceso'?'b-proceso':'b-cerrado'); ?>
         <span class="badge <?= $cls ?>"><?= htmlspecialchars($ticket['ESTADO']) ?></span>
       </p>
-      <?php $descripcion = $ticket['DESCRIPCION'] ?? ''; if (strpos((string)$descripcion, ' ') === false) { $descripcion = wordwrap($descripcion, 40, "\n", true);} ?>
+      <?php
+        $descripcion = $ticket['DESCRIPCION'] ?? '';
+        if (strpos((string)$descripcion, ' ') === false) { $descripcion = wordwrap($descripcion, 40, "\n", true); }
+      ?>
       <p><strong>Descripción:</strong><br><?= nl2br(htmlspecialchars($descripcion, ENT_QUOTES, 'UTF-8')) ?></p>
 
       <?php if ($empleado): ?>
@@ -75,20 +77,19 @@ include __DIR__ . '/layout/header.php';
           <?php if (!empty($empleado['Telefono'])): ?><p><strong>Teléfono:</strong> <?= htmlspecialchars($empleado['Telefono']) ?></p><?php endif; ?>
         </div>
       <?php endif; ?>
-
-      <!--<div class="actions">
-        <a class="btn" href="ticket.php?id=<?= urlencode((string)($ticket['ID_Tiket'] ?? '')) ?>">Ver detalle</a>
-      </div>-->
     </div>
   </div>
 
   <!-- FORMULARIO DE SOLUCIÓN -->
   <div class="tiket-solucion">
-    <form id="form-solucion" action="../app/appTiket.php?accion=solucionar&id_tiket=<?= urlencode((string)$ticket['ID_Tiket']) ?>" method="POST">
+    <form id="form-solucion"
+          action="../app/appTiket.php?accion=solucionar&id_tiket=<?= urlencode((string)$ticket['ID_Tiket']) ?>"
+          method="POST">
       <input type="hidden" name="id_tiket" value="<?= htmlspecialchars($ticket['ID_Tiket']) ?>">
 
       <div class="form-row">
-        <label for="id_error">SISTEMA</label>
+        <!-- 🔧 Era “SISTEMA” pero el select es de errores -->
+        <label for="id_error">ERROR</label>
         <select name="id_error" id="id_error" required>
           <option value="">Selecciona un error</option>
           <?php include __DIR__ . '/../partials/combo_errores.php'; ?>
@@ -96,7 +97,7 @@ include __DIR__ . '/layout/header.php';
       </div>
 
       <div class="form-row">
-        <label for="id_solucion">SOLUCION</label>
+        <label for="id_solucion">SOLUCIÓN</label>
         <select name="id_solucion" id="id_solucion" required>
           <option value="">Selecciona una solución</option>
           <?php include __DIR__ . '/../partials/combo_soluciones.php'; ?>
@@ -105,12 +106,22 @@ include __DIR__ . '/layout/header.php';
 
       <div class="form-row">
         <label for="descripcion_solucion">Descripción de la solución</label>
-        <textarea name="descripcion_solucion" id="descripcion_solucion" rows="7" maxlength="2000" placeholder="Qué hiciste, pasos, evidencia..." required><?= htmlspecialchars($descripcionSolucion) ?></textarea>
+        <textarea name="descripcion_solucion" id="descripcion_solucion" rows="7" maxlength="2000"
+                  placeholder="Qué hiciste, pasos, evidencia..." required><?= htmlspecialchars($descripcionSolucion) ?></textarea>
         <small class="muted"><span id="count">0</span>/2000</small>
       </div>
 
       <div class="actions">
+        <!-- ✅ Usa formaction/formmethod para “Avanzar” -->
+        <button type="submit" class="btn primary" id="btn-avanzar"
+                formaction="../app/appTiket.php?accion=tiket.avance&id_tiket=<?= urlencode((string)$ticket['ID_Tiket']) ?>"
+                formmethod="POST">
+          Avanzar
+        </button>
+
+        <!-- Este usa el action del form: solucionar -->
         <button type="submit" class="btn primary" id="btn-submit">Solucionar</button>
+
         <a class="btn" href="javascript:history.back()">Cancelar</a>
       </div>
     </form>
@@ -119,24 +130,59 @@ include __DIR__ . '/layout/header.php';
 
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    // Preseleccionar valores si el ticket ya tiene IDs guardados
     const selErr = document.getElementById('id_error');
     const selSol = document.getElementById('id_solucion');
-    const preErr = <?= json_encode((string)$selectedErrorId) ?>;
-    const preSol = <?= json_encode((string)$selectedSolucionId) ?>;
-    if (preErr) selErr.value = preErr;
-    if (preSol) selSol.value = preSol;
+    const preErr = <?= json_encode($selectedErrorId) ?>;
+    const preSol = <?= json_encode($selectedSolucionId) ?>;
+    if (selErr && preErr) selErr.value = preErr;
+    if (selSol && preSol) selSol.value = preSol;
 
-    // Contador de caracteres
     const ta = document.getElementById('descripcion_solucion');
     const count = document.getElementById('count');
-    const updateCount = () => { count.textContent = ta.value.length; }
-    ta.addEventListener('input', updateCount); updateCount();
+    if (ta && count){
+      const updateCount = () => { count.textContent = ta.value.length; };
+      ta.addEventListener('input', updateCount);
+      updateCount();
+    }
 
-    // Evitar doble envío
     const form = document.getElementById('form-solucion');
-    const btn = document.getElementById('btn-submit');
-    form.addEventListener('submit', function(){ btn.disabled = true; btn.textContent = 'Guardando…'; });
+    const btnSol = document.getElementById('btn-submit');
+    const btnAv  = document.getElementById('btn-avanzar');
+
+    function lockButtons(textSol = 'Guardando…', textAv = 'Avanzando…'){
+      if (btnSol) { btnSol.disabled = true; btnSol.dataset.old = btnSol.textContent; btnSol.textContent = textSol; }
+      if (btnAv)  { btnAv.disabled  = true; btnAv.dataset.old  = btnAv.textContent;  btnAv.textContent  = textAv;  }
+    }
+    function unlockButtons(){
+      if (btnSol) { btnSol.disabled = false; btnSol.textContent = btnSol.dataset.old || 'Solucionar'; }
+      if (btnAv)  { btnAv.disabled  = false; btnAv.textContent  = btnAv.dataset.old  || 'Avanzar'; }
+    }
+
+  if (btnAv && form && ta){
+    btnAv.addEventListener('click', function(e){
+      const texto = (ta.value || '').trim();
+      if (!texto) {
+        ta.focus();
+        alert('Para avanzar, escribe una descripción de la solución.');
+        e.preventDefault();
+        return;
+      }
+      lockButtons('Guardando…', 'Avanzando…');
+
+      const urlAvanzar = btnAv.getAttribute('formaction');
+      form.setAttribute('action', urlAvanzar);
+      form.submit();
+    });
+  }
+
+    if (form){
+      form.addEventListener('submit', function(e){
+        const submitter = e.submitter; 
+        if (submitter && submitter.id === 'btn-avanzar'){
+          lockButtons('Guardando…', 'Avanzando…');
+        } 
+      });
+    }
   });
 </script>
 

@@ -38,6 +38,19 @@ class Sistema {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$nombre, $descripcion]);
     }
+
+    public function actualizar($id, $nombre, $descripcion) {
+        $sql = "CALL sp_sistemas(4, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id, $nombre, $descripcion]);
+    }
+
+    public function lastInsertId() {
+        $sql = "CALL sp_sistemas(5, null, null, null)";
+        $result = $this->conn->prepare($sql);
+        $res = $result->execute();
+        
+    }
 }
 
 // Usando SP para crear un nuevo sistema
