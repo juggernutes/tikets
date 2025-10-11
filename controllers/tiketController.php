@@ -40,7 +40,7 @@ class TiketController
 
     public function tomarControlDeTiket($idTiket, $idSoporte)
     {
-        if ($this->model->tomarTiket($idTiket, $idSoporte)) {
+        if ($this->model->asignarSoporte($idTiket, $idSoporte)) {
             header("Location: ../views/resolver_tiket.php?id=$idTiket");
             exit;
         } else {

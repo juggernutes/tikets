@@ -1,166 +1,155 @@
 <?php
 class Tiket {
     private $conn;
+    public function __construct($db) { $this->conn = $db; }
 
-    public function __construct($db) {
-        $this->conn = $db;
-    }
+    /** Ejecuta el SP con 10 parámetros: 
+     *  Operacion, p_NumeroEmpleado, p_ID_Sistema, p_ID_Error, p_Descripcion, 
+     *  p_ID_Usuario, p_ID_Soporte, p_ID_Tiket, p_ID_Solucion, p_DetalleSolucion
+     */
+    private function ejecutarSP($op, array $p) {
+        // Asegura 9 params en orden (rellena con null)
+        $p = array_pad($p, 9, null);
+        array_unshift($p, $op); // Operacion como primer arg
 
-    // Método reutilizable para ejecutar cualquier operación del SP
-    private function ejecutarSP($op, $parametros = []) {
-        $params = array_merge([$op], $parametros);
-        $placeholders = implode(',', array_fill(0, count($params), '?'));
+        // Tipos:  i i i i s i i i i s   ->  "iiiisiiiis"
+        $types = "iiiisiiiis";
 
-        $types = '';
-        foreach ($params as $p) {
-            if (is_int($p)) {
-                $types .= 'i';
-            } elseif (is_string($p)) {
-                $types .= 's';
-            } else {
-                $types .= 's';
-            }
-        }
-
+        $placeholders = implode(',', array_fill(0, count($p), '?'));
         $stmt = $this->conn->prepare("CALL sp_tiket($placeholders)");
-        if (!$stmt) {
-            throw new Exception("Error al preparar SP: " . $this->conn->error);
+        if (!$stmt) throw new Exception("Error al preparar SP: ".$this->conn->error);
+
+        $stmt->bind_param($types, ...$p);
+        $stmt->execute();
+
+        // 1) TOMA EL RESULTSET PRINCIPAL
+        $res = $stmt->get_result();
+
+        // 2) LUEGO LIMPIA CUALQUIER OTRO RESULTSET DEL SP
+        while ($this->conn->more_results()) {
+            $this->conn->next_result();
+            $tmp = $this->conn->use_result();
+            if ($tmp) { $tmp->free(); }
         }
 
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-
-        while ($this->conn->more_results() && $this->conn->next_result()) {
-            $this->conn->use_result();
-        }
-
-        return $stmt->get_result();
+        return $res; // Puede ser false si el SP no hace SELECT
     }
 
-    // Operación 1: Crear nuevo ticket
-    public function crearTiket($numEmpleado, $idSistema, $descripcion) {
-        $params = [ null, $numEmpleado, $idSistema, 29, $descripcion, null, null, null, null];
-        $op = 1;
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-        return $stmt->affected_rows > 0;
+    /* 1. Crear nuevo ticket */
+    public function crearTiket($numEmpleado, $idSistema, $descripcion, $idError = 29) {
+        // op=1  => inserta y genera folio; el SP devuelve ID y folio
+        $res = $this->ejecutarSP(1, [
+            $numEmpleado,         // p_NumeroEmpleado (int)
+            $idSistema,           // p_ID_Sistema (int)
+            $idError,             // p_ID_Error (int) - usa 29 por default
+            $descripcion,         // p_Descripcion (text)
+            null,                 // p_ID_Usuario
+            null,                 // p_ID_Soporte
+            null,                 // p_ID_Tiket
+            null,                 // p_ID_Solucion
+            null                  // p_DetalleSolucion
+        ]);
+        return $res ? $res->fetch_assoc() : null; // ['ID_Tiket'=>..., 'SerieFolio'=>...]
     }
 
-    // Operación personalizada: soporte toma un ticket
-    public function tomarTiket($idTiket, $idSoporte) {
-        $op = 3;
-        $params = [$idTiket, null, null, null, null, $idSoporte, null, null, null];
-        
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
-    }
-
-        // Operación 4: Resolver ticket asignando error y solución
-    public function resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
-        $op= 4;
-        $params = [
-            $idTiket, null, null, $idError, null, $idSoporte, $idSolucion, $descripcionSolucion, null
-        ];
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
-    }
-
-    public function updatetiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
-        $op = 11;
-        $params = [
-            $idTiket, null, null, $idError, null, $idSoporte, $idSolucion, $descripcionSolucion, null
-        ];
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
-    }
-
-     // Operación 5: cerrar ticket
-    public function cerrar($idTiket, $idUsuario) {
-        $op = 5;
-        $params = [
-            $idTiket, null, null, null, null, null, null, null, $idUsuario
-        ];
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
-    }
-
-    //                                Operación 2: Obtener tickets por usuario
+    /* 2. Tickets de un usuario (abiertos) */
     public function getTiketsByUser($idUsuario) {
         return $this->ejecutarSP(2, [
-            null, null, null, null, null, null, null, null, $idUsuario
+            null, null, null, null, null,
+            null, null, null, $idUsuario
         ]);
     }
 
-    //                                  Operación 6: Obtener todos los tickets
-    public function obtenerTodosTikets($idSoporte) {
-        return $this->ejecutarSP(6, [
-            null, null, null, null, null, $idSoporte, null, null, null
-        ]);
-    }
-
-    public function getTiketById($idTiket) {
-        $result = $this->ejecutarSP(7, [
-            $idTiket, null, null, null, null, null, null, null, null
-        ]);
-        return $result->fetch_assoc();
-    }
-
-    
-    // Obtener un ticket específico
-    /*public function getTiket($idTiket) {
-        $result = $this->ejecutarSP(2, [
-            $idTiket,
-            null, null, null, null, null, null, null, null
-        ]);
-        return $result->fetch_assoc();
-    }*/
-
-    // Operación 3: Asignar soporte y marcar como EN PROCESO
+    /* 3. Asignar soporte (EN PROCESO) */
     public function asignarSoporte($idTiket, $idSoporte) {
-        return $this->ejecutarSP(3, [
-            $idTiket,
-            null, null, null, null,
+        $res = $this->ejecutarSP(3, [
+            null, null, null, null, null,
+            $idSoporte,           
+            $idTiket              
+        ]);
+        return $res !== false;
+    }
+
+    /* 3bis. Toma rápida */
+    public function tomarTiket($idTiket, $idSoporte) {
+        return $this->asignarSoporte($idTiket, $idSoporte);
+    }
+
+    /* 4. Resolver (pasa a Resuelto) */
+    public function resolver($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
+        $res = $this->ejecutarSP(4, [
+            null, null, $idError, null,     // err y desc (desc se manda al final)
+            null,                            // p_ID_Usuario
+            $idSoporte,                      // p_ID_Soporte
+            $idTiket,                        // p_ID_Tiket
+            $idSolucion,                     // p_ID_Solucion
+            $descripcionSolucion             // p_DetalleSolucion
+        ]);
+        return $res !== false;
+    }
+
+    /* 11. Guardar avance (permanece en 2) */
+    public function updatetiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
+        $res = $this->ejecutarSP(11, [
+            null, null, $idError, null,
             null,
             $idSoporte,
-            null, null
-        ]) !== false;
+            $idTiket,
+            $idSolucion,
+            $descripcionSolucion
+        ]);
+        return $res !== false;
     }
 
+    /* 5. Cerrar */
+    public function cerrar($idTiket, $idUsuario) {
+        $res = $this->ejecutarSP(5, [
+            null, null, null, null,
+            $idUsuario,          // p_ID_Usuario (quien cierra)
+            null,
+            $idTiket
+        ]);
+        return $res !== false;
+    }
+
+    /* 6. Todos los tickets (no cerrados) */
+    public function obtenerTodosTikets($idSoporte = null) {
+        return $this->ejecutarSP(6, [
+            null, null, null, null, null,
+            $idSoporte
+        ]);
+    }
+
+    /* 7. Ticket por ID */
+    public function getTiketById($idTiket) {
+        $res = $this->ejecutarSP(7, [
+            null, null, null, null, null,
+            null,
+            $idTiket
+        ]);
+        return $res ? $res->fetch_assoc() : null;
+    }
+
+    /* 8. Cerrados por usuario */
     public function getTicketsCerradosPorEmpleado($idUsuario) {
-        $result = $this->ejecutarSP(8, [
-            null, null, null, null, null, null, null, null, $idUsuario
+        return $this->ejecutarSP(8, [
+            null, null, null, null, null,
+            null, null, null, $idUsuario
         ]);
-        return $result;
     }
 
+    /* 9. Cerrados (general) */
     public function getTicketsCerrados() {
-        $result = $this->ejecutarSP(9, [
-            null, null, null, null, null, null, null, null, null
-        ]);
-        return $result;
+        return $this->ejecutarSP(9, [ ]);
     }
 
+    /* 10. Reabrir a estatus 2 */
     public function activarTiket($idTiket) {
-        $op = 10;
-        $params = [$idTiket, null, null, null, null, null, null, null, null];
-        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iiiiisiisi', $op, ...$params);
-        $stmt->execute();
-
-        return $stmt->affected_rows > 0;
+        $res = $this->ejecutarSP(10, [
+            null, null, null, null, null,
+            null,
+            $idTiket
+        ]);
+        return $res !== false;
     }
 }
-?>
