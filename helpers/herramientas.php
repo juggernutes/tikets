@@ -4,14 +4,9 @@
  * Formato: [fechaCodificada(14)] + [usuarioId(6)] + '-' + [hex(32)]
  * Ej.: A...J000123-4f8a... (total 53 chars)
  */
-function generarToken(int $usuarioId, ?DateTimeInterface $ahora = null, string $tz = 'America/Tijuana'): string
+function generarToken(int $usuarioId, DateTime $ahora): string
 {
     // Normaliza $ahora y usa DateTimeImmutable para evitar mutaciones
-    if ($ahora === null) {
-        $ahora = new DateTimeImmutable('now', new DateTimeZone($tz));
-    } elseif (!($ahora instanceof DateTimeImmutable)) {
-        $ahora = DateTimeImmutable::createFromInterface($ahora);
-    }
 
     // Usa 24h (H) para evitar ambigüedad 12h
     $fechaNum  = $ahora->format('YmdHis'); // 14 dígitos

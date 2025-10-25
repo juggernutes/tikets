@@ -74,8 +74,8 @@ class TiketController
 
     public function getTicketsCerrados($idUsuario, $rol)
     {
-        echo "Rol: $rol";
-        echo "ID Usuario: $idUsuario";
+        //echo "Rol: $rol";
+        //echo "ID Usuario: $idUsuario";
         if ($rol === 'EMPLEADO') {
             return $this->model->getTicketsCerradosPorEmpleado($idUsuario);
         } elseif ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
@@ -91,6 +91,18 @@ class TiketController
             exit;
         } else {
             return false;
+        }
+    }
+
+    public function cancelarTiket($idTiket, $idUsuario) {
+        $idError = 29;
+        $idSolucion = 11;
+        $descripcionSolucion = "CANCELADO POR EL USUARIO";
+
+        if($this->model->resolver($idTiket, $idUsuario, $idError, $idSolucion, $descripcionSolucion)){
+            header("Location: ../views/dashboard.php");
+        }else{
+            echo "BUELBE A INTENTARLO";
         }
     }
 }

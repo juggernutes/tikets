@@ -61,13 +61,17 @@ class Login
             return $stmt->execute();
         }*/
 
+    
     public function obtenerCuentaPorCorreo($correo): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?, NULL, NULL)");
         $op = 5;
         $stmt->bind_param("is", $op, $correo);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $res = $stmt->get_result()->fetch_assoc();
+        $stmt->Close();
+        $this->_flushResults();
+        return $res;
     }
 
     public function guardarToken($idLogin, $token, $fechaExpiracion): bool
@@ -78,7 +82,7 @@ class Login
         return $stmt->execute();
     }
 
-    public function buscarTokenPorHash($token): ?array
+    public function buscarToken($token): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, ?, NULL)");
         $op = 7;
@@ -86,6 +90,8 @@ class Login
         $stmt->execute();
         $res = $stmt->get_result()->fetch_assoc();
         $stmt->close();
+
+        
         return $res;
     }
 

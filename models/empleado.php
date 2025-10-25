@@ -13,13 +13,13 @@ class Empleado
         $this->conn = $db;
     }
 
-    public function obtenerEmpleados($userId)
+    public function obtenerEmpleados($idsucursal)
     {
         $empleados = [];
 
         if ($stmt = $this->conn->prepare("CALL sp_empleados(?, ?, null)")) {
             $op = 1;
-            $stmt->bind_param("ii", $op, $userId);
+            $stmt->bind_param("ii", $op, $idsucursal);
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
@@ -32,6 +32,27 @@ class Empleado
         }
 
         return $empleados;
+    }
+
+    public function obtenerSucursales()
+    {
+        $sucursales = [];
+
+        if ($stmt = $this->conn->prepare("CALL sp_empleados(?, null, null)")) {
+            $op = 5;
+            $stmt->bind_param("i", $op);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $sucursales[] = $row;
+            }
+            $stmt->close();
+            while ($this->conn->more_results() && $this->conn->next_result()) {
+                $this->conn->use_result();
+            }
+        }
+
+        return $sucursales;
     }
 
     public function obtenerEmpleadoPorId($numeroEmpleado)

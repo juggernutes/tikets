@@ -175,13 +175,25 @@ if (isset($_GET['accion'])) {
             }
             break;
         case 'buscarUsuario':
+            //manejo de busquda de correo
             if (isset($_POST['correo'])) {
                 $correo = $_POST['correo'];
-                $loginController->buscarUsuario($correo);
+                //$loginController->buscarUsuario($correo);
             } else {
                 echo "Correo no encontrado.";
             }
             break;
+        case 'cancelarTiket':
+            //Manejo de cancelacion
+            $idTiket = intval($_GET['id_tiket']);
+            $idUsuario = intval($_SESSION['login_id']);
+
+            if ($idTiket > 0) {
+                $ok = $tiketController->cancelarTiket($idTiket, $idUsuario);
+            } else {
+                echo "No hay accion";
+            }
+            break;    
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";
