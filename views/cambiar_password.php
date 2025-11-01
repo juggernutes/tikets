@@ -73,7 +73,7 @@ $pageClass = 'auth-page darker';
             </div>
 
             <div class="actions">
-              <a class="link" href="../public/index.php">Cancelar</a>
+              <!--<a class="link" href="../public/index.php">Cancelar</a>-->
               <button type="submit" class="btn">Actualizar</button>
             </div>
           </form>

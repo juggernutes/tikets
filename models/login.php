@@ -18,17 +18,39 @@ class Login
     }
 
 
-    public function actualizarPasswordSP($idLogin, $nuevoHash): bool
+    public function actualizarPasswordSP(int $idLogin, string $hash): ?array
     {
-        $stmt = $this->conn->prepare("CALL sp_login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)");
+        $sql = "CALL sp_Login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)";
+        $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            error_log("Error preparando sp_Login: " . $this->conn->error);
+            return null;
+        }
+
         $op = 2;
-        $stmt->bind_param("iis", $op, $idLogin, $nuevoHash);
-        $ok = $stmt->execute();
-        $err = $stmt->error;
+        $stmt->bind_param('iis', $op, $idLogin, $hash);
+
+        if (!$stmt->execute()) {
+            error_log("Error ejecutando sp_Login (Operacion=2): " . $stmt->error);
+            $stmt->close();
+            return null;
+        }
+
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+
         $stmt->close();
-        $this->_flushResults();
-        return $ok && $err === 0;
+
+        // Limpieza de posibles result sets adicionales (importante con procedimientos)
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+
+        return $row ?: null;
     }
+
+
 
     public function insertarLoginSP($cuenta, $hash, $idUsuario): bool
     {
@@ -61,7 +83,7 @@ class Login
             return $stmt->execute();
         }*/
 
-    
+
     public function obtenerCuentaPorCorreo($correo): ?array
     {
         $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, ?, NULL, NULL)");
@@ -91,7 +113,7 @@ class Login
         $res = $stmt->get_result()->fetch_assoc();
         $stmt->close();
 
-        
+
         return $res;
     }
 

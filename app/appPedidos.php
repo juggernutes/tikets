@@ -1,8 +1,13 @@
 <?php
 ob_start();
 
-if(session_status() === PHP_SESSION_NONE){
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+if (empty($ALLOW_PUBLIC) && !isset($_SESSION['login_id'])) {
+    header("Location: ../public/index.php");
+    exit;
 }
 
 //cargar la conexion a la base de datos

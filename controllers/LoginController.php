@@ -21,33 +21,74 @@ class LoginController
         $usuario = $this->loginModel->validarUsuarioSP($cuenta);
 
         if ($usuario && password_verify($passwordIngresado, $usuario['PasswordHash'])) {
-            $_SESSION['login_id'] = $usuario['ID_Login'];
-            $_SESSION['rol'] = $usuario['Rol'];
-            $_SESSION['nombre'] = $usuario['Nombre'];
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
 
+            $_SESSION['login_id'] = $usuario['ID_Login'];
+            $_SESSION['rol']      = strtoupper(trim($usuario['Rol']));
+            $_SESSION['nombre']   = $usuario['Nombre'];
+
+            // Si debe cambiar contraseña
             if ($usuario['DebeCambiarPassword']) {
                 header("Location: ../views/cambiar_password.php?id=" . $usuario['ID_Login']);
                 exit;
-            } else {
-                header("Location: ../views/dashboard.php");
-                exit;
             }
+
+            // Redirección según rol
+            switch ($_SESSION['rol']) {
+                case 'VENDEDOR':
+                    header("Location: ../views/pedido.php");
+                    break;
+                case 'SUPERVISOR':
+                    header("Location: ../views/supervisor_dashboard.php");
+                    break;
+                default:
+                    header("Location: ../views/dashboard.php");
+                    break;
+            }
+            exit;
         } else {
             header("Location: ../helpers/401.php");
+            exit;
         }
     }
 
     public function cambiarPassword($idLogin, $nuevoPassword)
     {
         $hash = password_hash($nuevoPassword, PASSWORD_DEFAULT);
-        $ok = $this->loginModel->actualizarPasswordSP($idLogin, $hash);
+        $row  = $this->loginModel->actualizarPasswordSP($idLogin, $hash); // <-- recibe array o null
 
-        if ($ok) {
-            header("Location: ../views/dashboard.php");
-        } else {
-            echo "Error al cambiar la contraseña.";
+        if ($row && (int)($row['rows_affected'] ?? 0) > 0) {
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            session_regenerate_id(true);
+
+            // Refresca/asegura sesión con los datos devueltos por el SP
+            $_SESSION['login_id']            = (int)($row['ID_Login'] ?? $idLogin);
+            $_SESSION['rol']                 = strtoupper(trim($row['Rol'] ?? ($_SESSION['rol'] ?? '')));
+            $_SESSION['nombre']              = $row['Nombre'] ?? ($_SESSION['nombre'] ?? '');
+            $_SESSION['DebeCambiarPassword'] = 0;
+
+            // Redirección por rol
+            switch ($_SESSION['rol']) {
+                case 'VENDEDOR':
+                    header("Location: ../views/pedido.php");
+                    break;
+                case 'SUPERVISOR':
+                    header("Location: ../views/supervisor_dashboard.php");
+                    break;
+                default:
+                    header("Location: ../views/dashboard.php");
+                    break;
+            }
+            exit;
         }
+
+        // Si falla:
+        header("Location: ../views/cambiar_password.php?id={$idLogin}&error=1");
+        exit;
     }
+
 
     /*public function restablecerContrasena(string $correo): array
     {
@@ -223,7 +264,6 @@ class LoginController
 
             // Todo OK
             return true;
-
         } catch (\Throwable $e) {
             error_log('[ERROR restablecerContrasena] ' . $e->getMessage());
             return false; // neutro
@@ -316,14 +356,16 @@ class LoginController
             © 2025 Empacadora Rosarito.";
 
         $email = new EmailHelper();
-        $res = $email->enviarCorreo($correo, $asunto, $mensaje, $altBody); // $res es array
+        $res = $email->enviarCorreo($correo, $asunto, $mensaje, $altBody);
 
-        // Opcional: log útil
-        if (!$res) {
+        // Normaliza a booleano según respuesta del helper
+        $ok = is_array($res) ? (bool)($res['ok'] ?? false) : (bool)$res;
+
+        if (!$ok) {
             error_log("[RESET][MAIL] ERROR: no se pudo enviar el correo a $correo");
         }
 
-        return $res;
+        return $ok;
     }
 
     /*public function validarToken($token)

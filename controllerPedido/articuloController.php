@@ -1,12 +1,14 @@
 <?php
 
+require_once __DIR__ . '/../modelsPedido/articuloModel.php';
+
 class ArticuloController
 {
     private $articuloModel;
 
-    public function __construct($articuloModel)
+    public function __construct($conn)
     {
-        $this->articuloModel = $articuloModel;
+        $this->articuloModel = new ArticuloModel($conn);
     }
 
     public function getAllArticulos()
@@ -14,13 +16,6 @@ class ArticuloController
         return $this->articuloModel->getAllArticulos();
     }
 
-    public function getArticuloById($id)
-    {
-        return $this->articuloModel->getArticuloById($id);
-    }
+   
 
-    public function createArticulo($nombre, $descripcion)
-    {
-        return $this->articuloModel->createArticulo($nombre, $descripcion);
-    }
 }

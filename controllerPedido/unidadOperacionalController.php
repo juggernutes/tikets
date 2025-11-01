@@ -1,12 +1,14 @@
 <?php
 
+require_once __DIR__ . '/../modelsPedido/unidadOperacionalModel.php';
+
 class UnidadOperacionalController
 {
     private $unidadOperacionalModel;
 
-    public function __construct($unidadOperacionalModel)
+    public function __construct($conn)
     {
-        $this->unidadOperacionalModel = $unidadOperacionalModel;
+        $this->unidadOperacionalModel = new UnidadOperacionalModel($conn);
     }
 
     public function getAllUnidadesOperacionales()
@@ -19,8 +21,8 @@ class UnidadOperacionalController
         return $this->unidadOperacionalModel->getUnidadOperacionalById($id);
     }
 
-    public function createUnidadOperacional($nombre, $descripcion)
+    public function getIdUsuario($usuario)
     {
-        return $this->unidadOperacionalModel->createUnidadOperacional($nombre, $descripcion);
+        return $this->unidadOperacionalModel->getIdUsuario($usuario);
     }
 }

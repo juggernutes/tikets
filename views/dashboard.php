@@ -40,7 +40,7 @@ $totalCerrados  = count($cerrados);
   // Recargar la pagina
   echo '<meta http-equiv="refresh" content="180">';
   exit;
-}*/
+}
 $rol = $_SESSION['rol'] ?? 'Invitado';
 // REDIRECCIONAR SEGÚN ROL
 if ($rol === 'SUPERVISOR' || $rol === 'ALMACEN') {
@@ -50,7 +50,7 @@ if ($rol === 'SUPERVISOR' || $rol === 'ALMACEN') {
 if ($rol === 'VENDEDOR') {
     header('Location: ./pedido.php');
     exit;
-} 
+} */
 ?>
 
 <style>

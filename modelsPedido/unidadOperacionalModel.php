@@ -23,7 +23,25 @@ class UnidadOperacionalModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+    public function getIdUsuario($usuario) 
+    {
+        $unidaddeventa = [];
+        $op = 3;
+        if($stmt = $this->conn->prepare("CALL sp_unidad_operacional(?,null, ?)")) {
+            $stmt->bind_param("ii", $op, $usuario);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $unidaddeventa[] = $row;
+            }
+            $stmt->close();
+            while ($this->conn->more_results() && $this->conn->next_result()) {
+                $this->conn->use_result();
+            }
+        }
+
+        return $unidaddeventa;
+    }
 
 
 }
