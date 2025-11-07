@@ -10,9 +10,17 @@ $unidad = $unidadOperacionalController->getIdUsuario($_SESSION['login_id'] ?? 0)
 $pesoMaximo = $unidad[0]['CAPMAX'] ?? 0;
 $pesoMinimo = $unidad[0]['CAPMIN'] ?? 0;
 $carro = $unidad[0]['CARRO'] ?? '';
+$registros = 0;
+$volumenTotal = 0;
 
 ?>
 <link rel="stylesheet" href="../tools/newStyle.css">
+
+<input type="hidden" id="IDUO" value="<?= (int)($unidad[0]['IDUO'] ?? 0) ?>">
+<input type="hidden" id="iduser" value="<?= (int)($_SESSION['login_id'] ?? 0) ?>">
+<input type="hidden" id="ID_CAPUV" value="<?= (int)($unidad[0]['ID_CAPUV'] ?? 0) ?>">
+<input type="hidden" id="ID_SUPERVISOR_UO" value="<?= (int)($unidad[0]['ID_SUPERVISOR_UO'] ?? 0) ?>">
+<input type="hidden" id="ID_ALMACEN_UO" value="<?= (int)($unidad[0]['ID_ALMACEN_UO'] ?? 0) ?>">
 
 <main class="page" style="padding:18px;">
     <header class="page-head" style="max-width:1100px;margin:0 auto 14px;">
@@ -74,12 +82,12 @@ $carro = $unidad[0]['CARRO'] ?? '';
                 </thead>
                 <tbody id="rows">
                     <tr>
-                        <td colspan="3" style="padding:14px;">Sin renglones</td>
+                        <td colspan="5" style="padding:14px;">Sin renglones</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="2"><strong>Renglones: <span id="count">0</span></strong></td>
+                        <td colspan="2"><strong>Renglones: <span id="rowCount">0</span></strong></td>
                         <td colspan="3" style="text-align:right;"><strong>Total: <span id="totalKg">0.000</span> kg</strong></td>
                     </tr>
                 </tfoot>
@@ -91,7 +99,10 @@ $carro = $unidad[0]['CARRO'] ?? '';
         </div>
 
         <footer style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;">
-            <div class="muted" style="font-size:1rem;"><span id="count">0</span> renglón(es)</div>
+            <div class="muted" style="font-size:1rem;">
+                <span id="rowCount2">0</span> renglón(es)
+            </div>
+
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <button id="btnLimpiar" class="btn-cancelar" type="button" style="padding:12px 18px;font-size:1rem;">Limpiar</button>
                 <button id="btnGuardar" class="app-btnCap" type="button" style="padding:12px 18px;font-size:1rem;">Guardar pedido</button>
@@ -102,8 +113,9 @@ $carro = $unidad[0]['CARRO'] ?? '';
 
             <div>
                 <label class="lbl" for="obs" style="display:block;font-weight:700;margin-bottom:6px;">Observaciones</label>
-                <textarea id="obs" class="in" placeholder="Ej. pedido tempranero o notas adicionales…"
-                    style="width:100%;min-height:100px;resize:vertical;padding:12px;font-size:1.05rem;border-radius:8px;"></textarea>
+                <textarea id="obs" class="in" placeholder="Ej. Aclaraciones necesarias…"
+                    style="width:100%;min-height:100px;resize:vertical;padding:12px;font-size:1.05rem;border-radius:8px;">
+                </textarea>
             </div>
         </section>
         <div id="msg" class="muted" style="margin-top:10px;font-size:1rem;"></div>
@@ -119,53 +131,74 @@ $carro = $unidad[0]['CARRO'] ?? '';
             const selectArt = qs('#articulo');
 
             const state = {
-                items: [] // { id, nombre, cantidad, pesoUnit }
-            };
+                items: []
+            }; // { id, nombre, cantidad, pesoUnit }
+
+            const pesoMax = parseFloat('<?= (float)$pesoMaximo ?>') || 0;
+            const pesoMin = parseFloat('<?= (float)$pesoMinimo ?>') || 0;
 
             const e = v => (v ?? '').toString()
                 .replaceAll('&', '&amp;').replaceAll('<', '&lt;')
                 .replaceAll('>', '&gt;').replaceAll('"', '&quot;')
-                .replaceAll("'", '&#039;');
+                .replaceAll("'", "&#039;");
+
+            function calcTotales() {
+                let totalKg = 0;
+                const itemsConVol = state.items.map(it => {
+                    const volArt = (Number(it.cantidad) || 0) * (Number(it.pesoUnit) || 0);
+                    totalKg += volArt;
+                    return {
+                        ...it,
+                        volArt
+                    };
+                });
+                return {
+                    itemsConVol,
+                    totalKg
+                };
+            }
 
             function render() {
-                if (state.items.length === 0) {
-                    rows.innerHTML = `<tr><td colspan="4" style="padding:12px;">Sin renglones</td></tr>`;
-                    qs('#count').textContent = 0;
+                const {
+                    itemsConVol,
+                    totalKg
+                } = calcTotales();
+
+                if (itemsConVol.length === 0) {
+                    rows.innerHTML = `<tr><td colspan="5" style="padding:12px;">Sin renglones</td></tr>`;
+                    qs('#rowCount').textContent = itemsConVol.length;
+                    qs('#rowCount2').textContent = itemsConVol.length;
                     qs('#totalKg').textContent = '0.000';
                     return;
                 }
 
-                let totalKg = 0;
+                rows.innerHTML = itemsConVol.map((it, i) => `
+      <tr style="font-size:.75rem;">
+        <td style="padding:4px;">${e(it.nombre)}</td>
+        <td style="padding:4px;">
+          <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*"
+                 value="${e(it.cantidad)}" data-i="${i}"
+                 class="in qty" autocomplete="off" enterkeyhint="done" style="width: 60px;">
+        </td>
+        <td style="padding:4px;">${(+it.pesoUnit).toFixed(3)} kg/u</td>
+        <td style="padding:4px;">${it.volArt.toFixed(3)} kg</td>
+        <td style="padding:4px;">
+          <button class="btn-cancelar btnDel btn-sm" data-i="${i}" type="button">X</button>
+        </td>
+      </tr>
+    `).join('');
 
-                rows.innerHTML = state.items.map((it, i) => {
-                    const pesoTotal = (Number(it.cantidad) * Number(it.pesoUnit)) || 0;
-                    totalKg += pesoTotal;
-                    return `
-        <tr style="font-size:.75rem;">
-          <td style="padding:4px;">${e(it.nombre)}</td>
-          <td style="padding:4px;">
-            <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*"
-                   value="${e(it.cantidad)}" data-i="${i}"
-                   class="in qty-input qty" autocomplete="off" enterkeyhint="done" style="width: 45px;">
-          </td>
-          <td style="padding:4px;">${e(it.pesoUnit)} kg/u</td>
-          <td style="padding:4px;">${pesoTotal.toFixed(3)} kg</td>
-          <td style="padding:4px;">
-            <button class="btn-cancelar btnDel btn-sm" data-i="${i}" type="button">X</button>
-          </td>
-        </tr>`;
-                }).join('');
-
-                qs('#count').textContent = state.items.length;
+                qs('#rowCount').textContent = itemsConVol.length;
+                qs('#rowCount2').textContent = itemsConVol.length;
                 qs('#totalKg').textContent = totalKg.toFixed(3);
             }
 
-            // AGREGAR RENGLÓN
+            // Agregar renglón
             qs('#btnAgregar').addEventListener('click', () => {
                 const artSel = selectArt;
                 const id = parseInt(artSel.value || '0', 10);
                 const nombre = artSel.options[artSel.selectedIndex]?.text?.trim() || '';
-                const pesoUnit = parseFloat(artSel.options[artSel.selectedIndex]?.dataset?.peso || '0'); // <<--
+                const pesoUnit = parseFloat(artSel.options[artSel.selectedIndex]?.dataset?.peso || '0');
                 const raw = qs('#cantidad').value.trim().replace(',', '.');
                 const cantidad = parseFloat(raw);
 
@@ -174,7 +207,7 @@ $carro = $unidad[0]['CARRO'] ?? '';
                     return;
                 }
                 if (!isFinite(cantidad) || cantidad <= 0) {
-                    msg.textContent = 'Indica una cantidad mayor a 0.';
+                    msg.textContent = 'Indica una cantidad > 0.';
                     return;
                 }
                 if (!isFinite(pesoUnit) || pesoUnit <= 0) {
@@ -183,17 +216,13 @@ $carro = $unidad[0]['CARRO'] ?? '';
                 }
 
                 const dup = state.items.find(i => i.id === id);
-                if (dup) {
-                    dup.cantidad = +(dup.cantidad) + cantidad;
-                    // dup.pesoUnit = pesoUnit; // normalmente no cambia, pero si quieres lo sincronizas
-                } else {
-                    state.items.push({
-                        id,
-                        nombre,
-                        cantidad,
-                        pesoUnit
-                    }); // <<--
-                }
+                if (dup) dup.cantidad = (+dup.cantidad) + cantidad;
+                else state.items.push({
+                    id,
+                    nombre,
+                    cantidad,
+                    pesoUnit
+                });
 
                 qs('#cantidad').value = '';
                 msg.textContent = '';
@@ -201,18 +230,17 @@ $carro = $unidad[0]['CARRO'] ?? '';
                 selectArt.focus();
             });
 
-            // Editar cantidad en la tabla
+            // Editar cantidad
             rows.addEventListener('input', ev => {
-                if (ev.target.classList.contains('qty')) {
-                    const i = +ev.target.dataset.i;
-                    let v = parseFloat(ev.target.value.replace(',', '.'));
-                    if (!isFinite(v) || v < 0) v = 0;
-                    state.items[i].cantidad = v;
-                    render(); // re-render para actualizar peso total por fila y total general
-                }
+                if (!ev.target.classList.contains('qty')) return;
+                const i = +ev.target.dataset.i;
+                let v = parseFloat(ev.target.value.replace(',', '.'));
+                if (!isFinite(v) || v < 0) v = 0;
+                state.items[i].cantidad = v;
+                render();
             });
 
-            // Eliminar renglón
+            // Eliminar
             rows.addEventListener('click', ev => {
                 const btn = ev.target.closest('.btnDel, .btn-cancelar');
                 if (!btn) return;
@@ -223,40 +251,91 @@ $carro = $unidad[0]['CARRO'] ?? '';
                 }
             });
 
-            // Limpiar todo
+            // Limpiar
             qs('#btnLimpiar').addEventListener('click', () => {
                 state.items = [];
                 render();
                 msg.textContent = '';
             });
 
-            // Guardar preventa (placeholder)
+            // Guardar: valida capacidad y envía
             qs('#btnGuardar').addEventListener('click', async () => {
                 if (state.items.length === 0) {
                     msg.textContent = 'Agrega al menos un renglón.';
                     return;
                 }
-                // Aquí puedes enviar state.items con id, cantidad y pesoUnit si quieres persistir peso
-                // fetch(API, { method:'POST', body: JSON.stringify({ items: state.items }), ... })
 
-                msg.textContent = '✅ Pedido enviado';
-                msg.style.color = '#1e8449';
+                const {
+                    itemsConVol,
+                    totalKg
+                } = calcTotales();
 
-                state.items = [];
-                render();
-                qs('#uv').value = '';
-                selectArt.value = '';
-                qs('#cantidad').value = '';
-                qs('#obs').value = '';
-                selectArt.focus();
+                // Validación capacidad (opcional: bloquea o solo avisa)
+                if (pesoMax > 0 && totalKg > pesoMax + 0.001) {
+                    msg.textContent = `❌ Excede la capacidad máxima (${totalKg.toFixed(3)} kg > ${pesoMax.toFixed(3)} kg).`;
+                    msg.style.color = '#b03a2e';
+                    return;
+                }
+                if (pesoMin > 0 && totalKg < pesoMin - 0.001) {
+                    msg.textContent = `⚠️ Por debajo de la carga mínima (${totalKg.toFixed(3)} kg < ${pesoMin.toFixed(3)} kg).`;
+                    msg.style.color = '#b07d2e';
+                    // Si deseas bloquear, agrega: return;
+                }
 
-                setTimeout(() => {
-                    msg.textContent = '';
-                    msg.style.color = '';
-                }, 2500);
+                const header = {
+                    ID_CAPUV: +qs('#ID_CAPUV').value || 0,
+                    ID_UNIDAD: +qs('#IDUO').value || 0,
+                    ID_SUPERVISOR_UO: +qs('#ID_SUPERVISOR_UO').value || 0,
+                    ID_ALMACEN_UO: +qs('#ID_ALMACEN_UO').value || 0,
+                    Registro: itemsConVol.length,
+                    Volumen: +totalKg.toFixed(3),
+                    Obser: (qs('#obs').value || '').trim(),
+                    ID_USUARIO: +qs('#iduser').value || 0
+                };
+
+                const payload = {
+                    header,
+                    items: itemsConVol.map(it => ({
+                        idArticulo: it.id,
+                        cantidad: +(+it.cantidad).toFixed(3), // piezas
+                        volArt: +(+it.volArt).toFixed(3), // kg
+                        pesoUnit: +(+it.pesoUnit).toFixed(3) // kg/u (por si quieres persistirlo)
+                    }))
+                };
+
+                try {
+                    const r = await fetch('../app/appPedidos.php?action=guardar', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin', // asegura cookies/sesión
+                        body: JSON.stringify(payload)
+                    });
+
+                    const out = await r.json();
+                    if (!r.ok) throw new Error(out?.error || 'Error al guardar');
+
+                    msg.textContent = `✅ Pedido ${out.folio} guardado`;
+                    msg.style.color = '#1e8449';
+
+                    state.items = [];
+                    render();
+                    selectArt.value = '';
+                    qs('#cantidad').value = '';
+                    qs('#obs').value = '';
+
+                    setTimeout(() => {
+                        msg.textContent = '';
+                        msg.style.color = '';
+                    }, 2500);
+                } catch (err) {
+                    msg.textContent = `❌ ${err.message}`;
+                    msg.style.color = '#b03a2e';
+                }
             });
 
-            // --- filtro por línea (tu código actual) ---
+            // --- filtros por línea (tus botones ya sirven con normalización) ---
             const norm = s => (s || '').toString().normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
             const contBotones = document.getElementById('segLineas');
             const options = Array.from(selectArt.options);
@@ -284,5 +363,6 @@ $carro = $unidad[0]['CARRO'] ?? '';
             render();
         })();
     </script>
+
 
     <?php include __DIR__ . '/layout/footer.php'; ?>

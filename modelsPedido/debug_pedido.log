@@ -1,0 +1,132 @@
+2025-11-06 14:15:24 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":400,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":400,"volArt":400,"pesoUnit":1}]
+2025-11-06 14:15:24 | SP HEADER CALL with: IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=400, Fecha=2025-11-06 14:15:24, Obser=, IdUsuario=119
+2025-11-06 14:27:33 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":3,"Volumen":412.5,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":200,"volArt":200,"pesoUnit":1},{"idArticulo":2013,"cantidad":100,"volArt":112.5,"pesoUnit":1.125},{"idArticulo":3018,"cantidad":100,"volArt":100,"pesoUnit":1}]
+2025-11-06 14:27:33 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=3, Dia=ju, Semana=45, Volumen=412.5, Fecha=2025-11-06 14:27:33, Obser=, IdUsuario=119
+2025-11-06 14:30:52 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":4,"Volumen":442.5,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":100,"volArt":100,"pesoUnit":1},{"idArticulo":2013,"cantidad":100,"volArt":112.5,"pesoUnit":1.125},{"idArticulo":8003,"cantidad":100,"volArt":30,"pesoUnit":0.3},{"idArticulo":5502,"cantidad":10,"volArt":200,"pesoUnit":20}]
+2025-11-06 14:30:52 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=4, Dia=ju, Semana=45, Volumen=442.5, Fecha=2025-11-06 14:30:52, Obser=, IdUsuario=119
+2025-11-06 14:44:27 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":700,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":700,"volArt":700,"pesoUnit":1}]
+2025-11-06 14:44:27 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=700, Fecha=2025-11-06 14:44:27, Obser=, IdUsuario=119
+2025-11-06 15:01:41 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":562.5,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2013,"cantidad":500,"volArt":562.5,"pesoUnit":1.125}]
+2025-11-06 15:01:41 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=562.5, Fecha=2025-11-06 15:01:41, Obser=, 
+                IdUsuario=119
+2025-11-06 15:06:33 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 15:06:33 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 15:06:33, Obser=, IdUsuario=119
+2025-11-06 15:12:48 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":400,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1003,"cantidad":200,"volArt":400,"pesoUnit":2}]
+2025-11-06 15:12:48 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=400, Fecha=2025-11-06 15:12:48, Obser=, IdUsuario=119
+2025-11-06 16:11:36 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":600,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2006,"cantidad":300,"volArt":600,"pesoUnit":2}]
+2025-11-06 16:11:36 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=600, Fecha=2025-11-06 16:11:36, Obser=, IdUsuario=119
+2025-11-06 16:11:59 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":230,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1005,"cantidad":50,"volArt":230,"pesoUnit":4.6}]
+2025-11-06 16:11:59 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=230, Fecha=2025-11-06 16:11:59, Obser=, IdUsuario=119
+2025-11-06 16:13:29 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 16:13:29 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 16:13:29, Obser=, IdUsuario=119
+2025-11-06 16:13:29 | SP DETALLE CALL with: operacion=2, IdPedido=11, Folio=TIJ-PED-20251106-0004, IdArticulo=1002, Registro=1, Cantidad=500, VolumenArt=500, IdUsuario=119
+2025-11-06 16:19:39 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 16:19:39 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 16:19:39, Obser=, IdUsuario=119
+2025-11-06 16:19:39 | SP DETALLE CALL with: operacion=2, IdPedido=12, Folio=TIJ-PED-20251106-0005, IdArticulo=1002, Registro=1, Cantidad=500, VolumenArt=500, IdUsuario=119
+2025-11-06 16:27:26 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":3,"Volumen":485,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2013,"cantidad":200,"volArt":225,"pesoUnit":1.125},{"idArticulo":1001,"cantidad":300,"volArt":60,"pesoUnit":0.2},{"idArticulo":2099,"cantidad":100,"volArt":200,"pesoUnit":2}]
+2025-11-06 16:27:26 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=3, Dia=ju, Semana=45, Volumen=485, Fecha=2025-11-06 16:27:26, Obser=, IdUsuario=119
+2025-11-06 16:27:26 | SP DETALLE CALL with: operacion=2, IdPedido=13, Folio=TIJ-PED-20251106-0006, IdArticulo=2013, Registro=1, Cantidad=200, VolumenArt=225, IdUsuario=119
+2025-11-06 16:27:26 | SP DETALLE CALL with: operacion=2, IdPedido=13, Folio=TIJ-PED-20251106-0006, IdArticulo=1001, Registro=2, Cantidad=300, VolumenArt=60, IdUsuario=119
+2025-11-06 16:27:26 | SP DETALLE CALL with: operacion=2, IdPedido=13, Folio=TIJ-PED-20251106-0006, IdArticulo=2099, Registro=3, Cantidad=100, VolumenArt=200, IdUsuario=119
+2025-11-06 16:36:24 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 16:36:24 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 16:36:24, Obser=, IdUsuario=119
+2025-11-06 16:36:25 | SP DETALLE CALL with: operacion=2, IdPedido=14, Folio=TIJ-PED-20251106-0007, IdArticulo=1002, Registro=1, Cantidad=500, VolumenArt=500, IdUsuario=119
+2025-11-06 16:41:12 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 16:41:12 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 16:41:12, Obser=, IdUsuario=119
+2025-11-06 16:51:19 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":400,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1003,"cantidad":200,"volArt":400,"pesoUnit":2}]
+2025-11-06 16:51:19 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=400, Fecha=2025-11-06 16:51:19, Obser=, IdUsuario=119
+2025-11-06 16:53:54 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":460,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1005,"cantidad":100,"volArt":460,"pesoUnit":4.6}]
+2025-11-06 16:53:54 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=460, Fecha=2025-11-06 16:53:54, Obser=, IdUsuario=119
+2025-11-06 17:11:38 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":500,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":500,"volArt":500,"pesoUnit":1}]
+2025-11-06 17:11:38 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=500, Fecha=2025-11-06 17:11:38, Obser=, IdUsuario=119
+2025-11-06 17:13:07 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":360,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2007,"cantidad":200,"volArt":360,"pesoUnit":1.8}]
+2025-11-06 17:13:07 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=ju, Semana=45, Volumen=360, Fecha=2025-11-06 17:13:07, Obser=, IdUsuario=119
+2025-11-06 17:18:34 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":5,"Volumen":367.25,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2100,"cantidad":200,"volArt":40,"pesoUnit":0.2},{"idArticulo":2015,"cantidad":200,"volArt":68,"pesoUnit":0.34},{"idArticulo":2007,"cantidad":100,"volArt":180,"pesoUnit":1.8},{"idArticulo":2013,"cantidad":50,"volArt":56.25,"pesoUnit":1.125},{"idArticulo":1005,"cantidad":5,"volArt":23,"pesoUnit":4.6}]
+2025-11-06 17:18:34 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=5, Dia=ju, Semana=45, Volumen=367.25, Fecha=2025-11-06 17:18:34, Obser=, IdUsuario=119
+2025-11-06 17:25:11 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":3,"Volumen":346,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1001,"cantidad":500,"volArt":100,"pesoUnit":0.2},{"idArticulo":1003,"cantidad":100,"volArt":200,"pesoUnit":2},{"idArticulo":1005,"cantidad":10,"volArt":46,"pesoUnit":4.6}]
+2025-11-06 17:25:11 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=3, Dia=ju, Semana=45, Volumen=346, Fecha=2025-11-06 17:25:11, Obser=, IdUsuario=119
+2025-11-06 17:55:40 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":516,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2014,"cantidad":200,"volArt":216,"pesoUnit":1.08},{"idArticulo":2016,"cantidad":150,"volArt":300,"pesoUnit":2}]
+2025-11-06 17:55:40 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=2, Dia=ju, Semana=45, Volumen=516, Fecha=2025-11-06 17:55:40, Obser=, IdUsuario=119
+2025-11-07 09:16:21 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":540,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2014,"cantidad":500,"volArt":540,"pesoUnit":1.08}]
+2025-11-07 09:16:21 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=1, Dia=vi, Semana=45, Volumen=540, Fecha=2025-11-07 09:16:21, Obser=, IdUsuario=119
+2025-11-07 09:16:21 | SP DETALLE CALL with: operacion=2, IdPedido=23, Folio=TIJ-PED-20251107-0023, IdArticulo=2014, Registro=1, Cantidad=500, VolumenArt=540, IdUsuario=119
+2025-11-07 09:20:22 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":8,"Volumen":481.8,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1002,"cantidad":100,"volArt":100,"pesoUnit":1},{"idArticulo":2007,"cantidad":3,"volArt":5.4,"pesoUnit":1.8},{"idArticulo":2099,"cantidad":40,"volArt":80,"pesoUnit":2},{"idArticulo":3012,"cantidad":10,"volArt":30,"pesoUnit":3},{"idArticulo":3019,"cantidad":7,"volArt":36.4,"pesoUnit":5.2},{"idArticulo":4010,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":4012,"cantidad":10,"volArt":10,"pesoUnit":1},{"idArticulo":5502,"cantidad":10,"volArt":200,"pesoUnit":20}]
+2025-11-07 09:20:22 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=8, Dia=vi, Semana=45, Volumen=481.8, Fecha=2025-11-07 09:20:22, Obser=, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=1002, Registro=1, Cantidad=100, VolumenArt=100, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=2007, Registro=2, Cantidad=3, VolumenArt=5.4, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=2099, Registro=3, Cantidad=40, VolumenArt=80, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=3012, Registro=4, Cantidad=10, VolumenArt=30, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=3019, Registro=5, Cantidad=7, VolumenArt=36.4, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=4010, Registro=6, Cantidad=10, VolumenArt=20, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=4012, Registro=7, Cantidad=10, VolumenArt=10, IdUsuario=119
+2025-11-07 09:20:22 | SP DETALLE CALL with: operacion=2, IdPedido=24, Folio=TIJ-PED-20251107-0002, IdArticulo=5502, Registro=8, Cantidad=10, VolumenArt=200, IdUsuario=119
+2025-11-07 09:26:24 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":20,"Volumen":521.67,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":1001,"cantidad":15,"volArt":3,"pesoUnit":0.2},{"idArticulo":1002,"cantidad":20,"volArt":20,"pesoUnit":1},{"idArticulo":1003,"cantidad":25,"volArt":50,"pesoUnit":2},{"idArticulo":1005,"cantidad":5,"volArt":23,"pesoUnit":4.6},{"idArticulo":2015,"cantidad":15,"volArt":5.1,"pesoUnit":0.34},{"idArticulo":9002,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":9003,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":9099,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":3006,"cantidad":15,"volArt":15,"pesoUnit":1},{"idArticulo":3005,"cantidad":50,"volArt":10,"pesoUnit":0.2},{"idArticulo":3007,"cantidad":4,"volArt":20.8,"pesoUnit":5.2},{"idArticulo":3012,"cantidad":2,"volArt":6,"pesoUnit":3},{"idArticulo":4001,"cantidad":100,"volArt":20,"pesoUnit":0.2},{"idArticulo":4004,"cantidad":20,"volArt":20,"pesoUnit":1},{"idArticulo":8015,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8027,"cantidad":3,"volArt":0.42,"pesoUnit":0.14},{"idArticulo":8002,"cantidad":10,"volArt":3,"pesoUnit":0.3},{"idArticulo":5501,"cantidad":50,"volArt":50,"pesoUnit":1},{"idArticulo":5506,"cantidad":20,"volArt":16,"pesoUnit":0.8},{"idArticulo":5511,"cantidad":15,"volArt":240,"pesoUnit":16}]
+2025-11-07 09:26:24 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=20, Dia=vi, Semana=45, Volumen=521.67, Fecha=2025-11-07 09:26:24, Obser=, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=1001, Registro=1, Cantidad=15, VolumenArt=3, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=1002, Registro=2, Cantidad=20, VolumenArt=20, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=1003, Registro=3, Cantidad=25, VolumenArt=50, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=1005, Registro=4, Cantidad=5, VolumenArt=23, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=2015, Registro=5, Cantidad=15, VolumenArt=5.1, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=9002, Registro=6, Cantidad=25, VolumenArt=6.25, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=9003, Registro=7, Cantidad=25, VolumenArt=6.25, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=9099, Registro=8, Cantidad=25, VolumenArt=6.25, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=3006, Registro=9, Cantidad=15, VolumenArt=15, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=3005, Registro=10, Cantidad=50, VolumenArt=10, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=3007, Registro=11, Cantidad=4, VolumenArt=20.8, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=3012, Registro=12, Cantidad=2, VolumenArt=6, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=4001, Registro=13, Cantidad=100, VolumenArt=20, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=4004, Registro=14, Cantidad=20, VolumenArt=20, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=8015, Registro=15, Cantidad=2, VolumenArt=0.6, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=8027, Registro=16, Cantidad=3, VolumenArt=0.42, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=8002, Registro=17, Cantidad=10, VolumenArt=3, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=5501, Registro=18, Cantidad=50, VolumenArt=50, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=5506, Registro=19, Cantidad=20, VolumenArt=16, IdUsuario=119
+2025-11-07 09:26:24 | SP DETALLE CALL with: operacion=2, IdPedido=25, Folio=TIJ-PED-20251107-0003, IdArticulo=5511, Registro=20, Cantidad=15, VolumenArt=240, IdUsuario=119
