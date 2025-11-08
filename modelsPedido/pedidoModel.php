@@ -1,7 +1,7 @@
 <?php
 class PedidoModel
 {
-    
+
     /** @var mysqli */
     private $conn;
 
@@ -241,7 +241,7 @@ class PedidoModel
      * Llama al SP con op=2 (insertar detalle).
      * Retorna ['ok'=>bool, 'msg'=>string]
      */
-        private function sp_pedido_detalle(
+    private function sp_pedido_detalle(
         int $IdPedido,
         string $Folio,
         int $IdArticulo,
@@ -324,10 +324,10 @@ class PedidoModel
         // ...
 
         return ['ok' => true, 'msg' => 'OK'];
-    } 
+    }
 
     /** Libera por completo cualquier result set pendiente de llamadas previas a CALL ... */
-        private function drainResults(): void
+    private function drainResults(): void
     {
         while ($this->conn->more_results()) {
             $this->conn->next_result();
@@ -335,5 +335,151 @@ class PedidoModel
                 $r->free();
             }
         }
+    }
+
+    public function getPedidosAbiertosByAlmacen(int $IdAlmacen): array
+    {
+        $op = 8; // operación para obtener pedidos abiertos por almacen
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            $IdAlmacen,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
+            ?, ?, ?, ?, ?,                           -- 5 detalle
+            @out_IdPedido, @out_Folio
+        )");
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $open = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $open[] = $row;
+        }
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $open;
+    }
+
+    public function getDetallePedido(string $Folio): array
+    {
+        $op = 9; // operación para obtener detalle de pedido por folio
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $Folio,
+            null,
+            null,
+            null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
+            ?, ?, ?, ?, ?,                           -- 5 detalle
+            @out_IdPedido, @out_Folio
+        )");
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $detalle = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $detalle[] = $row;
+        }
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $detalle;
+    }
+
+    public function marcarSurtidoPorFolio(int $IdPedido, int $IdUsuario): array
+    {
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
+            ?, ?, ?, ?, ?,                           -- 5 detalle
+            @out_IdPedido, @out_Folio
+        )");
+
+        $op = 10; // operación para marcar como surtido
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $IdPedido,
+            null,
+            null,
+            null,
+            $IdUsuario
+        ];
+
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $result ? ['ok' => true, 'msg' => 'Pedido marcado como surtido'] : ['ok' => false, 'msg' => 'Error al marcar pedido como surtido'];
+    }
+
+    function getPedidoByFolio($Folio)
+    {
+        $op = 11; // operación para obtener pedido por folio
+        $params = [
+            null,null,null,null,null,null,null,null,null,null,null,null,null,
+            null,$Folio,null,null,null,
+        ];
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
+            ?, ?, ?, ?, ?,                           -- 5 detalle
+            @out_IdPedido, @out_Folio
+        )");
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $result;
     }
 }

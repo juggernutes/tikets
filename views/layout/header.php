@@ -292,6 +292,11 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
 
       <nav aria-label="Principal">
         <ul>
+          <?php if ($rol === 'ALMACEN' || $rol === 'SUPERVISOR'): ?>
+            <li><a href="../views/dashboardPedidos.php">Inicio</a></li>
+            <!--<li><a href="../views/registrar_entrada.php">Entradas</a></li>
+            <li><a href="../views/historial_entradas.php">Historial de entradas</a></li>-->
+          <?php endif; ?>
           <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
           <li><a href="../views/dashboard.php">Inicio</a></li>
           <li><a href="../views/registrar_tiket.php">Tickets</a></li>

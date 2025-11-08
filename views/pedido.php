@@ -68,9 +68,19 @@ $volumenTotal = 0;
             </div>
         </div>
         <div class="section-sep"></div>
+        <tfoot>
+            <tr>
+                <td colspan="2"><strong>Renglones: <span id="rowCount">0</span></strong></td>
+                <td colspan="3" style="text-align:right;"><strong>Total: <span id="totalKg">0.000</span> kg</strong></td>
+            </tr>
+        </tfoot>
+
+        <div class="section-sep"></div>
+
         <!-- Tabla -->
         <div style="overflow:auto;margin-top:16px;">
             <table class="tickets-table" style="width:100%;border-collapse:collapse;">
+
                 <thead>
                     <tr style="font-size:.85rem;">
                         <th style="padding:4px;">Artículo</th>
@@ -85,14 +95,18 @@ $volumenTotal = 0;
                         <td colspan="5" style="padding:14px;">Sin renglones</td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2"><strong>Renglones: <span id="rowCount">0</span></strong></td>
-                        <td colspan="3" style="text-align:right;"><strong>Total: <span id="totalKg">0.000</span> kg</strong></td>
-                    </tr>
-                </tfoot>
+
+
             </table>
         </div>
+        <div class="section-sep"></div>
+        <div>
+            <tr>
+                <td colspan="3" style="text-align:right;"><strong>Total: <span id="totalKg2">0.000</span> kg</strong></td>
+            </tr>
+        </div>
+
+        <div class="section-sep"></div>
         <div>
             <label class="lbl" for="modelo" style="display:block;font-weight:700;margin-bottom:6px;">Modelo - <?php echo $carro; ?> </label>
             <label class="lbl" for="peso" style="display:block;font-weight:700;margin-bottom:6px;">Carga máxima / mínima: <?php echo $pesoMaximo; ?> / <?php echo $pesoMinimo; ?> kg</label>
@@ -147,6 +161,7 @@ $volumenTotal = 0;
                 const itemsConVol = state.items.map(it => {
                     const volArt = (Number(it.cantidad) || 0) * (Number(it.pesoUnit) || 0);
                     totalKg += volArt;
+                    const totalKg2 = totalKg;
                     return {
                         ...it,
                         volArt
@@ -154,7 +169,8 @@ $volumenTotal = 0;
                 });
                 return {
                     itemsConVol,
-                    totalKg
+                    totalKg,
+                    totalKg2
                 };
             }
 
@@ -169,6 +185,7 @@ $volumenTotal = 0;
                     qs('#rowCount').textContent = itemsConVol.length;
                     qs('#rowCount2').textContent = itemsConVol.length;
                     qs('#totalKg').textContent = '0.000';
+                    qs('#totalKg2').textContent = '0.000';
                     return;
                 }
 
@@ -191,6 +208,7 @@ $volumenTotal = 0;
                 qs('#rowCount').textContent = itemsConVol.length;
                 qs('#rowCount2').textContent = itemsConVol.length;
                 qs('#totalKg').textContent = totalKg.toFixed(3);
+                qs('#totalKg2').textContent = totalKg.toFixed(3);
             }
 
             // Agregar renglón

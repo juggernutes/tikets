@@ -142,4 +142,24 @@ class PedidoController
             return ['ok' => false, 'msg' => 'Error interno al guardar el pedido', 'data' => null];
         }
     }
+
+    function getPedidosAbiertosByAlmacen($IdAlmacen): array
+    {
+        return $this->pedidoModel->getPedidosAbiertosByAlmacen($IdAlmacen);
+    }
+
+    function getDetallePedido($Folio): array
+    {
+        return $this->pedidoModel->getDetallePedido($Folio);
+    }
+
+    function marcarSurtidoPorFolio($IdPedido, $IdUsuario)
+    {
+        return $this->pedidoModel->marcarSurtidoPorFolio($IdPedido, $IdUsuario);
+    }
+
+    function getPedidoByFolio($Folio)
+    {
+        return $this->pedidoModel->getPedidoByFolio($Folio);
+    }
 }
