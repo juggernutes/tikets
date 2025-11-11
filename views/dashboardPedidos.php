@@ -332,51 +332,37 @@ $cerrados = [];
                             </div>
                         <?php endforeach; ?>
                     </div>
-
-
                     <div class="acciones-botones">
-                        <button onclick="surtirPedido('<?php echo h($pedido['FOLIO'] ?? ''); ?>')">
+                        <button type="button"
+                            onclick="surtirPedido('<?php echo addslashes($pedido['FOLIO'] ?? ''); ?>')">
                             SURTIR PEDIDO
                         </button>
-                        <a class="btn" href="../app/appPedidos.php?action=csv&folio=<?php echo urlencode($pedido['FOLIO'] ?? ''); ?>">
-                            Descargar CSV
-                        </a>
+
                     </div>
 
                 </div>
-
             <?php endforeach; ?>
         </div>
-
     </div>
 </div>
+
 <script>
-    async function surtirPedido(folio) {
-        if (!folio) {
-            alert('Folio inválido');
-            return;
-        }
-        if (!confirm('¿Marcar como SURTIDO el pedido ' + folio + '?')) return;
+    function surtirPedido(folio) {
+        const url = `../app/appPedidos.php?action=surtir&folio=${encodeURIComponent(folio)}`;
 
-        try {
-            const r = await fetch('../app/appPedidos.php?action=surtir', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    folio
-                })
-            });
-            const out = await r.json();
-            if (!r.ok || !out?.ok) throw new Error(out?.error || 'No se pudo surtir');
+        // Abrir la descarga en nueva pestaña (evita bloqueadores al ser user-initiated)
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
 
-            alert('✅ Pedido surtido: ' + folio);
+        // Recargar el dashboard después de un pequeño delay
+        setTimeout(() => {
             location.reload();
-        } catch (err) {
-            alert('❌ ' + err.message);
-        }
+        }, 1000); // ajusta si tu CSV tarda más en generarse
     }
 </script>
 

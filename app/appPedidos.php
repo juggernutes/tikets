@@ -117,48 +117,17 @@ if (isset($_GET['action'])) {
         case 'surtir':
 
             // Cambia estado a SURTIDO (IdEstado=3)
-            $payload = json_decode(file_get_contents('php://input'), true) ?? [];
-            $folio   = trim($payload['folio'] ?? '');
+            $folio   = $_GET['folio'] ?? '';
             if ($folio === '') {
                 http_response_code(400);
                 echo json_encode(['ok' => false, 'error' => 'Folio requerido']);
                 exit;
             }
 
-            $pedidoController = new PedidoController($conn);
-            // Implementa el método en tu controller/model o llama tu SP WHEN 10
-            $ok = $pedidoController->marcarSurtidoPorFolio($folio, $_SESSION['login_id'] ?? null);
+            // Ejecuta SP y recoge datos
+            $result = $pedidoController->csv_surtir($folio, $_SESSION['login_id'] ?? 0);
 
-            if ($ok) {
-                echo json_encode(['ok' => true, 'folio' => $folio]);
-            } else {
-                http_response_code(500);
-                echo json_encode(['ok' => false, 'error' => 'No se pudo actualizar el estado']);
-            }
-            exit;
-
-        case 'csv':
-            // Descargar CSV del pedido
-            $folio = trim($_GET['folio'] ?? '');
-            if ($folio === '') {
-                http_response_code(400);
-                echo 'Folio requerido';
-                exit;
-            }
-
-            $pedidoController = new PedidoController($conn);
-
-            // Encabezado y detalle (ajusta a tus métodos reales)
-            $header  = $pedidoController->getPedidoByFolio($folio);           // Debe devolver 1 fila
-            $detalle = $pedidoController->getDetallePedido($folio);           // Array de renglones
-
-            if (!$header) {
-                http_response_code(404);
-                echo 'Pedido no encontrado';
-                exit;
-            }
-
-            // Headers para descarga
+            // Headers para descarga CSV (sin ningún echo antes)
             $filename = 'pedido-' . preg_replace('/[^A-Za-z0-9_-]/', '-', $folio) . '.csv';
             header('Content-Type: text/csv; charset=UTF-8');
             header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -170,53 +139,22 @@ if (isset($_GET['action'])) {
             // BOM UTF-8 para Excel
             fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Cabecera del CSV
-            fputcsv($out, [
-                'Folio',
-                'Fecha',
-                'UnidadVenta',
-                'Supervisor',
-                'Registros',
-                'IdArticulo',
-                'Articulo',
-                'Cantidad',
-                'PesoUnit',
-                'PesoTotal'
-            ]);
+            // Cabecera del CSV (coincide con alias del SP)
+            fputcsv($out, ['REGISTRO','ARTICULO', 'PIEZAS', 'PESO_UNIT', 'UNIDAD']);
 
-            // Volcar filas (una por detalle)
-            $folioCsv   = $header['FOLIO']        ?? $header['FolioPedido'] ?? $folio;
-            $fechaCsv   = $header['FECHA']        ?? $header['FechaPedido'] ?? '';
-            $unidadCsv  = $header['UNIDAD_VENTA'] ?? $header['Unidad']      ?? '';
-            $supCsv     = $header['SUPERVISOR']   ?? '';
-            $regsCsv    = $header['REGISTROS']    ?? $header['Registro']    ?? '';
-
-            foreach ($detalle as $d) {
-                $idArt   = $d['ID_ARTICULO']   ?? $d['IdArticulo'] ?? '';
-                $artNom  = $d['NOMBRE_CORTO']  ?? $d['ARTICULO']   ?? '';
-                $cant    = $d['CANTIDAD']      ?? $d['CanPzPed']   ?? 0;
-                $pUnit   = $d['PESO_UNIT']     ?? $d['PesoUnit']   ?? 0;
-                $pTotal  = $d['PESO_ARTICULO'] ?? $d['VolPed']     ?? ($cant * $pUnit);
-
+            // Filas
+            foreach ($result as $row) {
                 fputcsv($out, [
-                    $folioCsv,
-                    $fechaCsv,
-                    $unidadCsv,
-                    $supCsv,
-                    $regsCsv,
-                    $idArt,
-                    $artNom,
-                    $cant,
-                    $pUnit,
-                    $pTotal
+                    $row['REGISTRO']   ?? '',
+                    $row['ARTICULO']   ?? '',
+                    $row['PIEZAS']     ?? '',
+                    $row['PESO_UNIT']  ?? '',
+                    substr($row['UNIDAD'] ?? '', 0, 5)
                 ]);
             }
 
             fclose($out);
             exit;
-
-
-
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Acción inválida']);

@@ -275,6 +275,10 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
     <!-- Auto-refresh cada 180 segundos solo para soporte -->
     <meta http-equiv="refresh" content="180">
   <?php endif; ?>
+  <?php if($rol === 'ALMACEN' && $title === 'DASHBOARD PEDIDOS'): ?>
+    <!-- Auto-refresh cada 120 segundos solo para almacen -->
+    <meta http-equiv="refresh" content="120">
+  <?php endif; ?>
 </head>
 <body>
   <header class="site-header">

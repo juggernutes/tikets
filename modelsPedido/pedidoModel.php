@@ -464,8 +464,24 @@ class PedidoModel
     {
         $op = 11; // operación para obtener pedido por folio
         $params = [
-            null,null,null,null,null,null,null,null,null,null,null,null,null,
-            null,$Folio,null,null,null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $Folio,
+            null,
+            null,
+            null,
         ];
         $stmt = $this->conn->prepare("CALL sp_pedido(
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
@@ -481,5 +497,49 @@ class PedidoModel
             $this->conn->use_result();
         }
         return $result;
+    }
+
+    public function csv_surtir(string $Folio, int $IdUsuario): array
+    {
+        $CSV = [];
+        $op = 13; // operación para generar CSV y marcar como surtido
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $IdUsuario,
+            null,
+            $Folio,
+            null,
+            null,
+            null,
+        ];
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            @out_IdPedido, @out_Folio
+        )");
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+        do {
+            if ($res = $stmt->get_result()) {
+                while ($row = $res->fetch_assoc()) {
+                    $CSV[] = $row;
+                }
+                $res->free();
+            }
+        } while ($stmt->more_results() && $stmt->next_result());
+
+        $stmt->close();
+
+        return $CSV;;
     }
 }

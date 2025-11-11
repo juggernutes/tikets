@@ -162,4 +162,9 @@ class PedidoController
     {
         return $this->pedidoModel->getPedidoByFolio($Folio);
     }
+
+    function csv_surtir($Folio, $IdUsuario)
+    {
+        return $this->pedidoModel->csv_surtir($Folio, $IdUsuario);
+    }
 }
