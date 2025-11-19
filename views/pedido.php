@@ -27,7 +27,7 @@ $volumenTotal = 0;
         <h1 class="page-title" style="margin:6px 0 4px; font-weight:800;">PEDIDO DE CARGA</h1>
         <p class="page-sub" style="margin:0;color:#8aa2b4;"><strong>Ruta <?= $idRuta ?> </strong>· agrega artículos y cantidades</p>
     </header>
-
+    
     <!-- Capturador de renglones -->
     <section class="card" style="max-width:600px;margin:0 auto;padding:16px;font-size:1.05rem;">
         <h2 style="margin:0 0 14px;font-size:1.3rem;font-weight:800;">Agregar artículo</h2>
@@ -96,9 +96,10 @@ $volumenTotal = 0;
                     </tr>
                 </tbody>
 
-
+                
             </table>
         </div>
+        <div id="msg" class="muted" style="margin-top:10px;font-size:2rem;"></div>
         <div class="section-sep"></div>
         <div>
             <tr>
@@ -132,7 +133,7 @@ $volumenTotal = 0;
                 </textarea>
             </div>
         </section>
-        <div id="msg" class="muted" style="margin-top:10px;font-size:1rem;"></div>
+        
     </section>
 
 
@@ -327,16 +328,31 @@ $volumenTotal = 0;
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        credentials: 'same-origin', // asegura cookies/sesión
+                        credentials: 'same-origin',
                         body: JSON.stringify(payload)
                     });
 
-                    const out = await r.json();
-                    if (!r.ok) throw new Error(out?.error || 'Error al guardar');
+                    const text = await r.text(); // leemos texto
+                    let out;
 
-                    msg.textContent = `✅ Pedido ${out.folio} guardado`;
+                    try {
+                        out = JSON.parse(text);
+                    } catch (e) {
+                        throw new Error('Respuesta no es JSON válido: ' + text.substring(0, 120));
+                    }
+
+                    if (!r.ok || !out.ok) {
+                        throw new Error(out.error || out.msg || 'Error al guardar');
+                    }
+
+                    const folio = out.Folio || out.folio || 'SIN_FOLIO';
+
+                    // ✅ Mostrar folio generado
+                    msg.textContent = `✅${folio} \nguardado correctamente`;
                     msg.style.color = '#1e8449';
+                    msg.style.fontWeight = '600';
 
+                    // ✅ Borrar registros del state y limpiar formulario
                     state.items = [];
                     render();
                     selectArt.value = '';
@@ -347,10 +363,12 @@ $volumenTotal = 0;
                         msg.textContent = '';
                         msg.style.color = '';
                     }, 2500);
+
                 } catch (err) {
                     msg.textContent = `❌ ${err.message}`;
                     msg.style.color = '#b03a2e';
                 }
+
             });
 
             // --- filtros por línea (tus botones ya sirven con normalización) ---

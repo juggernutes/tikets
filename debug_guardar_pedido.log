@@ -31,3 +31,5 @@
 2025-11-06 17:18:34 | CONTROLLER EXCEPTION: Duplicate entry 'TIJ-PED-20251106-0008' for key 'FolioPedido'
 2025-11-06 17:25:11 | CONTROLLER EXCEPTION: Duplicate entry 'TIJ-PED-20251106-0008' for key 'FolioPedido'
 2025-11-06 17:55:40 | CONTROLLER EXCEPTION: Duplicate entry 'TIJ-PED-20251106-0008' for key 'FolioPedido'
+2025-11-19 11:39:52 | CONTROLLER EXCEPTION: mysqli_stmt::bind_param(): Argument #3 cannot be passed by reference
+2025-11-19 11:47:14 | CONTROLLER EXCEPTION: mysqli_stmt::bind_param(): Argument #3 cannot be passed by reference

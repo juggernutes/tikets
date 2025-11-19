@@ -41,7 +41,7 @@ class LoginController
                     header("Location: ../views/pedido.php");
                     break;
                 case 'SUPERVISOR':
-                    header("Location: ../views/supervisor_dashboard.php");
+                    header("Location: ../views/dashboardPedidos.php");
                     break;
                 case 'ALMACEN':
                     header("Location: ../views/dashboardPedidos.php");

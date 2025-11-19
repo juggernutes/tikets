@@ -107,41 +107,35 @@ class PedidoController
         ];
     }*/
 
-    public function guardarPedido(array $encabezado, array $contenido): array
+    public function guardarPedido($capacidadUV, $unidadOpe, $supervisor, $almacen, $registros, $dia, $semana, $volumen, $obser, $usuario)
     {
-
-        
-        try {
-            // Validación mínima aquí; el Model hará la validación completa
-            if (!is_array($encabezado) || !is_array($contenido) || count($contenido) === 0) {
-                return ['ok' => false, 'msg' => 'Payload inválido: encabezado/items ausentes o vacíos', 'data' => null];
-            }
-
-            $res = $this->pedidoModel->guardarPedido($encabezado, $contenido);
-
-            file_put_contents(
-                __DIR__ . '/debug_pedido.log',
-                date('Y-m-d H:i:s') . " | GUARDAR PEDIDO result: " . json_encode($res, JSON_UNESCAPED_UNICODE) . "\n",
-                FILE_APPEND
-            );
-
-            // Normaliza por si el model no cumplió el contrato
-            if (!is_array($res) || !array_key_exists('ok', $res)) {
-                return ['ok' => false, 'msg' => 'Respuesta inválida del modelo', 'data' => $res];
-            }
-
-            return $res;
-        } catch (\Throwable $e) {
-            // Log mínimo (opcional)
-            @file_put_contents(
-                __DIR__ . '/../debug_guardar_pedido.log',
-                date('Y-m-d H:i:s') . ' | CONTROLLER EXCEPTION: ' . $e->getMessage() . PHP_EOL,
-                FILE_APPEND
-            );
-
-            return ['ok' => false, 'msg' => 'Error interno al guardar el pedido', 'data' => null];
-        }
+        return $this->pedidoModel->guardarPedido(
+            $capacidadUV,
+            $unidadOpe,
+            $supervisor,
+            $almacen,
+            $registros,
+            $dia,
+            $semana,
+            $volumen,
+            $obser,
+            $usuario
+        );
     }
+
+    function guardarDetallePedido($idpedido, $folio, $idArticulo, $registro, $cantidad, $volArt, $IdUsuario)
+    {
+        return $this->pedidoModel->guardarDetallePedido(
+            $idpedido,
+            $folio,
+            $idArticulo,
+            $registro,
+            $cantidad,
+            $volArt,
+            $IdUsuario
+        );
+    }
+
 
     function getPedidosAbiertosByAlmacen($IdAlmacen): array
     {
@@ -153,10 +147,17 @@ class PedidoController
         return $this->pedidoModel->getDetallePedido($Folio);
     }
 
-    function marcarSurtidoPorFolio($IdPedido, $IdUsuario)
+    function marcarSurtidoPorFolio($IdPedido, $IdUsuario, $Volumen)
     {
-        return $this->pedidoModel->marcarSurtidoPorFolio($IdPedido, $IdUsuario);
+        return $this->pedidoModel->PedidoSurtido($IdPedido, $IdUsuario, $Volumen);
     }
+
+    function surtirDetallePedido($idpedido, $idItem, $cantidad, $VolArt, $usuario)
+    {
+        $op = 6;
+        return $this->pedidoModel->actualizarDetallePedido($idpedido, $idItem, $cantidad, $VolArt, $usuario, $op);
+    }
+
 
     function getPedidoByFolio($Folio)
     {
@@ -166,5 +167,26 @@ class PedidoController
     function csv_surtir($Folio, $IdUsuario)
     {
         return $this->pedidoModel->csv_surtir($Folio, $IdUsuario);
+    }
+
+    function getPedidosAbiertosBySupervisor($IdSupervisor): array
+    {
+        return $this->pedidoModel->getPedidosAbiertosBySupervisor($IdSupervisor);
+    }
+
+    function cancelarItemPedido($idpedido, $idItem)
+    {
+        return $this->pedidoModel->cancelarItemPedido($idpedido, $idItem);
+    }
+
+    function actualizarDetallePedido($idpedido, $idItem, $cantidad, $VolArt, $usuario)
+    {
+        $op = 4;
+        return $this->pedidoModel->actualizarDetallePedido($idpedido, $idItem, $cantidad, $VolArt, $usuario, $op);
+    }
+
+    function aprovarPedido($Volumen, $idpedido, $usuario)
+    {
+        return $this->pedidoModel->autorizarPedido($Volumen, $idpedido, $usuario);
     }
 }

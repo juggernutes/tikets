@@ -161,3 +161,41 @@
 2025-11-07 09:55:24 | SP DETALLE CALL with: operacion=2, IdPedido=26, Folio=TIJ-PED-20251107-0004, IdArticulo=5502, Registro=25, Cantidad=3, VolumenArt=60, IdUsuario=119
 2025-11-07 09:55:24 | SP DETALLE CALL with: operacion=2, IdPedido=26, Folio=TIJ-PED-20251107-0004, IdArticulo=5505, Registro=26, Cantidad=10, VolumenArt=4, IdUsuario=119
 2025-11-07 09:55:24 | SP DETALLE CALL with: operacion=2, IdPedido=26, Folio=TIJ-PED-20251107-0004, IdArticulo=5506, Registro=27, Cantidad=10, VolumenArt=8, IdUsuario=119
+2025-11-19 11:39:52 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":5,"Volumen":464.4,"Obser":"por omicion","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2016,"cantidad":70,"volArt":140,"pesoUnit":2},{"idArticulo":2010,"cantidad":2,"volArt":0.4,"pesoUnit":0.2},{"idArticulo":8001,"cantidad":80,"volArt":24,"pesoUnit":0.3},{"idArticulo":4004,"cantidad":80,"volArt":80,"pesoUnit":1},{"idArticulo":5504,"cantidad":10,"volArt":220,"pesoUnit":22}]
+2025-11-19 11:39:52 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=5, Dia=mi, Semana=47, Volumen=464.4, Fecha=2025-11-19 11:39:52, Obser=por omicion, IdUsuario=119
+2025-11-19 11:39:52 | SP DETALLE CALL with: operacion=2, IdPedido=27, Folio=TIJ-PED-20251119-0027, IdArticulo=2016, Registro=1, Cantidad=70, VolumenArt=140, IdUsuario=119
+2025-11-19 11:47:14 | GUARDAR PEDIDO called
+ | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":5,"Volumen":604,"Obser":"","ID_USUARIO":119}
+ | ITEMS: [{"idArticulo":2099,"cantidad":20,"volArt":40,"pesoUnit":2},{"idArticulo":4005,"cantidad":10,"volArt":70,"pesoUnit":7},{"idArticulo":2016,"cantidad":2,"volArt":4,"pesoUnit":2},{"idArticulo":3018,"cantidad":50,"volArt":50,"pesoUnit":1},{"idArticulo":5504,"cantidad":20,"volArt":440,"pesoUnit":22}]
+2025-11-19 11:47:14 | SP HEADER CALL with: operacion=1, estado=1, IdCapacidadUV=1, IdUnidad=112, IdSupervisor=18, IdAlmacen=180, Registros=5, Dia=mi, Semana=47, Volumen=604, Fecha=2025-11-19 11:47:14, Obser=, IdUsuario=119
+2025-11-19 11:47:14 | SP DETALLE CALL with: operacion=2, IdPedido=28, Folio=TIJ-PED-20251119-0003, IdArticulo=2099, Registro=1, Cantidad=20, VolumenArt=40, IdUsuario=119
+2025-11-19 13:13:55 | SP DETALLE CALL with: operacion=2, IdPedido=37, Folio=TIJ-PED-20251119-0012, IdArticulo=1003, Registro=1, Cantidad=10, VolumenArt=20, IdUsuario=119
+2025-11-19 13:13:55 | SP DETALLE CALL with: operacion=2, IdPedido=37, Folio=TIJ-PED-20251119-0012, IdArticulo=2101, Registro=2, Cantidad=20, VolumenArt=8, IdUsuario=119
+2025-11-19 13:14:24 | SP DETALLE CALL with: operacion=2, IdPedido=38, Folio=TIJ-PED-20251119-0013, IdArticulo=3005, Registro=1, Cantidad=20, VolumenArt=4, IdUsuario=119
+2025-11-19 13:14:24 | SP DETALLE CALL with: operacion=2, IdPedido=38, Folio=TIJ-PED-20251119-0013, IdArticulo=5503, Registro=2, Cantidad=15, VolumenArt=300, IdUsuario=119
+2025-11-19 14:01:46 | SP DETALLE CALL with: operacion=2, IdPedido=39, Folio=TIJ-PED-20251119-0014, IdArticulo=5506, Registro=1, Cantidad=15, VolumenArt=12, IdUsuario=119
+2025-11-19 14:01:46 | SP DETALLE CALL with: operacion=2, IdPedido=39, Folio=TIJ-PED-20251119-0014, IdArticulo=1002, Registro=2, Cantidad=100, VolumenArt=100, IdUsuario=119
+2025-11-19 14:01:46 | SP DETALLE CALL with: operacion=2, IdPedido=39, Folio=TIJ-PED-20251119-0014, IdArticulo=3007, Registro=3, Cantidad=20, VolumenArt=104, IdUsuario=119
+2025-11-19 14:03:13 | SP DETALLE CALL with: operacion=2, IdPedido=40, Folio=TIJ-PED-20251119-0015, IdArticulo=1001, Registro=1, Cantidad=50, VolumenArt=10, IdUsuario=119
+2025-11-19 14:03:13 | SP DETALLE CALL with: operacion=2, IdPedido=40, Folio=TIJ-PED-20251119-0015, IdArticulo=1002, Registro=2, Cantidad=200, VolumenArt=200, IdUsuario=119
+2025-11-19 14:03:13 | SP DETALLE CALL with: operacion=2, IdPedido=40, Folio=TIJ-PED-20251119-0015, IdArticulo=3007, Registro=3, Cantidad=15, VolumenArt=78, IdUsuario=119
+2025-11-19 14:03:13 | SP DETALLE CALL with: operacion=2, IdPedido=40, Folio=TIJ-PED-20251119-0015, IdArticulo=5503, Registro=4, Cantidad=12, VolumenArt=240, IdUsuario=119
+2025-11-19 14:08:24 | SP DETALLE CALL with: operacion=2, IdPedido=41, Folio=TIJ-PED-20251119-0016, IdArticulo=5504, Registro=1, Cantidad=15, VolumenArt=330, IdUsuario=119
+2025-11-19 14:08:24 | SP DETALLE CALL with: operacion=2, IdPedido=41, Folio=TIJ-PED-20251119-0016, IdArticulo=8006, Registro=2, Cantidad=20, VolumenArt=45.4, IdUsuario=119
+2025-11-19 14:08:24 | SP DETALLE CALL with: operacion=2, IdPedido=41, Folio=TIJ-PED-20251119-0016, IdArticulo=3006, Registro=3, Cantidad=100, VolumenArt=100, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=2100, Registro=1, Cantidad=14, VolumenArt=2.8, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=5501, Registro=2, Cantidad=15, VolumenArt=15, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=5509, Registro=3, Cantidad=100, VolumenArt=40, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=4008, Registro=4, Cantidad=12, VolumenArt=81.6, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=8015, Registro=5, Cantidad=20, VolumenArt=6, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=9002, Registro=6, Cantidad=150, VolumenArt=37.5, IdUsuario=119
+2025-11-19 14:14:52 | SP DETALLE CALL with: operacion=2, IdPedido=42, Folio=TIJ-PED-20251119-0017, IdArticulo=3019, Registro=7, Cantidad=99, VolumenArt=514.8, IdUsuario=119
+2025-11-19 14:25:07 | SP DETALLE CALL with: operacion=2, IdPedido=43, Folio=TIJ-PED-20251119-0018, IdArticulo=2015, Registro=1, Cantidad=700, VolumenArt=238, IdUsuario=187
+2025-11-19 14:25:07 | SP DETALLE CALL with: operacion=2, IdPedido=43, Folio=TIJ-PED-20251119-0018, IdArticulo=2007, Registro=2, Cantidad=100, VolumenArt=180, IdUsuario=187
+2025-11-19 14:26:32 | SP DETALLE CALL with: operacion=2, IdPedido=44, Folio=TIJ-PED-20251119-0019, IdArticulo=4004, Registro=1, Cantidad=700, VolumenArt=700, IdUsuario=187
+2025-11-19 14:27:43 | SP DETALLE CALL with: operacion=2, IdPedido=45, Folio=TIJ-PED-20251119-0020, IdArticulo=1002, Registro=1, Cantidad=400, VolumenArt=400, IdUsuario=187
+2025-11-19 14:28:13 | SP DETALLE CALL with: operacion=2, IdPedido=46, Folio=TIJ-PED-20251119-0021, IdArticulo=3006, Registro=1, Cantidad=400, VolumenArt=400, IdUsuario=187
+2025-11-19 14:29:04 | SP DETALLE CALL with: operacion=2, IdPedido=47, Folio=TIJ-PED-20251119-0022, IdArticulo=1002, Registro=1, Cantidad=400, VolumenArt=400, IdUsuario=187
+2025-11-19 14:29:44 | SP DETALLE CALL with: operacion=2, IdPedido=48, Folio=TIJ-PED-20251119-0023, IdArticulo=3006, Registro=1, Cantidad=400, VolumenArt=400, IdUsuario=187

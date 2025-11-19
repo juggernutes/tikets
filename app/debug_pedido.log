@@ -50,3 +50,124 @@
 2025-11-07 09:20:22 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":8,"Volumen":481.8,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1002,"cantidad":100,"volArt":100,"pesoUnit":1},{"idArticulo":2007,"cantidad":3,"volArt":5.4,"pesoUnit":1.8},{"idArticulo":2099,"cantidad":40,"volArt":80,"pesoUnit":2},{"idArticulo":3012,"cantidad":10,"volArt":30,"pesoUnit":3},{"idArticulo":3019,"cantidad":7,"volArt":36.4,"pesoUnit":5.2},{"idArticulo":4010,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":4012,"cantidad":10,"volArt":10,"pesoUnit":1},{"idArticulo":5502,"cantidad":10,"volArt":200,"pesoUnit":20}]
 2025-11-07 09:26:24 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":20,"Volumen":521.67,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1001,"cantidad":15,"volArt":3,"pesoUnit":0.2},{"idArticulo":1002,"cantidad":20,"volArt":20,"pesoUnit":1},{"idArticulo":1003,"cantidad":25,"volArt":50,"pesoUnit":2},{"idArticulo":1005,"cantidad":5,"volArt":23,"pesoUnit":4.6},{"idArticulo":2015,"cantidad":15,"volArt":5.1,"pesoUnit":0.34},{"idArticulo":9002,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":9003,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":9099,"cantidad":25,"volArt":6.25,"pesoUnit":0.25},{"idArticulo":3006,"cantidad":15,"volArt":15,"pesoUnit":1},{"idArticulo":3005,"cantidad":50,"volArt":10,"pesoUnit":0.2},{"idArticulo":3007,"cantidad":4,"volArt":20.8,"pesoUnit":5.2},{"idArticulo":3012,"cantidad":2,"volArt":6,"pesoUnit":3},{"idArticulo":4001,"cantidad":100,"volArt":20,"pesoUnit":0.2},{"idArticulo":4004,"cantidad":20,"volArt":20,"pesoUnit":1},{"idArticulo":8015,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8027,"cantidad":3,"volArt":0.42,"pesoUnit":0.14},{"idArticulo":8002,"cantidad":10,"volArt":3,"pesoUnit":0.3},{"idArticulo":5501,"cantidad":50,"volArt":50,"pesoUnit":1},{"idArticulo":5506,"cantidad":20,"volArt":16,"pesoUnit":0.8},{"idArticulo":5511,"cantidad":15,"volArt":240,"pesoUnit":16}]
 2025-11-07 09:55:24 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":27,"Volumen":352.92,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1005,"cantidad":1,"volArt":4.6,"pesoUnit":4.6},{"idArticulo":2011,"cantidad":2,"volArt":4,"pesoUnit":2},{"idArticulo":3007,"cantidad":12,"volArt":62.4,"pesoUnit":5.2},{"idArticulo":3010,"cantidad":7,"volArt":47.6,"pesoUnit":6.8},{"idArticulo":1001,"cantidad":20,"volArt":4,"pesoUnit":0.2},{"idArticulo":1003,"cantidad":8,"volArt":16,"pesoUnit":2},{"idArticulo":2001,"cantidad":2,"volArt":0.8,"pesoUnit":0.4},{"idArticulo":2010,"cantidad":15,"volArt":3,"pesoUnit":0.2},{"idArticulo":2015,"cantidad":2,"volArt":0.68,"pesoUnit":0.34},{"idArticulo":2101,"cantidad":2,"volArt":0.8,"pesoUnit":0.4},{"idArticulo":3006,"cantidad":12,"volArt":12,"pesoUnit":1},{"idArticulo":3005,"cantidad":20,"volArt":4,"pesoUnit":0.2},{"idArticulo":3017,"cantidad":20,"volArt":4,"pesoUnit":0.2},{"idArticulo":4001,"cantidad":50,"volArt":10,"pesoUnit":0.2},{"idArticulo":4004,"cantidad":15,"volArt":15,"pesoUnit":1},{"idArticulo":4005,"cantidad":8,"volArt":56,"pesoUnit":7},{"idArticulo":9002,"cantidad":20,"volArt":5,"pesoUnit":0.25},{"idArticulo":9003,"cantidad":20,"volArt":5,"pesoUnit":0.25},{"idArticulo":8001,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8002,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8003,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8015,"cantidad":2,"volArt":0.6,"pesoUnit":0.3},{"idArticulo":8027,"cantidad":26,"volArt":3.64,"pesoUnit":0.14},{"idArticulo":5501,"cantidad":20,"volArt":20,"pesoUnit":1},{"idArticulo":5502,"cantidad":3,"volArt":60,"pesoUnit":20},{"idArticulo":5505,"cantidad":10,"volArt":4,"pesoUnit":0.4},{"idArticulo":5506,"cantidad":10,"volArt":8,"pesoUnit":0.8}]
+2025-11-14 00:38:54 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:40:33 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:42:50 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 0
+2025-11-14 00:42:50 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:45:21 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: null
+2025-11-14 00:45:21 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:47:29 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: "8001"
+2025-11-14 00:47:29 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:50:34 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5505
+2025-11-14 00:50:34 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:56:43 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5506
+2025-11-14 00:56:43 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 00:56:58 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 9003
+2025-11-14 00:56:58 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 01:00:43 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:00:43 | EXCEPTION cancelar_item: The number of elements in the type definition string must match the number of bind variables
+2025-11-14 01:01:37 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:02:46 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:03:06 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:03:45 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:04:25 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:04:48 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1003
+2025-11-14 01:05:21 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:08:18 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001
+2025-11-14 01:16:14 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1003
+2025-11-14 01:16:14 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1003
+2025-11-14 01:18:09 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 2010
+2025-11-14 01:18:09 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=2010
+2025-11-14 01:22:57 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1003
+2025-11-14 01:22:57 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1003
+2025-11-14 01:33:09 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1003 | ITEM: 26
+2025-11-14 01:33:09 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1003
+2025-11-14 01:36:08 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1003 | ID-PEDIDO: 26
+2025-11-14 01:36:08 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1003
+2025-11-14 01:43:41 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1005 | ID-PEDIDO: 26
+2025-11-14 01:43:41 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1005
+2025-11-14 01:51:13 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1005 | ID-PEDIDO: 26
+2025-11-14 01:51:13 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=1005
+2025-11-14 01:52:04 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 2001 | ID-PEDIDO: 26
+2025-11-14 01:52:04 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=2001
+2025-11-14 01:53:16 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 2011 | ID-PEDIDO: 26
+2025-11-14 01:53:16 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=2011
+2025-11-14 01:53:36 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 9003 | ID-PEDIDO: 26
+2025-11-14 01:53:36 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=9003
+2025-11-14 02:05:12 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5505 | ID-PEDIDO: 26
+2025-11-14 02:05:12 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=5505
+2025-11-14 02:06:37 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8015 | ID-PEDIDO: 26
+2025-11-14 02:06:37 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8015
+2025-11-14 02:07:24 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 9002 | ID-PEDIDO: 26
+2025-11-14 02:07:24 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=9002
+2025-11-14 02:10:17 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 2015 | ID-PEDIDO: 26
+2025-11-14 02:10:17 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=2015
+2025-11-14 02:10:26 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 3007 | ID-PEDIDO: 26
+2025-11-14 02:10:26 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=3007
+2025-11-14 02:10:29 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 3005 | ID-PEDIDO: 26
+2025-11-14 02:10:29 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=3005
+2025-11-14 02:10:30 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 3006 | ID-PEDIDO: 26
+2025-11-14 02:10:30 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=3006
+2025-11-14 02:10:31 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 3010 | ID-PEDIDO: 26
+2025-11-14 02:10:31 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=3010
+2025-11-14 02:10:31 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 3017 | ID-PEDIDO: 26
+2025-11-14 02:10:31 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=3017
+2025-11-14 02:10:31 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 4001 | ID-PEDIDO: 26
+2025-11-14 02:10:31 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=4001
+2025-11-14 02:10:32 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 4004 | ID-PEDIDO: 26
+2025-11-14 02:10:32 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=4004
+2025-11-14 02:10:32 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 4005 | ID-PEDIDO: 26
+2025-11-14 02:10:32 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=4005
+2025-11-14 02:10:33 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 2101 | ID-PEDIDO: 26
+2025-11-14 02:10:33 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=2101
+2025-11-14 02:10:34 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5501 | ID-PEDIDO: 26
+2025-11-14 02:10:34 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=5501
+2025-11-14 02:10:34 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5502 | ID-PEDIDO: 26
+2025-11-14 02:10:34 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=5502
+2025-11-14 02:10:34 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 5506 | ID-PEDIDO: 26
+2025-11-14 02:10:34 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=5506
+2025-11-14 02:10:35 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8001 | ID-PEDIDO: 26
+2025-11-14 02:10:35 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8001
+2025-11-14 02:10:36 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8002 | ID-PEDIDO: 26
+2025-11-14 02:10:36 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8002
+2025-11-14 02:10:36 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8003 | ID-PEDIDO: 26
+2025-11-14 02:10:36 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8003
+2025-11-14 02:10:37 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8027 | ID-PEDIDO: 26
+2025-11-14 02:10:37 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8027
+2025-11-15 01:36:14 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 1001 | CANTIDAD: 20
+2025-11-19 00:47:51 | FOLIO: "TIJ-PED-20251107-0004" | ITEM: 8003 | ID-PEDIDO: 26
+2025-11-19 00:47:51 | ERROR cancelar_item en SP para folio=TIJ-PED-20251107-0004, idItem=8003
+2025-11-19 11:39:52 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":5,"Volumen":464.4,"Obser":"por omicion","ID_USUARIO":119} | ITEMS: [{"idArticulo":2016,"cantidad":70,"volArt":140,"pesoUnit":2},{"idArticulo":2010,"cantidad":2,"volArt":0.4,"pesoUnit":0.2},{"idArticulo":8001,"cantidad":80,"volArt":24,"pesoUnit":0.3},{"idArticulo":4004,"cantidad":80,"volArt":80,"pesoUnit":1},{"idArticulo":5504,"cantidad":10,"volArt":220,"pesoUnit":22}]
+2025-11-19 11:47:14 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":5,"Volumen":604,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":2099,"cantidad":20,"volArt":40,"pesoUnit":2},{"idArticulo":4005,"cantidad":10,"volArt":70,"pesoUnit":7},{"idArticulo":2016,"cantidad":2,"volArt":4,"pesoUnit":2},{"idArticulo":3018,"cantidad":50,"volArt":50,"pesoUnit":1},{"idArticulo":5504,"cantidad":20,"volArt":440,"pesoUnit":22}]
+2025-11-19 12:15:59 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":1,"Volumen":10,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":2099,"cantidad":5,"volArt":10,"pesoUnit":2}]
+2025-11-19 12:36:43 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 12:43:07 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 12:44:21 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 12:45:03 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 12:46:17 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 12:50:22 | ENCABEZADO: {"ID_CAPUV":1,"ID_UNIDAD":112,"ID_SUPERVISOR_UO":18,"ID_ALMACEN_UO":180,"Registro":2,"Volumen":28,"Obser":"","ID_USUARIO":119} | ITEMS: [{"idArticulo":1003,"cantidad":10,"volArt":20,"pesoUnit":2},{"idArticulo":2101,"cantidad":20,"volArt":8,"pesoUnit":0.4}]
+2025-11-19 13:04:56 | : 1, 112, 18, 180, 2, mi, 47, 28, , 119
+2025-11-19 13:13:55 | : 1, 112, 18, 180, 2, mi, 47, 28, , 119
+2025-11-19 13:13:55 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0012 | IDPEDIDO: 37 | ENVIADOS: 2 | OK: 2
+2025-11-19 13:14:24 | : 1, 112, 18, 180, 2, mi, 47, 304, , 119
+2025-11-19 13:14:24 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0013 | IDPEDIDO: 38 | ENVIADOS: 2 | OK: 2
+2025-11-19 14:01:46 | : 1, 112, 18, 180, 3, mi, 47, 216, , 119
+2025-11-19 14:01:46 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0014 | IDPEDIDO: 39 | ENVIADOS: 3 | OK: 3
+2025-11-19 14:03:13 | : 1, 112, 18, 180, 4, mi, 47, 528, , 119
+2025-11-19 14:03:13 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0015 | IDPEDIDO: 40 | ENVIADOS: 4 | OK: 4
+2025-11-19 14:08:24 | ENCAB: 1, 112, 18, 180, 3, mi, 47, 475.4, , 119
+2025-11-19 14:08:24 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0016 | IDPEDIDO: 41 | ENVIADOS: 3 | OK: 3
+2025-11-19 14:14:52 | ENCAB: 1, 112, 18, 180, 7, mi, 47, 697.7, , 119
+2025-11-19 14:14:52 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0017 | IDPEDIDO: 42 | ENVIADOS: 7 | OK: 7
+2025-11-19 14:25:07 | ENCAB: 6, 180, 29, 180, 2, mi, 47, 418, , 187
+2025-11-19 14:25:07 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0018 | IDPEDIDO: 43 | ENVIADOS: 2 | OK: 2
+2025-11-19 14:26:32 | ENCAB: 6, 180, 29, 180, 1, mi, 47, 700, , 187
+2025-11-19 14:26:32 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0019 | IDPEDIDO: 44 | ENVIADOS: 1 | OK: 1
+2025-11-19 14:27:43 | ENCAB: 6, 180, 29, 180, 1, mi, 47, 400, , 187
+2025-11-19 14:27:43 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0020 | IDPEDIDO: 45 | ENVIADOS: 1 | OK: 1
+2025-11-19 14:28:13 | ENCAB: 6, 180, 29, 180, 1, mi, 47, 400, , 187
+2025-11-19 14:28:13 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0021 | IDPEDIDO: 46 | ENVIADOS: 1 | OK: 1
+2025-11-19 14:29:04 | ENCAB: 6, 180, 29, 180, 1, mi, 47, 400, , 187
+2025-11-19 14:29:04 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0022 | IDPEDIDO: 47 | ENVIADOS: 1 | OK: 1
+2025-11-19 14:29:44 | ENCAB: 6, 180, 29, 180, 1, mi, 47, 400, , 187
+2025-11-19 14:29:44 | RESUMEN_GUARDAR | FOLIO: TIJ-PED-20251119-0023 | IDPEDIDO: 48 | ENVIADOS: 1 | OK: 1

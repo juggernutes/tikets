@@ -16,3 +16,8 @@
 2025-11-07 09:20:22 | GUARDAR PEDIDO result: {"ok":true,"msg":"Pedido creado correctamente","data":{"IdPedido":24,"Folio":"TIJ-PED-20251107-0002","items_ok":8,"items_err":[]}}
 2025-11-07 09:26:24 | GUARDAR PEDIDO result: {"ok":true,"msg":"Pedido creado correctamente","data":{"IdPedido":25,"Folio":"TIJ-PED-20251107-0003","items_ok":20,"items_err":[]}}
 2025-11-07 09:55:24 | GUARDAR PEDIDO result: {"ok":true,"msg":"Pedido creado correctamente","data":{"IdPedido":26,"Folio":"TIJ-PED-20251107-0004","items_ok":27,"items_err":[]}}
+2025-11-19 12:15:59 | GUARDAR PEDIDO result: {"ok":true,"msg":"OK","IdPedido":29,"Folio":"TIJ-PED-20251119-0004"}
+2025-11-19 12:36:43 | GUARDAR PEDIDO result: {"ok":true,"msg":"OK","IdPedido":30,"Folio":"TIJ-PED-20251119-0005"}
+2025-11-19 12:43:07 | GUARDAR PEDIDO result: {"ok":true,"msg":"OK","IdPedido":31,"Folio":"TIJ-PED-20251119-0006"}
+2025-11-19 12:44:21 | GUARDAR PEDIDO result: {"ok":true,"msg":"OK","IdPedido":32,"Folio":"TIJ-PED-20251119-0007"}
+2025-11-19 12:45:03 | GUARDAR PEDIDO result: {"ok":true,"msg":"OK","IdPedido":33,"Folio":"TIJ-PED-20251119-0008"}
