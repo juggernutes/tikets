@@ -142,9 +142,14 @@ class PedidoController
         return $this->pedidoModel->getPedidosAbiertosByAlmacen($IdAlmacen);
     }
 
-    function getDetallePedido($Folio): array
+    function getDetallePedido($Folio, $rol): array
     {
-        return $this->pedidoModel->getDetallePedido($Folio);
+        if ($rol === 'SUPERVISOR'){
+            return $this->pedidoModel->getDetallePedido($Folio);
+        }
+        else {
+            return $this->pedidoModel->getDetallePedidoAlmacen($Folio);
+        }
     }
 
     function marcarSurtidoPorFolio($IdPedido, $IdUsuario, $Volumen)

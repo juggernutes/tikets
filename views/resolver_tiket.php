@@ -110,6 +110,12 @@ include __DIR__ . '/layout/header.php';
       </div>
 
       <div class="actions">
+        <!-- ✅ Usa formaction/formmethod para “Avanzar” -->
+        <button type="submit" class="btn primary" id="btn-avanzar"
+                formaction="../app/appTiket.php?accion=tiket.avance&id_tiket=<?= urlencode((string)$ticket['ID_Tiket']) ?>"
+                formmethod="POST">
+          Dar seguimiento
+        </button>
         <button type="submit" class="btn primary" id="btn-submit">Solucionar</button>
         <a class="btn" href="javascript:history.back()">Cancelar</a>
       </div>

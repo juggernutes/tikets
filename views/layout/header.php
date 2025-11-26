@@ -301,7 +301,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
             <!--<li><a href="../views/registrar_entrada.php">Entradas</a></li>
             <li><a href="../views/historial_entradas.php">Historial de entradas</a></li>-->
           <?php endif; ?>
-          <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
+          <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE' || $rol === 'JEFE DE AREA'): ?>
           <li><a href="../views/dashboard.php">Inicio</a></li>
           <li><a href="../views/registrar_tiket.php">Tickets</a></li>
           <li><a href="../views/cerrado_tiket.php">Historial de tikects</a></li>

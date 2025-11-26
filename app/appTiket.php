@@ -193,7 +193,28 @@ if (isset($_GET['accion'])) {
             } else {
                 echo "No hay accion";
             }
-            break;    
+            break; 
+            case 'tiket.avance':
+                $idTiket = intval($_GET['id_tiket']);
+                $idSoporte = intval($_SESSION['login_id']);
+                $idError = intval($_POST['id_error']) || 42;
+                $idSolucion = intval($_POST['id_solucion']) || 12;
+                $descripcionSolucion = $_POST['descripcion_solucion'];
+    
+                if ($idTiket > 0 && $idSoporte > 0) {
+                    $tiketResuelto = $tiketController->avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
+                    if ($tiketResuelto) {
+                        header("Location: ../views/dashboard.php");
+                    } else {
+                        // Manejo de error: no se pudo resolver el ticket
+                        echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+                    }
+                    exit;
+                } else {
+                    // Manejo de error: IDs inválidos
+                    echo "Parámetros inválidos.";
+                }
+                break;   
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";

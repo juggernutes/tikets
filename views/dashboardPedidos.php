@@ -46,6 +46,12 @@ if ($rol === 'SUPERVISOR') {
 } else {
     $pedidos = $pedidoController->getPedidosAbiertosByAlmacen($IDUN);
 }
+/*
+echo "<pre>";
+print_r($unidad);
+echo "</pre>";
+exit;
+*/
 
 ?>
 <style>
@@ -393,7 +399,7 @@ if ($rol === 'SUPERVISOR') {
                             </thead>
                             <tbody>
                                 <?php
-                                $detalle = $pedidoController->getDetallePedido($pedido['FOLIO'] ?? '');
+                                $detalle = $pedidoController->getDetallePedido($pedido['FOLIO'] ??'',$rol);
                                 $folioAgregarCampo = $_GET['folio_agregar'] ?? '';
                                 ?>
                                 <?php foreach ($detalle as $item): ?>

@@ -281,7 +281,9 @@ if (isset($_GET['action'])) {
             }
 
             // Headers para descarga CSV (sin ningún echo antes)
-            $filename = 'pedido-' . preg_replace('/[^A-Za-z0-9_-]/', '-', $folio) . '.csv';
+            $unidad = preg_replace('/[^A-Za-z0-9]/', '', substr($row['UNIDAD'] ?? '', 0, 5));
+            $filename = "pedido-$unidad-" . preg_replace('/[^A-Za-z0-9_-]/', '-', $folio) . ".csv";
+
             header('Content-Type: text/csv; charset=UTF-8');
             header('Content-Disposition: attachment; filename="' . $filename . '"');
             header('Pragma: no-cache');
@@ -292,6 +294,11 @@ if (isset($_GET['action'])) {
             // BOM UTF-8 para Excel
             fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
+            fputcsv($out, ["REPORTE DE PEDIDO", substr($row['UNIDAD'] ?? '', 0, 5)]);
+            fputcsv($out, ["PEDIDO FOLIO:", $folio]);
+            fputcsv($out, ["FECHA:", date('Y-m-d H:i:s')]);
+            // Línea en blanco opcional
+            fputcsv($out, []);
             // Cabecera del CSV (coincide con alias del SP)
             fputcsv($out, ['REGISTRO', 'ARTICULO', 'PIEZAS', 'PESO_UNIT', 'UNIDAD']);
 
