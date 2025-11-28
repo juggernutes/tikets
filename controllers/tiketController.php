@@ -119,4 +119,14 @@ class TiketController
             return false;
         }
     }
+
+    public function getTicketbyProveedor($usuario)
+    {
+        return $this->model->getTicketbyProveedor($usuario);
+    }
+
+    public function enviarTiketProveedor($idTiket, $idSoporte)
+    {
+        return $this->model->tomarTiket($idTiket, $idSoporte);
+    }
 }

@@ -13,11 +13,15 @@ $enProceso     = [];
 $cerrados      = [];
 
 // Obtiene tickets según rol
-if ($rol === 'EMPLEADO') {
-    $tikets = $tiketController->getTicketsByUserId($usuarioId);
-} elseif ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
-    $tikets = $tiketController->getAllTickets($usuarioId);
+if ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
+    $tikets = $tiketController->getAllTickets($usuario);
+} elseif ($rol === 'PROVEEDOR') {
+    $tikets = $tiketController->getTicketbyProveedor($usuario);
+}else {
+    $tikets = $tiketController->getTicketsByUserId($usuario);
 }
+
+print_r($tikets);
 
 // Clasificación por estado
 if ($tikets && $tikets->num_rows > 0) {
@@ -199,6 +203,10 @@ if ($rol === 'VENDEDOR') {
             <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] === 'SOPORTE'|| $_SESSION['rol'] === 'ADMINISTRADOR')): ?>
               <div class="acciones-botones">
                 <a href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Tomar</button></a>
+              </div>
+            <?php elseif(isset($_SESSION['rol']) && $_SESSION['rol'] === 'PROVEEDOR'): ?>
+              <div class="acciones-botones">
+                <a href="Location: ../views/resolver_tiket.php?id==<?= $row['ID_Tiket'] ?>"><button>Ver detalle</button></a>
               </div>
             <?php endif; ?>
           </div>

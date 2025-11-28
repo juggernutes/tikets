@@ -307,6 +307,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
           <li><a href="../views/cerrado_tiket.php">Historial de tikects</a></li>
           <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
             <li><a href="../views/empleado.php">Empleados</a></li>
+            <li><a href="../views/usuarios.php">Usuarios</a></li>
           <?php endif; ?>
           <?php endif; ?>
           <li><a href="../public/logout.php">Cerrar sesión</a></li>

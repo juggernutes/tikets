@@ -30,6 +30,7 @@ require_once __DIR__ . '/../controllers/errorModelController.php';
 require_once __DIR__ . '/../controllers/encuestaController.php';
 require_once __DIR__ . '/../controllers/equipoController.php';
 require_once __DIR__ . '/../controllers/loginController.php';
+require_once __DIR__ . '/../controllers/soporteController.php';
 
 // Crear instancias de los controladores y modelos
 $sistemaController = new SistemaController($conn);
@@ -40,6 +41,7 @@ $solucionController = new SolucionController(new Solucion($conn));
 $encuestaController = new EncuestaController($conn);
 $equipoController = new EpicoController($conn);
 $loginController = new LoginController($conn);
+$soporteController = new soporteController($conn);
 
 $usuarioId = $_SESSION['login_id'] ?? null;
 
@@ -193,28 +195,70 @@ if (isset($_GET['accion'])) {
             } else {
                 echo "No hay accion";
             }
-            break; 
-            case 'tiket.avance':
-                $idTiket = intval($_GET['id_tiket']);
-                $idSoporte = intval($_SESSION['login_id']);
-                $idError = intval($_POST['id_error']) || 42;
-                $idSolucion = intval($_POST['id_solucion']) || 12;
-                $descripcionSolucion = $_POST['descripcion_solucion'];
-    
-                if ($idTiket > 0 && $idSoporte > 0) {
-                    $tiketResuelto = $tiketController->avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
-                    if ($tiketResuelto) {
-                        header("Location: ../views/dashboard.php");
-                    } else {
-                        // Manejo de error: no se pudo resolver el ticket
-                        echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
-                    }
-                    exit;
+            break;
+        case 'tiket.avance':
+            $idTiket = intval($_GET['id_tiket']);
+            $idSoporte = intval($_SESSION['login_id']);
+            $idError = intval($_POST['id_error']);
+            $idSolucion = intval($_POST['id_solucion']);
+            $descripcionSolucion = $_POST['descripcion_solucion'];
+
+            if ($idTiket > 0 && $idSoporte > 0) {
+                $tiketResuelto = $tiketController->avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
+                if ($tiketResuelto) {
+                    header("Location: ../views/dashboard.php");
                 } else {
-                    // Manejo de error: IDs inválidos
-                    echo "Parámetros inválidos.";
+                    // Manejo de error: no se pudo resolver el ticket
+                    echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
                 }
-                break;   
+                exit;
+            } else {
+                // Manejo de error: IDs inválidos
+                echo "Parámetros inválidos.";
+            }
+            break;
+        case 'enviarProveedor':
+            $idTiket = intval($_GET['id_tiket']);
+            $idSoporte = intval($_GET['id_proveedor']);
+
+            if ($idTiket > 0 && $idSoporte > 0) {
+                $tiketResuelto = $tiketController->enviarTiketProveedor($idTiket, $idSoporte);
+                if ($tiketResuelto) {
+                    header("Location: ../views/dashboard.php");
+                } else {
+                    // Manejo de error: no se pudo resolver el ticket
+                    echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+                }
+                exit;
+            } else {
+                // Manejo de error: IDs inválidos
+                echo "Parámetros inválidos.";
+            }
+            break;
+        case 'resetPasswordUsuario':
+                    $idUsuario      = (int)($_POST['id'] ?? 0);
+                    $nuevaPassword  = '12345';  
+                    echo $idUsuario;
+                    echo $nuevaPassword;
+        
+                    if ($idUsuario > 0 && $nuevaPassword !== '') {
+        
+                        $passwordCambiada = $loginController->resetearPassword($idUsuario, $nuevaPassword);
+        
+                        if ($passwordCambiada) {
+                            header("Location: ../views/usuarios.php");
+                            exit;
+                        } else {
+                            echo "No se pudo cambiar la contraseña. Inténtalo de nuevo más tarde.";
+                            exit;
+                        }
+                    } else {
+                        echo "Parámetros inválidos.";
+                        exit;
+                    }
+                break;
+
+
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";

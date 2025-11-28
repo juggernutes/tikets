@@ -192,6 +192,7 @@ class Empleado
         }
         return $empleados;
     }
+    
     public function obtenerEmpleadosPorArea($areaId)
     {
         $empleados = [];

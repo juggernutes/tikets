@@ -152,4 +152,37 @@ class Login
             }
         }
     }
+
+    public function obtenerTodosLosUsuarios(){
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+        $op = 9;
+        $stmt->bind_param("i", $op);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = [];
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = $row;
+        }
+        $stmt->close();
+        $this->_flushResults();
+        return $usuarios;
+    }
+
+    // Model
+    public function resetearPassword(int $idLogin, string $hash): bool
+    {
+        $stmt = $this->conn->prepare("CALL sp_Login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)");
+        $op = 10;    
+        $stmt->bind_param('iis', $op, $idLogin, $hash);
+        $stmt->execute();
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        if($stmt->affected_rows > 0){
+            return true;
+        }
+    
+        return false;
+    }
 }
