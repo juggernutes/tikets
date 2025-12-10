@@ -33,10 +33,31 @@ class Sistema {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function crear($nombre, $descripcion) {
+    /*public function crear($nombre, $descripcion) {
         $sql = "CALL sp_sistemas(3, 0, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$nombre, $descripcion]);
+    }*/
+
+    public function crearNuevoSistema($nombre, $descripcion) {
+        $idNuevo = null;
+        $op = 3;
+
+        if ($stmt = $this->conn->prepare("CALL sp_sistemas(?, null, ?, ?)")) {
+            $stmt->bind_param("iss", $op, $nombre, $descripcion);
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                if ($row = $result->fetch_assoc()) {
+                    $idNuevo = $row['ID_Sistema'];
+                }
+            }
+            $stmt->close();
+            while ($this->conn->more_results() && $this->conn->next_result()) {
+                $this->conn->use_result();
+            }
+        }
+
+        return $idNuevo;
     }
 }
 

@@ -281,7 +281,9 @@ if (isset($_GET['action'])) {
             }
 
             // Headers para descarga CSV (sin ningún echo antes)
-            $filename = 'pedido-' . preg_replace('/[^A-Za-z0-9_-]/', '-', $folio) . '.csv';
+            $unidad = preg_replace('/[^A-Za-z0-9]/', '', substr($row['UNIDAD'] ?? '', 0, 5));
+            $filename = "pedido-$unidad-" . preg_replace('/[^A-Za-z0-9_-]/', '-', $folio) . ".csv";
+
             header('Content-Type: text/csv; charset=UTF-8');
             header('Content-Disposition: attachment; filename="' . $filename . '"');
             header('Pragma: no-cache');
@@ -292,22 +294,50 @@ if (isset($_GET['action'])) {
             // BOM UTF-8 para Excel
             fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Cabecera del CSV (coincide con alias del SP)
-            fputcsv($out, ['REGISTRO', 'ARTICULO', 'PIEZAS', 'PESO_UNIT', 'UNIDAD']);
+            // ======== ENCABEZADO TIPO FORMATO ========
+            fputcsv($out, ["REPORTE DE PEDIDO", substr($row['UNIDAD'] ?? '', 0, 5)]);
+            fputcsv($out, ["PEDIDO FOLIO:", $folio]);
+            fputcsv($out, ["FECHA:", date('Y-m-d H:i:s')]);
+            // línea en blanco
+            fputcsv($out, []);
 
-            // Filas
+            // ======== CABECERA DE COLUMNAS (IGUAL A LA HOJA) ========
+            fputcsv($out, [
+                'REGISTRO',
+                'CÓDIGO',          // IdArticulo
+                'DESCRIPCIÓN',     // Nombre artículo
+                'CANTIDAD_PEDIDO', // Piezas
+                'OK',              // vacía
+                'LOTE',            // vacía (más ancha la ajustas en Excel)
+                'PESO'             // vacía
+            ]);
+            $contador = 0;
+            // ======== DETALLE ========
             foreach ($result as $row) {
+                $contador ++;
                 fputcsv($out, [
-                    $row['REGISTRO']   ?? '',
-                    $row['ARTICULO']   ?? '',
-                    $row['PIEZAS']     ?? '',
-                    $row['PESO_UNIT']  ?? '',
-                    substr($row['UNIDAD'] ?? '', 0, 5)
+
+                    $contador,
+                    $row['CÓDIGO'] ?? '',  // CÓDIGO
+                    $row['DESCRIPCIÓN']   ?? '',  // DESCRIPCIÓN
+                    $row['CANTIDAD_PEDIDO']   ?? '',  // CANTIDAD PEDIDO
+                    '',                     // OK (en blanco)
+                    '',                     // LOTE (en blanco)
+                    ''                      // PESO (en blanco)
                 ]);
             }
 
+            fputcsv($out, []);          // línea en blanco
+            fputcsv($out, []);          // otra línea en blanco
+                    
+            // Renglones de firma
+            fputcsv($out, ['Nombre y firma', '']);  
+            fputcsv($out, ['Responsable de armado', '']);
+
+
             fclose($out);
             exit;
+
 
 
         case 'autorizar_pedido':

@@ -1,5 +1,5 @@
 <?php
-    $appVersion = defined('APP_VERSION') ? APP_VERSION : 'V 1.3.0';
+    $appVersion = defined('APP_VERSION') ? APP_VERSION : 'V 1.3.4';
     $env = defined('APP_ENV') ? APP_ENV : 'productivo';
   ?>
   <footer class="app-footer">
@@ -13,7 +13,7 @@
       <nav class="app-footer__links" aria-label="Enlaces del pie">
          <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
         <a class="app-footer__link" href="../views/registrar_tiket.php">Tickets</a>
-        <a class="app-footer__link" href="#reportes">Reportes</a>
+        <a class="app-footer__link" href="../views/reportes.php">Reportes</a>
         <a class="app-footer__link" href="#manuales">Manuales</a>
         <a class="app-footer__link app-btn--danger" href="#incidencia">Reportar incidencia</a>
         <?php endif; ?>

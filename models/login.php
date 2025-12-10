@@ -152,4 +152,51 @@ class Login
             }
         }
     }
+
+    public function obtenerTodosLosUsuarios(){
+        $stmt = $this->conn->prepare("CALL sp_login(?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+        $op = 9;
+        $stmt->bind_param("i", $op);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $usuarios = [];
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = $row;
+        }
+        $stmt->close();
+        $this->_flushResults();
+        return $usuarios;
+    }
+
+    // Model
+    public function resetearPassword(int $idLogin, string $hash): bool
+    {
+        $sql = "CALL sp_Login(?, ?, NULL, ?, NULL, NULL, NULL, NULL, NULL)";
+        $stmt = $this->conn->prepare($sql);
+        
+        if (!$stmt) {
+            error_log("Error prepare resetearPassword: " . $this->conn->error);
+            return false;
+        }
+    
+        $op = 10;
+    
+        if (!$stmt->bind_param('iis', $op, $idLogin, $hash)) {
+            error_log("Error bind_param resetearPassword: " . $stmt->error);
+            return false;
+        }
+    
+        if (!$stmt->execute()) {
+            error_log("Error execute resetearPassword: " . $stmt->error);
+            return false;
+        }
+    
+        $ok = $stmt->affected_rows > 0;
+    
+        $stmt->close();
+    
+        return $ok;
+    }
+
+
 }

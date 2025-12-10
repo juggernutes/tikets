@@ -447,4 +447,16 @@ class LoginController
         echo "\n marcarUso: $marcarUso";
         return true;
     }*/
+
+    public function obtenerTodosLosUsuarios(){
+        return $this->loginModel->obtenerTodosLosUsuarios();
+    }
+
+    public function resetearPassword(int $idUsuario, string $nuevaPassword): bool
+    {
+        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
+        return $this->loginModel->resetearPassword($idUsuario, $hash);
+    }
+
+
 }

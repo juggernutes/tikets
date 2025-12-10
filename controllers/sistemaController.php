@@ -29,4 +29,8 @@ class SistemaController {
 
         return $options;
     }
+
+    public function crearNuevoSistema($nombre, $descripcion) {
+        return $this->sistemaModel->crearNuevoSistema($nombre, $descripcion);
+    }
 }

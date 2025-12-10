@@ -72,6 +72,19 @@ class Tiket {
         return $stmt->affected_rows > 0;
     }
 
+    
+    public function updatetiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion) {
+        $op = 11;
+        $params = [
+            $idTiket, null, null, $idError, null, $idSoporte, $idSolucion, $descripcionSolucion, null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
+    }
+
      // Operación 5: cerrar ticket
     public function cerrar($idTiket, $idUsuario) {
         $op = 5;
@@ -90,6 +103,30 @@ class Tiket {
         return $this->ejecutarSP(2, [
             null, null, null, null, null, null, null, null, $idUsuario
         ]);
+    }
+
+    public function getTicketbyProveedor($usuario)
+    {
+        $op = 12;
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $usuario
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisi', $op, ...$params);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $res;
     }
 
     //                                  Operación 6: Obtener todos los tickets

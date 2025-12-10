@@ -1,10 +1,15 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {session_start();}
-$rol = $_SESSION['rol'] ?? 'Invitado';
-$usuario = $_SESSION['login_id'] ?? 'Sin sesión';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$rol           = $_SESSION['rol']    ?? 'Invitado';
+$usuario       = $_SESSION['login_id'] ?? 'Sin sesión';
 $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
-
-
+// Aseguramos que $title exista para evitar notices (por si no lo defines antes)
+if (!isset($title)) {
+    $title = '';
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,6 +18,7 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SISTEMA DE GESTION</title>
   <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+
   <style>
     /* ==========================
        Diseño base y variables
@@ -59,16 +65,20 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
     /* ==========================
        Header compacto y elegante
        ========================== */
-    header.site-header {
+       header.site-header {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
         overflow: visible;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
-      background: linear-gradient(180deg, var(--bg-soft) 0%, rgba(0,0,0,0) 140%);
-      border-bottom: 1px solid var(--ring);
-    }
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+        background: linear-gradient(180deg, var(--bg-soft) 0%, rgba(0,0,0,0) 140%);
+        border-bottom: 1px solid var(--ring);
+      }
+
 
     .container {
       max-width: 1200px;
@@ -81,23 +91,23 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       min-height: 64px; /* compacto */
     }
 
-    /* Marca y animación conservada */
     .brand {
       display: grid;
       grid-auto-flow: column;
       align-items: center;
       gap: 12px;
-      grid-template-columns: 84px 1fr; align-items:center; 
+      grid-template-columns: 84px 1fr;
     }
 
     .logo-shell {
       position: relative;
       width: 80px; height: 80px;
       display: grid; place-items: center;
-      margin-right:12px; position:relative; z-index:1; pointer-events:none; 
+      margin-right:12px;
+      z-index:1;
+      pointer-events:none;
     }
 
-    /* Anillo exterior (animación girarExterior conservada) */
     .ring {
       position: absolute;
       inset: -2px;
@@ -107,7 +117,6 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       filter: drop-shadow(0 0 8px rgba(255,255,255,.85));
     }
 
-    /* Centro que se abre (animación abrirCentro conservada) */
     .core {
       position: relative;
       width: 44px; height: 44px;
@@ -123,7 +132,8 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       font-weight: 700;
       letter-spacing: .2px;
       line-height: 1.15;
-      position:relative; z-index:2; 
+      position:relative;
+      z-index:2;
     }
 
     .brand .sub {
@@ -133,10 +143,10 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       color: var(--muted);
       letter-spacing: .2px;
       margin-top: 2px;
-      position:relative; z-index:2; 
+      position:relative;
+      z-index:2;
     }
 
-    /* Navegación minimal */
     nav ul {
       display: flex;
       gap: 14px;
@@ -161,7 +171,6 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       background: rgba(255,255,255,.04);
     }
 
-    /* Usuario a la derecha */
     .user {
       display: grid;
       grid-auto-flow: column;
@@ -185,9 +194,6 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
 
     .user small { display:block; color: var(--muted); font-size: 11px; margin-top: 1px; }
 
-    /* ==========================
-       Main (demo)
-       ========================== */
     main {
       max-width: 1100px;
       margin: 24px auto;
@@ -202,9 +208,6 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       padding: 20px;
     }
 
-    /* ==========================
-       Animaciones (recicladas)
-       ========================== */
     @keyframes girarExterior {
       0% {
         transform: rotate(0deg);
@@ -224,17 +227,11 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       100% { transform: scaleX(1); opacity: 1; }
     }
 
-    /* ==========================
-       Responsivo
-       ========================== */
     @media (max-width: 760px) {
       .container { grid-template-columns: 1fr auto; gap: 10px; }
       nav { display: none; }
     }
-  
-    /* ==========================
-       Footer estilizado (ligero, sin <hr>)
-       ========================== */
+
     .app-footer{
       background: rgba(255,255,255,.9);
       backdrop-filter: blur(8px) saturate(1.05);
@@ -271,14 +268,15 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       .divider{ display:none; }
     }
   </style>
-  <?php if ($rol === 'SOPORTE'  && $title === 'DASHBOARD'): ?>
-    <!-- Auto-refresh cada 180 segundos solo para soporte -->
+
+  <?php if ($rol === 'SOPORTE' && $title === 'DASHBOARD'): ?>
+    <!-- Auto-refresh cada 180 segundos solo para soporte en dashboard -->
     <meta http-equiv="refresh" content="180">
-  <?php endif; ?>
-  <?php if($rol === 'ALMACEN' || $rol === 'SUPERVISOR') : ?>
-    <!-- Auto-refresh cada 120 segundos solo para almacen -->
+  <?php elseif ($rol === 'ALMACEN' || $rol === 'SUPERVISOR'): ?>
+    <!-- Auto-refresh cada 120 segundos solo para almacen/supervisor -->
     <meta http-equiv="refresh" content="120">
   <?php endif; ?>
+
 </head>
 <body>
   <header class="site-header">
@@ -298,23 +296,25 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
         <ul>
           <?php if ($rol === 'ALMACEN' || $rol === 'SUPERVISOR'): ?>
             <li><a href="../views/dashboardPedidos.php">Inicio</a></li>
-            <!--<li><a href="../views/registrar_entrada.php">Entradas</a></li>
-            <li><a href="../views/historial_entradas.php">Historial de entradas</a></li>-->
+          <?php elseif ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE' || $rol === 'JEFE DE AREA'): ?>
+            <li><a href="../views/dashboard.php">Inicio</a></li>
+            <li><a href="../views/registrar_tiket.php">Tickets</a></li>
+            <li><a href="../views/cerrado_tiket.php">Historial de tickets</a></li>
+
+            <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
+              <li><a href="../views/empleado.php">Empleados</a></li>
+              <li><a href="../views/usuarios.php">Usuarios</a></li>
+            <?php endif; ?>
           <?php endif; ?>
-          <?php if ($rol === 'EMPLEADO' || $rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-          <li><a href="../views/dashboard.php">Inicio</a></li>
-          <li><a href="../views/registrar_tiket.php">Tickets</a></li>
-          <li><a href="../views/cerrado_tiket.php">Historial de tikects</a></li>
-          <?php if ($rol === 'ADMINISTRADOR' || $rol === 'SOPORTE'): ?>
-            <li><a href="../views/empleado.php">Empleados</a></li>
-          <?php endif; ?>
-          <?php endif; ?>
+
           <li><a href="../public/logout.php">Cerrar sesión</a></li>
         </ul>
       </nav>
 
       <div class="user" title="<?php echo htmlspecialchars($rol); ?>">
-        <div class="avatar"><?php echo strtoupper(substr($nombreUsuario, 0, 1)); ?></div>
+        <div class="avatar">
+          <?php echo strtoupper(substr($nombreUsuario, 0, 1)); ?>
+        </div>
         <div>
           <strong style="font-size:13px; line-height:1.1; display:block; max-width:180px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
             <?php echo htmlspecialchars($nombreUsuario); ?>
@@ -324,5 +324,5 @@ $nombreUsuario = $_SESSION['nombre'] ?? 'Sin sesión';
       </div>
     </div>
   </header>
-  <!-- ===== Footer estilizado ===== -->
-  
+
+  <!-- aquí ya iría tu <main> y luego el footer -->
