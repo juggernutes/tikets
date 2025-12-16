@@ -30,6 +30,7 @@ require_once __DIR__ . '/../controllers/errorModelController.php';
 require_once __DIR__ . '/../controllers/encuestaController.php';
 require_once __DIR__ . '/../controllers/equipoController.php';
 require_once __DIR__ . '/../controllers/loginController.php';
+require_once __DIR__ . '/../controllers/soporteController.php';
 
 // Crear instancias de los controladores y modelos
 $sistemaController = new SistemaController($conn);
@@ -40,6 +41,7 @@ $solucionController = new SolucionController(new Solucion($conn));
 $encuestaController = new EncuestaController($conn);
 $equipoController = new EpicoController($conn);
 $loginController = new LoginController($conn);
+$soporteController = new soporteController($conn);
 
 $usuarioId = $_SESSION['login_id'] ?? null;
 
@@ -193,7 +195,184 @@ if (isset($_GET['accion'])) {
             } else {
                 echo "No hay accion";
             }
-            break;    
+            break; 
+        case 'tiket.avance':
+                $idTiket = intval($_GET['id_tiket']);
+                $idSoporte = intval($_SESSION['login_id']);
+                $idError = intval($_POST['id_error']) || 42;
+                $idSolucion = intval($_POST['id_solucion']) || 12;
+                $descripcionSolucion = $_POST['descripcion_solucion'];
+    
+                if ($idTiket > 0 && $idSoporte > 0) {
+                    $tiketResuelto = $tiketController->avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
+                    if ($tiketResuelto) {
+                        header("Location: ../views/dashboard.php");
+                    } else {
+                        // Manejo de error: no se pudo resolver el ticket
+                        echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+                    }
+                    exit;
+                } else {
+                    // Manejo de error: IDs inválidos
+                    echo "Parámetros inválidos.";
+                }
+            break; 
+
+        case 'enviarProveedor':
+                $idTiket = intval($_GET['id_tiket']);
+                $idSoporte = intval($_GET['id_proveedor']);
+    
+                if ($idTiket > 0 && $idSoporte > 0) {
+                    $tiketResuelto = $tiketController->enviarTiketProveedor($idTiket, $idSoporte);
+                    if ($tiketResuelto) {
+                        header("Location: ../views/dashboard.php");
+                    } else {
+                        // Manejo de error: no se pudo resolver el ticket
+                        echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
+                    }
+                    exit;
+                } else {
+                    // Manejo de error: IDs inválidos
+                    echo "Parámetros inválidos.";
+                }
+            break; 
+
+        case 'resetPasswordUsuario':
+                    $idUsuario      = intval($_POST['id'] ?? 0);
+                    $nuevaPassword  = '12345';  // o genera una aleatoria
+                
+                    if ($idUsuario > 0 && $loginController->resetearPassword($idUsuario, $nuevaPassword)) {
+                        header("Location: ../views/usuarios.php");
+                        exit;
+                    } else {
+                        echo "No se pudo cambiar la contraseña. Inténtalo de nuevo más tarde.";
+                    }
+            break;
+
+        case 'nuevoSistema':
+            $nombre = trim($_GET['nombre'] ?? '');
+            $descripcion = trim($_GET['descripcion'] ?? '');
+    
+                header('Content-Type: application/json');
+                // DEBUG: registrar datos que llegan al app
+                file_put_contents(
+                    __DIR__ . '/../debug_nuevoSistema.log',
+                    date('Y-m-d H:i:s') . " | REQUEST: " . print_r($_REQUEST, true) . "\n",
+                    FILE_APPEND
+                );
+
+    
+                if ($nombre === '') {
+                    echo json_encode(['ok' => false, 'error' => 'El nombre del sistema es obligatorio.']);
+                    exit;
+                }
+    
+                $nuevoSistemaId = $sistemaController->crearNuevoSistema($nombre, $descripcion);
+                if ($nuevoSistemaId) {
+                    echo json_encode(['ok' => true, 'id' => $nuevoSistemaId]);
+                } else {
+                    echo json_encode(['ok' => false, 'error' => 'No se pudo crear el sistema.']);
+                }
+            exit;
+            
+        case 'nuevoError':
+                header('Content-Type: application/json; charset=utf-8');
+            
+                $nombreError = trim($_GET['nombre'] ?? '');
+            
+                if ($nombreError === '') {
+                    echo json_encode([
+                        'ok'    => false,
+                        'error' => 'El nombre del error es obligatorio.'
+                    ]);
+                    exit;
+                }
+            
+                $nuevoErrorId = $errorController->crearNuevoError($nombreError);
+            
+                if ($nuevoErrorId) {
+                    echo json_encode([
+                        'ok' => true,
+                        'id' => $nuevoErrorId
+                    ]);
+                } else {
+                    echo json_encode([
+                        'ok'    => false,
+                        'error' => 'No se pudo crear el error.'
+                    ]);
+                }
+            exit;
+            
+            
+        case 'nuevoSolucion':
+                header('Content-Type: application/json; charset=utf-8');
+            
+                $nombreSolucion = trim($_GET['nombre'] ?? '');
+            
+                if ($nombreSolucion === '') {
+                    echo json_encode([
+                        'ok'    => false,
+                        'error' => 'El nombre de la solución es obligatorio.'
+                    ]);
+                    exit;
+                }
+            
+                $nuevaSolucionId = $solucionController->crearNuevaSolucion($nombreSolucion);
+            
+                if ($nuevaSolucionId) {
+                    echo json_encode([
+                        'ok' => true,
+                        'id' => $nuevaSolucionId
+                    ]);
+                } else {
+                    echo json_encode([
+                        'ok'    => false,
+                        'error' => 'No se pudo crear la solución.'
+                    ]);
+                }
+            exit;
+
+        case 'reporteProveedor':
+                $idProveedor = trim($_GET['ID_PROVEEDOR'] ?? 0);
+                $fecha = trim($_GET['fecha'] ?? '');
+
+                /*$anio = 0;
+                $mes = 0;
+                [$anio,$mes] = explode('-', $fecha);*/
+    
+                header('Content-Type: application/json; charset=utf-8');
+
+                $logData = [
+                    'fecha_log'   => date('Y-m-d H:i:s'),
+                    'GET'         => $_GET,
+                    'idProveedor' => $idProveedor,
+                    'fecha'       => $fecha
+                ];
+            
+                file_put_contents(
+                    __DIR__ . '/../reporteProveedor.log',
+                    json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . PHP_EOL,
+                    FILE_APPEND
+                );
+    
+                if ($idProveedor <= 0) {
+                    echo json_encode([
+                        'ok'    => false,
+                        'error' => 'ID de proveedor inválido.'
+                    ]);
+                    exit;
+                }
+    
+                $reporte = $tiketController->datosReportePorProveedor($idProveedor, $anio, $mes);
+    
+                echo json_encode([
+                    'ok'     => true,
+                    'reporte' => $reporte
+                ]);
+
+
+            exit;
+            
         default:
             // Manejo de error: acción no reconocida
             echo "Acción no reconocida.";
@@ -205,82 +384,3 @@ if (isset($_GET['accion'])) {
 
 ob_end_flush(); // Enviar el contenido del buffer de salida
 
-/*
-if (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'tomarTiket') {
-    $idTiket = intval($_GET['id_tiket']);
-    $idSoporte = intval($_SESSION['login_id']);
-
-    if ($idTiket > 0 && $idSoporte > 0) {
-        $tiketTomado = $tiketController->tomarControlDeTiket($idTiket, $idSoporte);
-        if ($tiketTomado) {
-            header("Location: ../views/resolver_tiket.php?id=$idTiket");
-        } else {
-            // Manejo de error: no se pudo tomar el ticket
-            echo "No se pudo tomar el ticket. Inténtalo de nuevo más tarde.";
-        }
-        exit;
-    } else {
-        // Manejo de error: IDs inválidos
-        echo "Parámetros inválidos.";
-    }
-} elseif (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'solucionar') {
-    $idTiket = intval($_GET['id_tiket']);
-    $idSoporte = intval($_SESSION['login_id']);
-    $idError = intval($_POST['id_error']);
-    $idSolucion = intval($_POST['id_solucion']);
-    $descripcionSolucion = $_POST['descripcion_solucion'];
-
-    if ($idTiket > 0 && $idSoporte > 0) {
-        $tiketResuelto = $tiketController->resolverTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion);
-        if ($tiketResuelto) {
-            header("Location: ../views/dashboard.php");
-        } else {
-            // Manejo de error: no se pudo resolver el ticket
-            echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
-        }
-        exit;
-    } else {
-        // Manejo de error: IDs inválidos
-        echo "Parámetros inválidos.";
-    }
-} elseif (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'cerrarTiket') {
-    $idTiket = intval($_GET['id_tiket']);
-    $idUsuario = intval($_SESSION['login_id']);
-
-    if ($idTiket > 0 && $idUsuario > 0) {
-        $tiketResuelto = $tiketController->closeTicket($idTiket, $idUsuario);
-
-        if ($tiketResuelto) {
-            header("Location: ../views/dashboard.php");
-        } else {
-            // Manejo de error: no se pudo resolver el ticket
-            echo "No se pudo resolver el ticket. Inténtalo de nuevo más tarde.";
-        }
-        exit;
-    } else {
-        // Manejo de error: IDs inválidos
-        echo "Parámetros inválidos.";
-    }
-} elseif (isset($_GET['accion'], $_GET['id_tiket']) && $_GET['accion'] === 'calificarEncuesta') {
-    $idTiket = intval($_GET['id_tiket']);
-    $calificacion = intval($_POST['calificacion']);
-    $comentarios = substr(trim($_POST['comentarios']), 0, 500);
-
-    if ($idTiket > 0 && $calificacion >= 1 && $calificacion <= 5) {
-        $encuestaCalificada = $encuestaController->calificarEncuesta($idTiket, $calificacion, $comentarios);
-
-        if ($encuestaCalificada) {
-            header("Location: ../views/dashboard.php");
-        } else {
-            // Manejo de error: no se pudo calificar la encuesta
-            echo "No se pudo calificar la encuesta. Inténtalo de nuevo más tarde.";
-        }
-        exit;
-    } else {
-        // Manejo de error: parámetros inválidos
-        echo "Parámetros inválidos.";
-    }
-} else {
-    // Manejo de error: acción no reconocida
-    echo "Acción no reconocida.";
-}*/

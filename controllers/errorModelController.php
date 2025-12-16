@@ -32,4 +32,8 @@ class ErrorModelController {
         }
         return null; // Si no se encuentra el error
     }
+
+    public function crearNuevoError($nombreError) {
+        return $this->model->insertarError($nombreError);
+    }
 }

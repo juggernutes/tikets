@@ -30,13 +30,11 @@ class ErrorModel{
 
         return $error;        
     }
-    public function insertarError($descripcion, $tipoError) {
+    public function insertarError($descripcion) {
         $op=2;
-        $idError = null; 
-        $active = 1; 
-        $sql = "CALL sp_errores(?, ?, ?, ?, ?)";
+        $sql = "CALL sp_errores(?, null, ?, null, 2)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iisii", $op, $idError, $descripcion, $active, $tipoError);
+        $stmt->bind_param("is", $op, $descripcion);
         if ($stmt->execute()) {
             return true;
         } else {

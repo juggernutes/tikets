@@ -1,0 +1,21 @@
+2025-12-03 11:25:36 | REQUEST: Array
+(
+    [accion] => nuevoSistema
+    [nombre] => 1
+    [descripcion] => 1
+)
+
+2025-12-03 11:27:28 | REQUEST: Array
+(
+    [accion] => nuevoSistema
+    [nombre] => Dashboard
+    [descripcion] => Portal de indicadores operativos
+)
+
+2025-12-05 17:03:24 | REQUEST: Array
+(
+    [accion] => nuevoSistema
+    [nombre] => prueba
+    [descripcion] => 2
+)
+

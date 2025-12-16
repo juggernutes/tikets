@@ -239,6 +239,48 @@ class PedidoModel
         return $detalle;
     }
 
+    public function getDetallePedidoAlmacen(string $Folio): array
+    {
+        $op = 10; // operación para obtener detalle de pedido por folio
+        $params = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $Folio,
+            null,
+            null,
+            null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_pedido(
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,   -- 13 header
+            ?, ?, ?, ?, ?,                           -- 5 detalle
+            @out_IdPedido, @out_Folio
+        )");
+        $stmt->bind_param('iiiiiiisidssiisiid', $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $detalle = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $detalle[] = $row;
+        }
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $this->conn->use_result();
+        }
+        return $detalle;
+    }
+
     public function PedidoSurtido(int $idpedido, int $usuario, float $volumen): bool
     {
         $stmt = $this->conn->prepare("CALL sp_pedido(

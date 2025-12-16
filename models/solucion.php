@@ -41,4 +41,19 @@ class Solucion{
         }
         return null;
     }
+    
+    public function insertarSolucion($nombreSolucion) {
+        $op = 3;
+        $id = null;
+        $active = 1;
+
+        $sql = "CALL sp_soluciones(?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iisi", $op, $id, $nombreSolucion, $active);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

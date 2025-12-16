@@ -13,11 +13,16 @@ $enProceso     = [];
 $cerrados      = [];
 
 // Obtiene tickets según rol
-if ($rol === 'EMPLEADO') {
-    $tikets = $tiketController->getTicketsByUserId($usuarioId);
-} elseif ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
-    $tikets = $tiketController->getAllTickets($usuarioId);
+if ($rol === 'SOPORTE' || $rol === 'ADMINISTRADOR') {
+  $tikets = $tiketController->getAllTickets($usuario);
+} elseif ($rol === 'PROVEEDOR') {
+  $tikets = $tiketController->getTicketbyProveedor($usuario);
+  //print_r($usuario);
+  //print_r($tikets);
+}else {
+  $tikets = $tiketController->getTicketsByUserId($usuario);
 }
+
 
 // Clasificación por estado
 if ($tikets && $tikets->num_rows > 0) {
@@ -36,21 +41,7 @@ if ($tikets && $tikets->num_rows > 0) {
 $totalTickets   = ($tikets ? $tikets->num_rows : 0);
 $totalAbiertos  = count($soloAbiertos) + count($enProceso);
 $totalCerrados  = count($cerrados);
-/*if ($rol === 'SOPORTE') {
-  // Recargar la pagina
-  echo '<meta http-equiv="refresh" content="180">';
-  exit;
-}
-$rol = $_SESSION['rol'] ?? 'Invitado';
-// REDIRECCIONAR SEGÚN ROL
-if ($rol === 'SUPERVISOR' || $rol === 'ALMACEN') {
-    header('Location: ./dashboardPedidos.php');
-    exit;
-} 
-if ($rol === 'VENDEDOR') {
-    header('Location: ./pedido.php');
-    exit;
-} */
+
 ?>
 
 <style>
@@ -199,6 +190,10 @@ if ($rol === 'VENDEDOR') {
             <?php if(isset($_SESSION['rol']) && ($_SESSION['rol'] === 'SOPORTE'|| $_SESSION['rol'] === 'ADMINISTRADOR')): ?>
               <div class="acciones-botones">
                 <a href="../app/appTiket.php?accion=tomarTiket&id_tiket=<?= $row['ID_Tiket'] ?>"><button>Tomar</button></a>
+              </div>
+            <?php elseif(isset($_SESSION['rol']) && $_SESSION['rol'] === 'PROVEEDOR'): ?>
+              <div class="acciones-botones">
+                <a href="../views/resolver_tiket.php?id=<?= $row['ID_Tiket'] ?>"><button>Ver detalle</button></a>
               </div>
             <?php endif; ?>
           </div>

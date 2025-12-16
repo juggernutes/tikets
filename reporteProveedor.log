@@ -1,0 +1,52 @@
+{
+    "fecha_log": "2025-12-11 15:42:26",
+    "GET": {
+        "accion": "reporteProveedor",
+        "id_proveedor": "205",
+        "mes": "2025-11"
+    },
+    "idProveedor": 0,
+    "fecha": "",
+    "anio": "",
+    "mes": null
+}
+{
+    "fecha_log": "2025-12-11 15:44:07",
+    "GET": {
+        "accion": "reporteProveedor",
+        "id_proveedor": "205",
+        "mes": "2025-11"
+    },
+    "idProveedor": 0,
+    "fecha": ""
+}
+{
+    "fecha_log": "2025-12-11 15:44:37",
+    "GET": {
+        "accion": "reporteProveedor",
+        "id_proveedor": "205",
+        "mes": "2025-11"
+    },
+    "idProveedor": "0",
+    "fecha": ""
+}
+{
+    "fecha_log": "2025-12-11 15:56:16",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-04"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-04"
+}
+{
+    "fecha_log": "2025-12-11 16:59:46",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}

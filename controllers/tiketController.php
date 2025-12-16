@@ -105,4 +105,28 @@ class TiketController
             echo "BUELBE A INTENTARLO";
         }
     }
+
+    public function avanzarTiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)
+    {
+        // Validar que los IDs sean válidos
+        if (empty($idTiket) || empty($idSoporte) || empty($descripcionSolucion)) {
+            echo "Descripcion obligatoria.";
+            return false;
+        } elseif ($this->model->updatetiket($idTiket, $idSoporte, $idError, $idSolucion, $descripcionSolucion)) {
+            header("Location: ../views/dashboard.php");
+            exit;
+        } else {
+            return false;
+        }
+    }
+
+    public function getTicketbyProveedor($usuario)
+    {
+        return $this->model->getTicketbyProveedor($usuario);
+    }
+
+    public function enviarTiketProveedor($idTiket, $idSoporte)
+    {
+        return $this->model->tomarTiket($idTiket, $idSoporte);
+    }
 }

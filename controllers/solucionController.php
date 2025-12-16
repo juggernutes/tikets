@@ -14,4 +14,8 @@ class SolucionController {
     public function getSolucionById($id) {
         return $this->model->obtenerSolucionPorId($id);
     }
+
+    public function crearNuevaSolucion($nombreSolucion) {
+        return $this->model->insertarSolucion($nombreSolucion);
+    }
 }

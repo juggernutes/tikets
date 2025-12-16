@@ -1,21 +1,16 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'SOPORTE') {
-    header("Location: ../public/index.php");
-    exit;
-}
-
-require_once __DIR__ . '/../models/login.php';
+require_once __DIR__ . '/../models/proveedor.php';
 
 class soporteController{
-    private $loginModel;
+    private $proveedorModel;
 
     public function __construct($conn) {
-        $this->loginModel = new Login($conn);
+        $this->proveedorModel = new Proveedor($conn);
+    }
+
+    public function getAllProveedores() {
+        return $this->proveedorModel->obtenerProveedores();
     }
 
     
 }
-
-?>
