@@ -129,4 +129,9 @@ class TiketController
     {
         return $this->model->tomarTiket($idTiket, $idSoporte);
     }
+
+    public function datosReportePorProveedor($idProveedor, $fecha)
+    {
+        return $this->model->datosReportePorProveedor($idProveedor, $fecha);
+    }
 }

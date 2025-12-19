@@ -50,3 +50,799 @@
     "idProveedor": "205",
     "fecha": "2025-12"
 }
+{
+    "fecha_log": "2025-12-18 10:08:15",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 10:10:08",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 10:10:08 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:25:30",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 10:25:30 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:25:49",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-11"
+}
+2025-12-18 10:25:49 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:27:01",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-11"
+}
+2025-12-18 10:27:01 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:28:03",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-11"
+}
+2025-12-18 10:28:03 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:47:46",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 10:47:46 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:47:54",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-11"
+}
+2025-12-18 10:47:54 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:48:43",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-11"
+}
+2025-12-18 10:48:43 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 10:48:48",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-11"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-11"
+}
+2025-12-18 10:48:48 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 11:06:10",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 11:06:10 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 11:06:21",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:06:22 | REPORTE: []
+{
+    "fecha_log": "2025-12-18 11:11:42",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:11:42 | REPORTE: [
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-02 15:02:19",
+        "FECHA_SOLUCION": "2025-12-10 16:39:35",
+        "DESCRIPCION": "Oscar Pérez: Generar N C automáticas para S N Ley debido a que se generaron ayer cuando todavía no estaban todos los descuentos en cero.",
+        "EMPLEADO": "MARISELA AMADOR GODINEZ",
+        "SOLUCION": "Se actualizo la fecha de timbrado, ya que la lista de precios tenía un descuento en 0 y esto provocaba fallas en el timbrado, se actualiza lista de precios y se manda a timbrar con fecha del periodo de noviembre."
+    },
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-03 12:43:38",
+        "FECHA_SOLUCION": "2025-12-10 16:44:06",
+        "DESCRIPCION": "Acompañamiento en las pruebas de reforzamiento de capacitación de mantenimiento",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se acompaña a k-user a generar sus pruebas correspondientes de mantenimiento basándonos en la capacitación de Poligonuns"
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-10 09:23:59",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Oscar Pérez: Impedir que se registre en SAP la transacción que se realice desde el Portal de viáticos si no contiene el nombre del empleado.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se plantea la opción de bloquear un campo para que los registros del portal del viaticos no escriba en SAP, hasta que este lleno el campo solicitado (Transaction). Pendiente de probar con usuario tentativamente el día jueves o viernes."
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 08:53:14",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Cómo identificar el documento que genera o tiene inventario comprometido dado que no existe inventario en stock.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 17:05:33",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Factura de reserva 2009228 pagada del 21\/08\/2023 genera inventario comprometido del código 5502",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-17 15:52:48",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "asascascasc",
+        "EMPLEADO": "ANAYELI MONTAÑO FLORES",
+        "SOLUCION": null
+    }
+]
+{
+    "fecha_log": "2025-12-18 11:19:22",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:19:22 | REPORTE: [
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-02 15:02:19",
+        "FECHA_SOLUCION": "2025-12-10 16:39:35",
+        "DESCRIPCION": "Oscar Pérez: Generar N C automáticas para S N Ley debido a que se generaron ayer cuando todavía no estaban todos los descuentos en cero.",
+        "EMPLEADO": "MARISELA AMADOR GODINEZ",
+        "SOLUCION": "Se actualizo la fecha de timbrado, ya que la lista de precios tenía un descuento en 0 y esto provocaba fallas en el timbrado, se actualiza lista de precios y se manda a timbrar con fecha del periodo de noviembre."
+    },
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-03 12:43:38",
+        "FECHA_SOLUCION": "2025-12-10 16:44:06",
+        "DESCRIPCION": "Acompañamiento en las pruebas de reforzamiento de capacitación de mantenimiento",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se acompaña a k-user a generar sus pruebas correspondientes de mantenimiento basándonos en la capacitación de Poligonuns"
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-10 09:23:59",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Oscar Pérez: Impedir que se registre en SAP la transacción que se realice desde el Portal de viáticos si no contiene el nombre del empleado.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se plantea la opción de bloquear un campo para que los registros del portal del viaticos no escriba en SAP, hasta que este lleno el campo solicitado (Transaction). Pendiente de probar con usuario tentativamente el día jueves o viernes."
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 08:53:14",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Cómo identificar el documento que genera o tiene inventario comprometido dado que no existe inventario en stock.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 17:05:33",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Factura de reserva 2009228 pagada del 21\/08\/2023 genera inventario comprometido del código 5502",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-17 15:52:48",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "asascascasc",
+        "EMPLEADO": "ANAYELI MONTAÑO FLORES",
+        "SOLUCION": null
+    }
+]
+{
+    "fecha_log": "2025-12-18 11:20:02",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:20:02 | REPORTE: [
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-02 15:02:19",
+        "FECHA_SOLUCION": "2025-12-10 16:39:35",
+        "DESCRIPCION": "Oscar Pérez: Generar N C automáticas para S N Ley debido a que se generaron ayer cuando todavía no estaban todos los descuentos en cero.",
+        "EMPLEADO": "MARISELA AMADOR GODINEZ",
+        "SOLUCION": "Se actualizo la fecha de timbrado, ya que la lista de precios tenía un descuento en 0 y esto provocaba fallas en el timbrado, se actualiza lista de precios y se manda a timbrar con fecha del periodo de noviembre."
+    },
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-03 12:43:38",
+        "FECHA_SOLUCION": "2025-12-10 16:44:06",
+        "DESCRIPCION": "Acompañamiento en las pruebas de reforzamiento de capacitación de mantenimiento",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se acompaña a k-user a generar sus pruebas correspondientes de mantenimiento basándonos en la capacitación de Poligonuns"
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-10 09:23:59",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Oscar Pérez: Impedir que se registre en SAP la transacción que se realice desde el Portal de viáticos si no contiene el nombre del empleado.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se plantea la opción de bloquear un campo para que los registros del portal del viaticos no escriba en SAP, hasta que este lleno el campo solicitado (Transaction). Pendiente de probar con usuario tentativamente el día jueves o viernes."
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 08:53:14",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Cómo identificar el documento que genera o tiene inventario comprometido dado que no existe inventario en stock.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 17:05:33",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Factura de reserva 2009228 pagada del 21\/08\/2023 genera inventario comprometido del código 5502",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-17 15:52:48",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "asascascasc",
+        "EMPLEADO": "ANAYELI MONTAÑO FLORES",
+        "SOLUCION": null
+    }
+]
+{
+    "fecha_log": "2025-12-18 11:20:05",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:20:05 | REPORTE: [
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-02 15:02:19",
+        "FECHA_SOLUCION": "2025-12-10 16:39:35",
+        "DESCRIPCION": "Oscar Pérez: Generar N C automáticas para S N Ley debido a que se generaron ayer cuando todavía no estaban todos los descuentos en cero.",
+        "EMPLEADO": "MARISELA AMADOR GODINEZ",
+        "SOLUCION": "Se actualizo la fecha de timbrado, ya que la lista de precios tenía un descuento en 0 y esto provocaba fallas en el timbrado, se actualiza lista de precios y se manda a timbrar con fecha del periodo de noviembre."
+    },
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-03 12:43:38",
+        "FECHA_SOLUCION": "2025-12-10 16:44:06",
+        "DESCRIPCION": "Acompañamiento en las pruebas de reforzamiento de capacitación de mantenimiento",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se acompaña a k-user a generar sus pruebas correspondientes de mantenimiento basándonos en la capacitación de Poligonuns"
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-10 09:23:59",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Oscar Pérez: Impedir que se registre en SAP la transacción que se realice desde el Portal de viáticos si no contiene el nombre del empleado.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se plantea la opción de bloquear un campo para que los registros del portal del viaticos no escriba en SAP, hasta que este lleno el campo solicitado (Transaction). Pendiente de probar con usuario tentativamente el día jueves o viernes."
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 08:53:14",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Cómo identificar el documento que genera o tiene inventario comprometido dado que no existe inventario en stock.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 17:05:33",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Factura de reserva 2009228 pagada del 21\/08\/2023 genera inventario comprometido del código 5502",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-17 15:52:48",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "asascascasc",
+        "EMPLEADO": "ANAYELI MONTAÑO FLORES",
+        "SOLUCION": null
+    }
+]
+{
+    "fecha_log": "2025-12-18 11:20:07",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+2025-12-18 11:20:07 | REPORTE: [
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-02 15:02:19",
+        "FECHA_SOLUCION": "2025-12-10 16:39:35",
+        "DESCRIPCION": "Oscar Pérez: Generar N C automáticas para S N Ley debido a que se generaron ayer cuando todavía no estaban todos los descuentos en cero.",
+        "EMPLEADO": "MARISELA AMADOR GODINEZ",
+        "SOLUCION": "Se actualizo la fecha de timbrado, ya que la lista de precios tenía un descuento en 0 y esto provocaba fallas en el timbrado, se actualiza lista de precios y se manda a timbrar con fecha del periodo de noviembre."
+    },
+    {
+        "ESTADO": "CERRADO",
+        "FECHA_INICIO": "2025-12-03 12:43:38",
+        "FECHA_SOLUCION": "2025-12-10 16:44:06",
+        "DESCRIPCION": "Acompañamiento en las pruebas de reforzamiento de capacitación de mantenimiento",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se acompaña a k-user a generar sus pruebas correspondientes de mantenimiento basándonos en la capacitación de Poligonuns"
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-10 09:23:59",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Oscar Pérez: Impedir que se registre en SAP la transacción que se realice desde el Portal de viáticos si no contiene el nombre del empleado.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": "Se plantea la opción de bloquear un campo para que los registros del portal del viaticos no escriba en SAP, hasta que este lleno el campo solicitado (Transaction). Pendiente de probar con usuario tentativamente el día jueves o viernes."
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 08:53:14",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Cómo identificar el documento que genera o tiene inventario comprometido dado que no existe inventario en stock.",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-12 17:05:33",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "Factura de reserva 2009228 pagada del 21\/08\/2023 genera inventario comprometido del código 5502",
+        "EMPLEADO": "MANUEL DIAZ MENDEZ",
+        "SOLUCION": null
+    },
+    {
+        "ESTADO": "EN PROCESO",
+        "FECHA_INICIO": "2025-12-17 15:52:48",
+        "FECHA_SOLUCION": null,
+        "DESCRIPCION": "asascascasc",
+        "EMPLEADO": "ANAYELI MONTAÑO FLORES",
+        "SOLUCION": null
+    }
+]
+{
+    "fecha_log": "2025-12-18 11:59:55",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:07:43",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:09:24",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:13:12",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:27:46",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:29:12",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:29:32",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:36:52",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:44:00",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 12:45:20",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 14:15:37",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 14:17:38",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 14:18:32",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 14:21:27",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 14:58:53",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 15:26:59",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "205",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "205",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 15:34:10",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+{
+    "fecha_log": "2025-12-18 15:51:31",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 15:51:31 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 15:52:17",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 15:52:17 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:03:59",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:03:59 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:04:44",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:04:44 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:04:56",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:04:56 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:09:30",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:09:30 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:12:15",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:12:15 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:16:01",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:16:01 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 16:20:58",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 16:20:58 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 17:21:44",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 17:21:44 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 17:23:07",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 17:23:07 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 17:29:57",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 17:29:57 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}
+{
+    "fecha_log": "2025-12-18 17:32:28",
+    "GET": {
+        "accion": "reporteProveedor",
+        "ID_PROVEEDOR": "206",
+        "fecha": "2025-12"
+    },
+    "idProveedor": "206",
+    "fecha": "2025-12"
+}
+2025-12-18 17:32:28 | PROVEEDOR: {
+    "NOMBRE": "RAMON SIERRA VEGA",
+    "EMAIL": "rsierra@sedis.app",
+    "TELEFONO": "6641215443"
+}

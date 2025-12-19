@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ . '/../models/proveedor.php';
+require_once '../models/proveedor.php';
 
 class soporteController{
     private $proveedorModel;
@@ -12,5 +12,7 @@ class soporteController{
         return $this->proveedorModel->obtenerProveedores();
     }
 
-    
+    public function getProveedorById($id) {
+        return $this->proveedorModel->obtenerProveedorPorId($id);
+    }    
 }

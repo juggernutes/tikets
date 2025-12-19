@@ -70,8 +70,21 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
             <button type="button" class="icon-btn" id="btn-nuevo-sistema">+</button>
           <?php endif; ?>
         </div>
-
-
+        <!-- Proveedor -->
+         <?php if(isset($_SESSION['rol']) && 
+         ($_SESSION['rol'] === 'SOPORTE' || $_SESSION['rol'] === 'ADMINISTRADOR' || $_SESSION['rol'] === 'PROVEEDOR')): ?>
+        <divclass="form-row-2col">
+          <div class="col-input">
+          <label for="proveedor" class="titulo">Proveedor</label>
+          <select name="proveedor" id="proveedor" class="input">
+            <option value="">Seleccione un proveedor</option>
+            <?php
+            include __DIR__ . '/../partials/combo_proveedor.php';
+            ?>
+          </select>
+          </div>
+        </div>
+        <?php endif; ?>
 
         <!-- Descripción del sistema -->
         <div class="field" style="grid-column: 1 / -1;">
