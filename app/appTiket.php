@@ -33,6 +33,7 @@ require_once __DIR__ . '/../controllers/equipoController.php';
 require_once __DIR__ . '/../controllers/loginController.php';
 require_once __DIR__ . '/../controllers/soporteController.php';
 require_once __DIR__ . '/../controllers/SoporteController.php';
+require_once __DIR__ . '/../components/ReportePdfProveedor.php';
 
 // Crear instancias de los controladores y modelos
 $sistemaController = new SistemaController($conn);
@@ -51,49 +52,49 @@ $usuarioId = $_SESSION['login_id'] ?? null;
 if (isset($_GET['accion'])) {
     switch ($_GET['accion']) {
         case 'crearTiket': {
-                $numEmpleado = (int)($_POST['Numero_Empleado'] ?? 0);
-                $idSistema   = (int)($_POST['id_sistema'] ?? 0);
-                $descripcion = trim((string)($_POST['descripcion'] ?? ''));
-                $proveedor   = (int)($_POST['proveedor'] ?? 0);
+            $numEmpleado = (int) ($_POST['Numero_Empleado'] ?? 0);
+            $idSistema = (int) ($_POST['id_sistema'] ?? 0);
+            $descripcion = trim((string) ($_POST['descripcion'] ?? ''));
+            $proveedor = (int) ($_POST['proveedor'] ?? 0);
 
-                // Evita que te rompan el log con saltos de línea
-                $descLog = str_replace(["\r", "\n"], [' ', ' '], $descripcion);
+            // Evita que te rompan el log con saltos de línea
+            $descLog = str_replace(["\r", "\n"], [' ', ' '], $descripcion);
 
-                /*file_put_contents(
-                    __DIR__ . '/../crearTiket.log',
-                    date('Y-m-d H:i:s') . " | EMPLEADO: $numEmpleado | SISTEMA: $idSistema | DESCRIPCION: $descLog | PROVEEDOR: $proveedor\n",
-                    FILE_APPEND
-                );*/
+            /*file_put_contents(
+                __DIR__ . '/../crearTiket.log',
+                date('Y-m-d H:i:s') . " | EMPLEADO: $numEmpleado | SISTEMA: $idSistema | DESCRIPCION: $descLog | PROVEEDOR: $proveedor\n",
+                FILE_APPEND
+            );*/
 
-                if ($numEmpleado <= 0 || $idSistema <= 0 || $descripcion === '') {
-                    http_response_code(400);
-                    echo "Parámetros inválidos.";
-                    break;
-                }
-
-                // ======= DECISIÓN POR PROVEEDOR =======
-                $tiketCreado = $tiketController->createTicket($numEmpleado, $idSistema, $descripcion);
-
-                /*file_put_contents(
-                    __DIR__ . '/../crearTiket.log',
-                    date('Y-m-d H:i:s') . " | TICKET CREADO ID: " . ($tiketCreado ? $tiketCreado : 'FALLIDO') . "\n",
-                    FILE_APPEND
-                );*/
-
-                if ($tiketCreado && $proveedor > 0) {
-                    $tiketController->enviarTiketProveedor($tiketCreado, $proveedor);
-                }
-
-
-                if ($tiketCreado) {
-                    header("Location: ../views/dashboard.php");
-                    exit;
-                }
-
-                http_response_code(500);
-                echo "No se pudo crear el ticket. Inténtalo de nuevo más tarde.";
+            if ($numEmpleado <= 0 || $idSistema <= 0 || $descripcion === '') {
+                http_response_code(400);
+                echo "Parámetros inválidos.";
                 break;
             }
+
+            // ======= DECISIÓN POR PROVEEDOR =======
+            $tiketCreado = $tiketController->createTicket($numEmpleado, $idSistema, $descripcion);
+
+            /*file_put_contents(
+                __DIR__ . '/../crearTiket.log',
+                date('Y-m-d H:i:s') . " | TICKET CREADO ID: " . ($tiketCreado ? $tiketCreado : 'FALLIDO') . "\n",
+                FILE_APPEND
+            );*/
+
+            if ($tiketCreado && $proveedor > 0) {
+                $tiketController->enviarTiketProveedor($tiketCreado, $proveedor);
+            }
+
+
+            if ($tiketCreado) {
+                header("Location: ../views/dashboard.php");
+                exit;
+            }
+
+            http_response_code(500);
+            echo "No se pudo crear el ticket. Inténtalo de nuevo más tarde.";
+            break;
+        }
 
         case 'tomarTiket':
             $idTiket = intval($_GET['id_tiket']);
@@ -249,6 +250,12 @@ if (isset($_GET['accion'])) {
             $idTiket = intval($_GET['id_tiket']);
             $idSoporte = intval($_GET['id_proveedor']);
 
+            file_put_contents(
+                __DIR__ . '/../debug_enviarProveedor.log',
+                date('Y-m-d H:i:s') . " | idTiket: $idTiket | idSoporte: $idSoporte\n",
+                FILE_APPEND
+            );
+
             if ($idTiket > 0 && $idSoporte > 0) {
                 $tiketResuelto = $tiketController->enviarTiketProveedor($idTiket, $idSoporte);
                 if ($tiketResuelto) {
@@ -265,8 +272,8 @@ if (isset($_GET['accion'])) {
             break;
 
         case 'resetPasswordUsuario':
-            $idUsuario      = intval($_POST['id'] ?? 0);
-            $nuevaPassword  = '12345';  // o genera una aleatoria
+            $idUsuario = intval($_POST['id'] ?? 0);
+            $nuevaPassword = '12345';  // o genera una aleatoria
 
             if ($idUsuario > 0 && $loginController->resetearPassword($idUsuario, $nuevaPassword)) {
                 header("Location: ../views/usuarios.php");
@@ -309,7 +316,7 @@ if (isset($_GET['accion'])) {
 
             if ($nombreError === '') {
                 echo json_encode([
-                    'ok'    => false,
+                    'ok' => false,
                     'error' => 'El nombre del error es obligatorio.'
                 ]);
                 exit;
@@ -324,7 +331,7 @@ if (isset($_GET['accion'])) {
                 ]);
             } else {
                 echo json_encode([
-                    'ok'    => false,
+                    'ok' => false,
                     'error' => 'No se pudo crear el error.'
                 ]);
             }
@@ -338,7 +345,7 @@ if (isset($_GET['accion'])) {
 
             if ($nombreSolucion === '') {
                 echo json_encode([
-                    'ok'    => false,
+                    'ok' => false,
                     'error' => 'El nombre de la solución es obligatorio.'
                 ]);
                 exit;
@@ -353,7 +360,7 @@ if (isset($_GET['accion'])) {
                 ]);
             } else {
                 echo json_encode([
-                    'ok'    => false,
+                    'ok' => false,
                     'error' => 'No se pudo crear la solución.'
                 ]);
             }
@@ -366,10 +373,10 @@ if (isset($_GET['accion'])) {
             //('Content-Type: application/json; charset=utf-8');
 
             $logData = [
-                'fecha_log'   => date('Y-m-d H:i:s'),
-                'GET'         => $_GET,
+                'fecha_log' => date('Y-m-d H:i:s'),
+                'GET' => $_GET,
                 'idProveedor' => $idProveedor,
-                'fecha'       => $fecha
+                'fecha' => $fecha
             ];
 
             file_put_contents(
@@ -380,7 +387,7 @@ if (isset($_GET['accion'])) {
 
             if ($idProveedor <= 0) {
                 echo json_encode([
-                    'ok'    => false,
+                    'ok' => false,
                     'error' => 'ID de proveedor inválido.'
                 ]);
                 exit;
@@ -403,8 +410,8 @@ if (isset($_GET['accion'])) {
             $proveedor = $soporteController->getProveedorById($idProveedor) ?? [];
 
             $nombreProv = $proveedor['NOMBRE'] ?? 'Desconocido';
-            $emailProv  = $proveedor['EMAIL'] ?? 'Desconocido';
-            $phoneProv  = $proveedor['TELEFONO'] ?? 'Desconocido';
+            $emailProv = $proveedor['EMAIL'] ?? 'Desconocido';
+            $phoneProv = $proveedor['TELEFONO'] ?? 'Desconocido';
 
             $fechaConsulta = date('Y-m-d');
 
@@ -414,17 +421,41 @@ if (isset($_GET['accion'])) {
                 FILE_APPEND
             );
 
-            require_once __DIR__ . '/../components/ReportePdfProveedor.php';
+
             ReportesPdfProveedor::outputReporteProveedorFPDF(
                 $reporte,
                 [
-                    'filename'     => "reporte_proveedor_{$nombreProv}_{$fecha}.pdf",
-                    'nombreProv'   => $nombreProv,
-                    'emailProv'    => $emailProv,
-                    'phoneProv'    => $phoneProv,
+                    'filename' => "reporte_proveedor_{$nombreProv}_{$fecha}.pdf",
+                    'nombreProv' => $nombreProv,
+                    'emailProv' => $emailProv,
+                    'phoneProv' => $phoneProv,
                     'fechaReporte' => $fechaConsulta
                 ]
             );
+            break;
+
+        case 'reporteSemanal':
+            $anio = (int) ($_GET['anio'] ?? date('Y'));
+            $semana = (int) ($_GET['Semana'] ?? $_GET['semana'] ?? date('W'));
+
+            file_put_contents(
+                __DIR__ . '/../reporteSemanal.log',
+                date('Y-m-d H:i:s') . " | ANIO: $anio | SEMANA: $semana\n",
+                FILE_APPEND
+            );
+
+            $reporteSemanal = $soporteController->datosReporteSemanal($anio, $semana);
+
+            ReportesPdfProveedor::reporteSemanal(
+                $reporteSemanal,
+                [
+                    'filename' => "reporte_semanal_{$anio}_semana_{$semana}.pdf",
+                    'anio' => $anio,
+                    'semana' => $semana
+                ]
+            );
+            break;
+
 
         default:
             // Manejo de error: acción no reconocida

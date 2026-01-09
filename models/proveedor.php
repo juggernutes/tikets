@@ -42,4 +42,27 @@ class Proveedor
         $stmt->close();
         return $result->fetch_assoc();
     }
+
+    public function datosReporteSemanal($anio, $semana)
+    {
+        $rows = [];
+        $op = 1;
+        $params = [$anio, $semana];
+        $stmt = $this->conn->prepare("CALL sp_reporte(?, ?, ?)");
+        $stmt->bind_param("iii", $op, ...$params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        $result->free();
+        $stmt->close();
+        while ($this->conn->more_results() && $this->conn->next_result()) {
+            $extraResult = $this->conn->use_result();
+            if ($extraResult instanceof mysqli_result) {
+                $extraResult->free();
+            }
+        }
+        return $rows;
+    }
 }

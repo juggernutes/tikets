@@ -55,7 +55,7 @@ class Tiket
         // Si tu SP hace: SELECT @ultimoID AS id_tiket;
         if ($res = $stmt->get_result()) {
             $row = $res->fetch_assoc();
-            $id = (int)($row['id_tiket'] ?? 0);
+            $id = (int) ($row['id_tiket'] ?? 0);
             $res->free();
         }
 
@@ -100,7 +100,9 @@ class Tiket
             $idSoporte,
             $idSolucion,
             $descripcionSolucion,
-            null, null, null
+            null,
+            null,
+            null
         ];
         $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('iiiiisiisiss', $op, ...$params);
@@ -122,7 +124,9 @@ class Tiket
             $idSoporte,
             $idSolucion,
             $descripcionSolucion,
-            null, null, null
+            null,
+            null,
+            null
         ];
         $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('iiiiisiisiss', $op, ...$params);
@@ -144,7 +148,9 @@ class Tiket
             null,
             null,
             null,
-            $idUsuario, null, null
+            $idUsuario,
+            null,
+            null
         ];
         $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('iiiiisiisiss', $op, ...$params);
@@ -165,7 +171,9 @@ class Tiket
             null,
             null,
             null,
-            $idUsuario, null, null
+            $idUsuario,
+            null,
+            null
         ]);
     }
 
@@ -181,7 +189,9 @@ class Tiket
             null,
             null,
             null,
-            $usuario, null, null
+            $usuario,
+            null,
+            null
         ];
         $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('iiiiisiisiss', $op, ...$params);
@@ -205,7 +215,9 @@ class Tiket
             $idSoporte,
             null,
             null,
-            null, null, null
+            null,
+            null,
+            null
         ]);
     }
 
@@ -220,7 +232,9 @@ class Tiket
             null,
             null,
             null,
-            null, null, null
+            null,
+            null,
+            null
         ]);
         return $result->fetch_assoc();
     }
@@ -247,7 +261,9 @@ class Tiket
             null,
             $idSoporte,
             null,
-            null, null, null
+            null,
+            null,
+            null
         ]) !== false;
     }
 
@@ -262,7 +278,9 @@ class Tiket
             null,
             null,
             null,
-            $idUsuario, null, null
+            $idUsuario,
+            null,
+            null
         ]);
         return $result;
     }
@@ -278,7 +296,9 @@ class Tiket
             null,
             null,
             null,
-            null, null, null
+            null,
+            null,
+            null
         ]);
         return $result;
     }
@@ -304,7 +324,7 @@ class Tiket
         }
 
         $fechaInicio = $dt->format('Y-m-01 00:00:00');
-        $fechaFin    = $dt->format('Y-m-t 23:59:59');
+        $fechaFin = $dt->format('Y-m-t 23:59:59');
 
         file_put_contents(
             __DIR__ . '/../reporteProveedor_debug.log',
@@ -338,4 +358,27 @@ class Tiket
         }
         return $data;
     }
+
+    public function enviarTiketProveedor($idTiket, $idSoporte)
+    {
+        $op = 14;
+        $params = [
+            $idTiket,
+            null,
+            null,
+            null,
+            null,
+            $idSoporte,
+            null,
+            null,
+            null,
+            null,
+            null
+        ];
+        $stmt = $this->conn->prepare("CALL sp_tiket(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('iiiiisiisiss', $op, ...$params);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
+    }
+
 }

@@ -127,7 +127,7 @@ class TiketController
 
     public function enviarTiketProveedor($idTiket, $idSoporte)
     {
-        return $this->model->tomarTiket($idTiket, $idSoporte);
+        return $this->model->enviarTiketProveedor($idTiket, $idSoporte);
     }
 
     public function datosReportePorProveedor($idProveedor, $fecha)

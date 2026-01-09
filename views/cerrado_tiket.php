@@ -8,12 +8,12 @@ if (!isset($_SESSION['login_id'])) {
 }
 
 $IdUser = $_SESSION['login_id'];
-$rol    = $_SESSION['rol'] ?? 'INVITADO';
+$rol = $_SESSION['rol'] ?? 'INVITADO';
 
 /* ===== Helpers ===== */
 function e($v)
 {
-  return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+  return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
 }
 function dash($v)
 {
@@ -21,13 +21,14 @@ function dash($v)
 }
 function fmt($s)
 {
-  if (!$s) return '—';
+  if (!$s)
+    return '—';
   $t = strtotime($s);
   return $t ? date('d/M/Y H:i', $t) : e($s);
 }
 function seconds_to_readable($secs)
 {
-  $secs = (int)$secs;
+  $secs = (int) $secs;
   $d = intdiv($secs, 86400);
   $secs %= 86400;
   $h = intdiv($secs, 3600);
@@ -35,30 +36,36 @@ function seconds_to_readable($secs)
   $m = intdiv($secs, 60);
   $s = $secs % 60;
   $parts = [];
-  if ($d) $parts[] = $d . 'd';
-  if ($h || $d) $parts[] = $h . 'h';
-  if ($m || $h || $d) $parts[] = $m . 'm';
+  if ($d)
+    $parts[] = $d . 'd';
+  if ($h || $d)
+    $parts[] = $h . 'h';
+  if ($m || $h || $d)
+    $parts[] = $m . 'm';
   $parts[] = $s . 's';
   return implode(' ', $parts);
 }
 
 /* ===== Horario hábil solo para los tiempos por ticket ===== */
 const WORK_START_HOUR = 7;
-const WORK_END_HOUR   = 18;
-const WORK_DAYS       = [1, 2, 3, 4, 5];
+const WORK_END_HOUR = 18;
+const WORK_DAYS = [1, 2, 3, 4, 5];
 
 $FERIADOS = [];
 
 function business_seconds_between($ini, $fin, array $feriados)
 {
-  if (!$ini || !$fin) return null;
+  if (!$ini || !$fin)
+    return null;
   $start = strtotime($ini);
-  $end   = strtotime($fin);
-  if (!$start || !$end) return null;
-  if ($end <= $start) return 0;
+  $end = strtotime($fin);
+  if (!$start || !$end)
+    return null;
+  if ($end <= $start)
+    return 0;
 
   $tz = new DateTimeZone(date_default_timezone_get());
-  $cur   = (new DateTime('@' . $start))->setTimezone($tz);
+  $cur = (new DateTime('@' . $start))->setTimezone($tz);
   $endDT = (new DateTime('@' . $end))->setTimezone($tz);
 
   $total = 0;
@@ -68,14 +75,14 @@ function business_seconds_between($ini, $fin, array $feriados)
     $d = $cur->format('d');
 
     $dayStart = (new DateTime("$y-$m-$d " . WORK_START_HOUR . ":00:00", $tz));
-    $dayEnd   = (new DateTime("$y-$m-$d " . WORK_END_HOUR   . ":00:00", $tz));
+    $dayEnd = (new DateTime("$y-$m-$d " . WORK_END_HOUR . ":00:00", $tz));
 
-    $dow       = (int)$cur->format('N');
+    $dow = (int) $cur->format('N');
     $isHoliday = in_array($cur->format('Y-m-d'), $feriados, true);
     $isWorkday = in_array($dow, WORK_DAYS, true) && !$isHoliday;
 
     $segStart = max($cur->getTimestamp(), $dayStart->getTimestamp());
-    $segEnd   = min($endDT->getTimestamp(), $dayEnd->getTimestamp());
+    $segEnd = min($endDT->getTimestamp(), $dayEnd->getTimestamp());
 
     if ($isWorkday && $segEnd > $segStart) {
       $total += ($segEnd - $segStart);
@@ -87,11 +94,11 @@ function business_seconds_between($ini, $fin, array $feriados)
 }
 
 /* ===== Filtros GET ===== */
-$q      = trim($_GET['q']      ?? '');
-$desde  = trim($_GET['desde']  ?? '');
-$hasta  = trim($_GET['hasta']  ?? '');
-$per    = max(5, min(100, (int)($_GET['per'] ?? 25)));
-$page   = max(1, (int)($_GET['page'] ?? 1));
+$q = trim($_GET['q'] ?? '');
+$desde = trim($_GET['desde'] ?? '');
+$hasta = trim($_GET['hasta'] ?? '');
+$per = max(5, min(100, (int) ($_GET['per'] ?? 25)));
+$page = max(1, (int) ($_GET['page'] ?? 1));
 
 $title = 'TICKETS CERRADOS';
 include __DIR__ . '/layout/header.php';
@@ -111,24 +118,27 @@ $rows = array_values(array_filter($rows, function ($r) use ($q, $desde, $hasta) 
   if ($q !== '') {
     $needle = mb_strtolower($q, 'UTF-8');
     $hay = mb_strtolower(implode(' ', [
-      $r['Folio']          ?? '',
-      $r['SISTEMA']        ?? '',
-      $r['DESCRIPCION']    ?? '',
-      $r['EMPLEADO']       ?? '',
-      $r['PUESTO']         ?? '',
-      $r['SUCURSAL']       ?? '',
+      $r['Folio'] ?? '',
+      $r['SISTEMA'] ?? '',
+      $r['DESCRIPCION'] ?? '',
+      $r['EMPLEADO'] ?? '',
+      $r['PUESTO'] ?? '',
+      $r['SUCURSAL'] ?? '',
       $r['NOMBRE_SOPORTE'] ?? '',
-      $r['ERROR']          ?? '',
-      $r['SOLUCION']       ?? ''
+      $r['ERROR'] ?? '',
+      $r['SOLUCION'] ?? ''
     ]), 'UTF-8');
-    if (mb_strpos($hay, $needle) === false) return false;
+    if (mb_strpos($hay, $needle) === false)
+      return false;
   }
 
   $fecha = $r['FECHA_SOLUCION'] ?? ($r['FECHA'] ?? '');
   if ($fecha && ($desde || $hasta)) {
     $ts = strtotime($fecha);
-    if ($desde && $ts < strtotime($desde . ' 00:00:00')) return false;
-    if ($hasta && $ts > strtotime($hasta . ' 23:59:59')) return false;
+    if ($desde && $ts < strtotime($desde . ' 00:00:00'))
+      return false;
+    if ($hasta && $ts > strtotime($hasta . ' 23:59:59'))
+      return false;
   }
   return true;
 }));
@@ -139,15 +149,15 @@ usort($rows, function ($a, $b) {
   $fb = strtotime($b['FECHA_SOLUCION'] ?? $b['FECHA'] ?? '1970-01-01');
   return $fb <=> $fa;
 });
-$total_rows  = count($rows);
-$total_pages = max(1, (int)ceil($total_rows / $per));
-$page        = min($page, $total_pages);
-$offset      = ($page - 1) * $per;
-$view        = array_slice($rows, $offset, $per);
+$total_rows = count($rows);
+$total_pages = max(1, (int) ceil($total_rows / $per));
+$page = min($page, $total_pages);
+$offset = ($page - 1) * $per;
+$view = array_slice($rows, $offset, $per);
 
 /* ===== CSS ===== */
 $cssPath = __DIR__ . '/../tools/ticketCerradosStyle.css';
-$cssVer  = is_file($cssPath) ? filemtime($cssPath) : time();
+$cssVer = is_file($cssPath) ? filemtime($cssPath) : time();
 ?>
 <link rel="stylesheet" href="../tools/ticketCerradosStyle.css?v=<?= $cssVer ?>">
 
@@ -276,6 +286,30 @@ $cssVer  = is_file($cssPath) ? filemtime($cssPath) : time();
         </div>
 
       </form>
+
+      <form class="toolbar" action="../app/appTiket.php" method="get">
+        <!-- Acción -->
+        <input type="hidden" name="accion" value="reporteSemanal">
+
+        <div class="field">
+          <label for="Semana">Semana</label>
+          <select name="Semana" id="Semana" required>
+            <option value="">Selecciona la Semana</option>
+            <?php include __DIR__ . '/../partials/combo_semanas.php'; ?>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="anio">Año</label>
+          <input type="number" name="anio" id="anio" required min="2000" max="2100" step="1"
+            value="<?= htmlspecialchars($_GET['anio'] ?? date('Y')) ?>" placeholder="Ej. 2025">
+        </div>
+
+
+        <div class="field">
+          <button type="submit">PDF</button>
+        </div>
+      </form>
     </div>
 
 
@@ -287,7 +321,7 @@ $cssVer  = is_file($cssPath) ? filemtime($cssPath) : time();
         $base = '?' . http_build_query($qs);
         $pmin = max(1, $page - 2);
         $pmax = min($total_pages, $page + 2);
-      ?>
+        ?>
         <a href="<?= $base . ($base === '?' ? '' : '&') ?>page=1">«</a>
         <a href="<?= $base . ($base === '?' ? '' : '&') ?>page=<?= max(1, $page - 1) ?>">‹</a>
         <?php for ($p = $pmin; $p <= $pmax; $p++): ?>
@@ -307,9 +341,9 @@ $cssVer  = is_file($cssPath) ? filemtime($cssPath) : time();
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.ticket-row').forEach(function(row) {
-      row.addEventListener('click', function() {
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.ticket-row').forEach(function (row) {
+      row.addEventListener('click', function () {
         const id = this.getAttribute('data-tiket');
         if (id) {
           window.location.href = 'detalles_tiket.php?ID_Tiket=' + encodeURIComponent(id);

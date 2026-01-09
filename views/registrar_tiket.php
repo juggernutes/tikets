@@ -19,7 +19,8 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
   </header>
 
   <!-- Tarjeta del formulario -->
-  <section class="card" style="max-width:1100px;margin:0 auto; background:#fff; border:1px solid #e9e9e9; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.06);">
+  <section class="card"
+    style="max-width:1100px;margin:0 auto; background:#fff; border:1px solid #e9e9e9; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.06);">
     <form action="../app/appTiket.php?accion=crearTiket" method="POST" style="padding:16px 16px 20px;">
       <!-- Grid del formulario -->
       <div class="form-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
@@ -27,33 +28,28 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
         <!-- Sucursal -->
         <div class="form-row-2col">
           <div class="col-input">
-          <label for="id_sucursal" class="titulo">Sucursal</label>
-          <select name="id_sucursal" id="id_sucursal" class="input" required>
-            <option value="">Seleccione la sucursal</option>
-            <?php include __DIR__ . '/../partials/combo_sucursales.php'; ?>
-          </select>
+            <label for="id_sucursal" class="titulo">Sucursal</label>
+            <select name="id_sucursal" id="id_sucursal" class="input" required>
+              <option value="">Seleccione la sucursal</option>
+              <?php include __DIR__ . '/../partials/combo_sucursales.php'; ?>
+            </select>
           </div>
         </div>
-        <script>
-          document.getElementById('id_sucursal').addEventListener('change', function() {
-            const idSucursal = this.value;
-
-          });
-        </script>
-
 
         <!-- Empleado -->
         <div class="form-row-2col">
           <div class="col-input">
-          <label for="Numero_Empleado" class="titulo">Empleado</label>
-          <select name="Numero_Empleado" id="Numero_Empleado" class="input" required>
-            <option value="">Seleccione un empleado</option>
-            <?php
-            include __DIR__ . '/../partials/combo_empleados.php';
-            // $empleados = $empleadoController->obtenerEmpleados($idUsuario);
-            ?>
-          </select>
+            <label for="Numero_Empleado" class="titulo">Empleado</label>
+            <select name="Numero_Empleado" id="Numero_Empleado" class="input" required>
+              <option value="">Seleccione un empleado</option>
+              <?php
+              include __DIR__ . '/../partials/combo_empleados.php';
+              // $empleados = $empleadoController->obtenerEmpleados($idUsuario);
+              ?>
+            </select>
           </div>
+          <div id="infoEmpleado" style="font-size:12px;color:#6b7280;margin-top:4px;"></div>
+
         </div>
 
         <!-- Sistema -->
@@ -71,46 +67,51 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
           <?php endif; ?>
         </div>
         <!-- Proveedor -->
-         <?php if(isset($_SESSION['rol']) && 
-         ($_SESSION['rol'] === 'SOPORTE' || $_SESSION['rol'] === 'ADMINISTRADOR' || $_SESSION['rol'] === 'PROVEEDOR')): ?>
-        <divclass="form-row-2col">
-          <div class="col-input">
-          <label for="proveedor" class="titulo">Proveedor</label>
-          <select name="proveedor" id="proveedor" class="input">
-            <option value="">Seleccione un proveedor</option>
-            <?php
-            include __DIR__ . '/../partials/combo_proveedor.php';
-            ?>
-          </select>
-          </div>
+        <?php if (
+          isset($_SESSION['rol']) &&
+          ($_SESSION['rol'] === 'SOPORTE' || $_SESSION['rol'] === 'ADMINISTRADOR' || $_SESSION['rol'] === 'PROVEEDOR')
+        ): ?>
+          <divclass="form-row-2col">
+            <div class="col-input">
+              <label for="proveedor" class="titulo">Proveedor</label>
+              <select name="proveedor" id="proveedor" class="input">
+                <option value="">Seleccione un proveedor</option>
+                <?php
+                include __DIR__ . '/../partials/combo_proveedor.php';
+                ?>
+              </select>
+            </div>
         </div>
-        <?php endif; ?>
+      <?php endif; ?>
+      <div class="field"> 
+        <p>----------------------------------------------</p>
+      </div>
 
-        <!-- Descripción del sistema -->
-        <div class="field" style="grid-column: 1 / -1;">
-          <div class="meta" style="padding:10px 12px; border:1px dashed #d8e6f3; border-radius:8px; background:#f6fbff;">
-            <strong style="margin-right:6px;">Descripción del sistema:</strong>
-            <span id="descripcionSistema" style="color:#0f6292;font-size:30px;">Seleccione un sistema</span>
-          </div>
+      <!-- Descripción del sistema -->
+      <div class="field" style="grid-column: 1 / -1;">
+        <div class="meta" style="padding:10px 12px; border:1px dashed #d8e6f3; border-radius:8px; background:#f6fbff;">
+          <strong style="margin-right:6px;">Descripción del sistema:</strong>
+          <span id="descripcionSistema" style="color:#0f6292;font-size:30px;">Seleccione un sistema</span>
         </div>
+      </div>
 
-        <!-- Descripción del ticket -->
-        <div class="field" style="grid-column: 1 / -1;">
-          <label for="descripcion" class="titulo">Descripción del ticket</label>
-          <textarea name="descripcion" id="descripcion" class="input"
-            rows="5" required
-            placeholder="Describe el problema, pasos previos, capturas o mensajes de error..."></textarea>
-        </div>
+
+      <!-- Descripción del ticket -->
+      <div class="field" style="grid-column: 1 / -1;">
+        <label for="descripcion" class="titulo">Descripción del ticket</label>
+        <textarea name="descripcion" id="descripcion" class="input" rows="5" required
+          placeholder="Describe el problema, pasos previos, capturas o mensajes de error..."></textarea>
       </div>
 
       <!-- Acciones -->
       <div class="actions" style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-        <a href="./dashboard.php" class="app-btn app-btn--secondary" style="background:#fff;color:#0f6292;border-color:#d8e6f3;">Cancelar</a>
+        <a href="./dashboard.php" class="app-btn app-btn--secondary"
+          style="background:#fff;color:#0f6292;border-color:#d8e6f3;">Cancelar</a>
         <button type="submit" class="app-btnCap">Guardar ticket</button>
       </div>
 
       <!-- (Opcional) hidden para el usuario actual -->
-      <input type="hidden" name="id_usuario_crea" value="<?= (int)$idUsuario ?>">
+      <input type="hidden" name="id_usuario_crea" value="<?= (int) $idUsuario ?>">
     </form>
   </section>
   <!-- FORMULARIO PARA NUEVO SISTEMA -->
@@ -118,13 +119,13 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
     <div class="field">
       <label class="titulo" for="nombreSistemaNuevo">Nombre del sistema</label>
       <input type="text" id="nombreSistemaNuevo" name="nombreSistemaNuevo" class="input"
-             placeholder="Ej. SAP, Inventario..." required>
+        placeholder="Ej. SAP, Inventario..." required>
     </div>
 
     <div class="field">
       <label class="titulo" for="descripcionSistemaNuevo">Descripción del sistema</label>
-      <textarea id="descripcionSistemaNuevo" name="descripcionSistemaNuevo" class="input"
-                rows="2" placeholder="Descripción breve del sistema..."></textarea>
+      <textarea id="descripcionSistemaNuevo" name="descripcionSistemaNuevo" class="input" rows="2"
+        placeholder="Descripción breve del sistema..."></textarea>
     </div>
 
     <div class="actions">
@@ -142,7 +143,7 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
     // Mostrar descripción del sistema seleccionado
     const selectSistema = document.getElementById('id_sistema');
     if (selectSistema) {
-      selectSistema.addEventListener('change', function() {
+      selectSistema.addEventListener('change', function () {
         const opt = this.options[this.selectedIndex];
         const desc = opt && opt.getAttribute('data-descripcion') || 'Seleccione un sistema';
         const descSpan = document.getElementById('descripcionSistema');
@@ -164,59 +165,102 @@ $idUsuario = $_SESSION['login_id'] ?? 0;
 
 
     // Mostrar / ocultar formulario NUEVO SISTEMA con el botón +
-      const btnNuevoSistema = document.getElementById('btn-nuevo-sistema');
-      const formSistema     = document.getElementById('formularioSistema');
+    const btnNuevoSistema = document.getElementById('btn-nuevo-sistema');
+    const formSistema = document.getElementById('formularioSistema');
 
-      if (btnNuevoSistema && formSistema) {
-        btnNuevoSistema.addEventListener('click', function (e) {
-          e.preventDefault();
-          formSistema.classList.toggle('oculto');
-        });
+    if (btnNuevoSistema && formSistema) {
+      btnNuevoSistema.addEventListener('click', function (e) {
+        e.preventDefault();
+        formSistema.classList.toggle('oculto');
+      });
+    }
+
+    // (deja igual tu código de guardarSistema con fetch)
+    document.getElementById('guardarSistema')?.addEventListener('click', async function () {
+      const nombre = document.getElementById('nombreSistemaNuevo').value.trim();
+      const descripcion = document.getElementById('descripcionSistemaNuevo').value.trim();
+      if (!nombre) {
+        alert("El nombre del sistema es obligatorio.");
+        return;
       }
 
-      // (deja igual tu código de guardarSistema con fetch)
-      document.getElementById('guardarSistema')?.addEventListener('click', async function() {
-        const nombre = document.getElementById('nombreSistemaNuevo').value.trim();
-        const descripcion = document.getElementById('descripcionSistemaNuevo').value.trim();
-        if (!nombre) {
-          alert("El nombre del sistema es obligatorio.");
-          return;
-        }
+      const params = new URLSearchParams({
+        accion: 'nuevoSistema',
+        nombre: nombre,
+        descripcion: descripcion
+      });
 
-        const params = new URLSearchParams({
-          accion: 'nuevoSistema',
-          nombre: nombre,
-          descripcion: descripcion
+      try {
+        const response = await fetch('../app/appTiket.php?' + params.toString(), {
+          method: 'GET'
         });
 
-        try {
-          const response = await fetch('../app/appTiket.php?' + params.toString(), {
-            method: 'GET'
-          });
+        const result = await response.json();
+        if (result.ok) {
+          const select = document.getElementById('id_sistema');
+          const nuevaOpcion = document.createElement('option');
+          nuevaOpcion.value = result.id;
+          nuevaOpcion.textContent = nombre;
+          nuevaOpcion.setAttribute('data-descripcion', descripcion);
+          select.appendChild(nuevaOpcion);
+          select.value = result.id;
 
-          const result = await response.json();
-          if (result.ok) {
-            const select = document.getElementById('id_sistema');
-            const nuevaOpcion = document.createElement('option');
-            nuevaOpcion.value = result.id;
-            nuevaOpcion.textContent = nombre;
-            nuevaOpcion.setAttribute('data-descripcion', descripcion);
-            select.appendChild(nuevaOpcion);
-            select.value = result.id;
+          document.getElementById('descripcionSistema').textContent = descripcion;
+          formSistema.classList.add('oculto');
+          document.getElementById('nombreSistemaNuevo').value = '';
+          document.getElementById('descripcionSistemaNuevo').value = '';
+        } else {
+          alert(result.error || "Error al guardar el sistema.");
+        }
+      } catch (err) {
+        console.error('Error en fetch:', err);
+        alert('Error de comunicación con el servidor.');
+      }
+    });
+    const selSucursal = document.getElementById('id_sucursal');
+    const selEmpleado = document.getElementById('Numero_Empleado');
 
-            document.getElementById('descripcionSistema').textContent = descripcion;
-            formSistema.classList.add('oculto');
-            document.getElementById('nombreSistemaNuevo').value = '';
-            document.getElementById('descripcionSistemaNuevo').value = '';
-          } else {
-            alert(result.error || "Error al guardar el sistema.");
-          }
-        } catch (err) {
-          console.error('Error en fetch:', err);
-          alert('Error de comunicación con el servidor.');
+    if (!selSucursal || !selEmpleado) return;
+
+    // Guardar lista original de empleados
+    const allEmployeeOptions = Array.from(selEmpleado.options).map(opt => ({
+      value: opt.value,
+      text: opt.text,
+      suc: opt.dataset.sucursal || ''
+    }));
+
+    function renderEmployeesBySucursal(idSucursal) {
+      selEmpleado.innerHTML = '<option value="">Seleccione un empleado</option>';
+
+      if (!idSucursal) return;
+
+      allEmployeeOptions.forEach(o => {
+        if (!o.value) return; // placeholder
+        if (String(o.suc) === String(idSucursal)) {
+          const opt = document.createElement('option');
+          opt.value = o.value;
+          opt.textContent = o.text;
+          opt.dataset.sucursal = o.suc;
+          selEmpleado.appendChild(opt);
         }
       });
+    }
+
+    selSucursal.addEventListener('change', function () {
+      renderEmployeesBySucursal(this.value);
     });
+
+    // Si ya hay sucursal seleccionada al cargar, filtra
+    if (selSucursal.value) renderEmployeesBySucursal(selSucursal.value);
+  });
+  const selEmpleado = document.getElementById('Numero_Empleado');
+  const info = document.getElementById('infoEmpleado');
+
+  selEmpleado.addEventListener('change', () => {
+    const opt = selEmpleado.options[selEmpleado.selectedIndex];
+    const puesto = opt?.dataset.puesto || '';
+    info.textContent = puesto ? `Puesto: ${puesto}` : '';
+  });
 
 </script>
 

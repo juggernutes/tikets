@@ -15,4 +15,8 @@ class soporteController{
     public function getProveedorById($id) {
         return $this->proveedorModel->obtenerProveedorPorId($id);
     }    
+
+    public function datosReporteSemanal($anio, $semana) {
+        return $this->proveedorModel->datosReporteSemanal($anio, $semana);
+    }
 }
